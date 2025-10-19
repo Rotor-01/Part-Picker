@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 });
 
 // Import the JSON data.
-const pcData = require('../data.json');
+const pcData = require('./data.json');
 console.log('✅ PC parts data loaded successfully');
 
 app.use(express.json());
