@@ -811,11 +811,17 @@
       // Get all parts and add their category
       let allParts = [];
       for (const category in pcData) {
-        const items = pcData[category];
-        items.forEach(item => {
-          item.category = category; // Add category to part object
-          allParts.push(item);
-        });
+        // Check if pcData has this property directly
+        if (Object.prototype.hasOwnProperty.call(pcData, category)) {
+          const items = pcData[category];
+          // Ensure items is an array before iterating
+          if (Array.isArray(items)) {
+            items.forEach(item => {
+              item.category = category; // Add category to part object
+              allParts.push(item);
+            });
+          }
+        }
       }
       
       // Apply filters
@@ -839,7 +845,7 @@
           const detailsString = getPartDetails(part, part.category).join(' ').toLowerCase();
           
           if (!part.name.toLowerCase().includes(searchTerm) && 
-              !part.brand.toLowerCase().includes(searchTerm) &&
+              !(part.brand && part.brand.toLowerCase().includes(searchTerm)) && // Add check for brand
               !detailsString.includes(searchTerm)) {
             return false;
           }
@@ -858,7 +864,10 @@
           case 'price-high':
             return b.price - a.price;
           case 'brand':
-            return a.brand.localeCompare(b.brand);
+            // Handle parts that might not have a brand
+            const brandA = a.brand || '';
+            const brandB = b.brand || '';
+            return brandA.localeCompare(brandB);
           default:
             return 0;
         }
@@ -906,7 +915,7 @@
         </div>
         <div class="part-info">
           <h4>${part.name}</h4>
-          <div class="part-brand">${part.brand}</div>
+          <div class="part-brand">${part.brand || 'N/A'}</div>
           <div class="part-price">$${part.price}</div>
           <div class="part-details">
             ${detailsHtml}
@@ -960,7 +969,9 @@
     function updateTotalCount() {
       let total = 0;
       for (const category in pcData) {
-        total += pcData[category].length;
+        if (Object.prototype.hasOwnProperty.call(pcData, category) && Array.isArray(pcData[category])) {
+          total += pcData[category].length;
+        }
       }
       totalCount.textContent = `Total: ${total} parts`;
     }
