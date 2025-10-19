@@ -1,0 +1,15 @@
+{
+  "name": "pc-part-picker",
+  "version": "1.0.0",
+  "description": "AI PC Part Picker",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "node api/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "@google/generative-ai": "^0.11.3"
+  }
+}
