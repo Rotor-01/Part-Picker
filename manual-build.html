@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual Builder - PC Part Picker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>THE TRINITY</h1>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="ai-build.html">AI Build</a></li>
+        <li><a href="manual-build.html">Manual Build</a></li>
+        <li><a href="browse-parts.html">Parts</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="content">
+    <section class="builder" id="builder">
+      <h2>Manual PC Builder</h2>
+      <div class="builder-container">
+        <div class="build-summary">
+          <h3>Your Build</h3>
+          <div id="build-components">
+            <div class="build-component" data-type="cpu">
+              <h4>CPU</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+            <div class="build-component" data-type="motherboard">
+              <h4>Motherboard</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+            <div class="build-component" data-type="gpu">
+              <h4>GPU</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+            <div class="build-component" data-type="ram">
+              <h4>RAM</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+            <div class="build-component" data-type="storage">
+              <h4>Storage</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+            <div class="build-component" data-type="psu">
+              <h4>Power Supply</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+            <div class="build-component" data-type="case">
+              <h4>Case</h4>
+              <div class="component-placeholder">Not Selected</div>
+            </div>
+          </div>
+          <div class="build-total">
+            <h4>Total: $<span id="total-cost">0</span></h4>
+            <div id="compatibility-status" class="compatibility-unknown">
+              Compatibility: Checking...
+            </div>
+          </div>
+        </div>
+
+        <div class="component-selector">
+          <div class="selector-header">
+            <h3>Select Components</h3>
+            <div class="filter-controls">
+              <select id="component-type">
+                <option value="all">All Components</option>
+                <option value="CPUs">CPU</option>
+                <option value="Motherboards">Motherboard</option>
+                <option value="GPUs">GPU</option>
+                <option value="PSUs">Power Supply</option>
+                <option value="Storage">Storage</option>
+                <option value="Cases">Case</option>
+              </select>
+              <input type="text" id="component-search" placeholder="Search components...">
+            </div>
+          </div>
+          <div id="component-gallery" class="component-gallery"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Explore Other Options</h2>
+      <div class="cta-buttons">
+        <a href="ai-build.html" class="feature-btn">Try AI Assistant</a>
+        <a href="browse-parts.html" class="feature-btn">Browse All Parts</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 PC Part Picker. Built for builders, by builders.</p>
+  </footer>
+</html>
