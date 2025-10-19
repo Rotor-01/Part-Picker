@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const componentSearch = document.getElementById('component-search');
     const componentGallery = document.getElementById('component-gallery');
     
+    // Added promptButtons
+    const promptButtons = document.querySelectorAll('.prompt-btn');
+    
     let isProcessing = false;
     let pcData = {};
     let currentBuild = {
@@ -37,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showDataLoadError();
         });
         setupEventListeners();
-        showWelcomeMessage();
+        // REMOVED showWelcomeMessage(); to prevent the duplicate welcome.
     }
     
     function setupEventListeners() {
@@ -55,6 +58,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (componentSearch) {
             componentSearch.addEventListener('input', filterComponents);
+        }
+        
+        // ADDED: Event listeners for quick prompt buttons
+        if (promptButtons.length > 0) {
+            promptButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const prompt = this.dataset.prompt;
+                    if (userInput) {
+                        userInput.value = prompt;
+                        userInput.focus();
+                    }
+                    if (chatForm) {
+                        // Dispatch a submit event on the form to trigger the AI
+                        chatForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                    }
+                });
+            });
         }
     }
     
@@ -679,6 +699,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return details.slice(0, 3);
     }
     
+    // This function remains but is no longer called by default.
     function showWelcomeMessage() {
         setTimeout(() => {
             const welcomeMessage = `
