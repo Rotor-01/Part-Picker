@@ -23,6 +23,28 @@
       "link": "https://www.intel.com/content/www/us/en/products/sku/134780/intel-core-i312100f-processor-12m-cache-up-to-4-30-ghz/specifications.html"
     },
     {
+      "category": "Budget",
+      "brand": "AMD",
+      "name": "AMD Ryzen 5 5600",
+      "cores": 6,
+      "threads": 12,
+      "price": 130,
+      "socket": "AM4",
+      "image": "images/r5-5600.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Intel",
+      "name": "Intel Core i3-13100F",
+      "cores": 4,
+      "threads": 8,
+      "price": 110,
+      "socket": "LGA1700",
+      "image": "images/i3-13100f.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Mid Range",
       "brand": "AMD",
       "name": "AMD Ryzen 5 7600X",
@@ -43,6 +65,28 @@
       "socket": "LGA1700",
       "image": "images/i5-13600k.jpg",
       "link": "https://www.intel.com/content/www/us/en/products/sku/230491/intel-core-i513600k-processor-24m-cache-up-to-5-10-ghz/specifications.html"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "AMD",
+      "name": "AMD Ryzen 7 5800X",
+      "cores": 8,
+      "threads": 16,
+      "price": 240,
+      "socket": "AM4",
+      "image": "images/r7-5800x.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Intel",
+      "name": "Intel Core i5-14600K",
+      "cores": 14,
+      "threads": 20,
+      "price": 329,
+      "socket": "LGA1700",
+      "image": "images/i5-14600k.jpg",
+      "link": "https://example.com"
     },
     {
       "category": "Gaming",
@@ -67,6 +111,28 @@
       "link": "https://www.intel.com/content/www/us/en/products/sku/235745/intel-core-i714700k-processor-33m-cache-up-to-5-60-ghz/specifications.html"
     },
     {
+      "category": "Gaming",
+      "brand": "AMD",
+      "name": "AMD Ryzen 7 5800X3D",
+      "cores": 8,
+      "threads": 16,
+      "price": 320,
+      "socket": "AM4",
+      "image": "images/r7-5800x3d.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Gaming",
+      "brand": "Intel",
+      "name": "Intel Core i9-14900K",
+      "cores": 24,
+      "threads": 32,
+      "price": 589,
+      "socket": "LGA1700",
+      "image": "images/i9-14900k.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Editing",
       "brand": "AMD",
       "name": "AMD Ryzen 9 7950X",
@@ -87,9 +153,74 @@
       "socket": "LGA1700",
       "image": "images/i9-13900k.jpg",
       "link": "https://www.intel.com/content/www/us/en/products/sku/235745/intel-core-i913900ks-processor-36m-cache-up-to-6-00-ghz/specifications.html"
+    },
+    {
+      "category": "Editing",
+      "brand": "AMD",
+      "name": "AMD Ryzen 9 7900X",
+      "cores": 12,
+      "threads": 24,
+      "price": 470,
+      "socket": "AM5",
+      "image": "images/r9-7900x.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Editing",
+      "brand": "AMD",
+      "name": "AMD Ryzen 9 5950X",
+      "cores": 16,
+      "threads": 32,
+      "price": 550,
+      "socket": "AM4",
+      "image": "images/r9-5950x.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Workstation",
+      "brand": "AMD",
+      "name": "AMD Threadripper 7970X",
+      "cores": 32,
+      "threads": 64,
+      "price": 2499,
+      "socket": "sTRX5",
+      "image": "images/tr-7970x.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Workstation",
+      "brand": "Intel",
+      "name": "Intel Xeon W5-3435X",
+      "cores": 16,
+      "threads": 32,
+      "price": 1589,
+      "socket": "LGA4677",
+      "image": "images/xeon-w5.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Intel",
+      "name": "Intel Core i3-10100F",
+      "cores": 4,
+      "threads": 8,
+      "price": 70,
+      "socket": "LGA1200",
+      "image": "images/i3-10100f.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Intel",
+      "name": "Intel Core i5-12400F",
+      "cores": 6,
+      "threads": 12,
+      "price": 150,
+      "socket": "LGA1700",
+      "image": "images/i5-12400f.jpg",
+      "link": "https://example.com"
     }
   ],
-
   "GPUs": [
     {
       "category": "Budget",
@@ -112,6 +243,36 @@
       "link": "https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3060-3060ti/"
     },
     {
+      "category": "Budget",
+      "brand": "NVIDIA",
+      "name": "NVIDIA GeForce RTX 4060",
+      "vram": 8,
+      "price": 299,
+      "powerdraw": 115,
+      "image": "images/rtx-4060.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "AMD",
+      "name": "AMD Radeon RX 7600",
+      "vram": 8,
+      "price": 269,
+      "powerdraw": 165,
+      "image": "images/rx-7600.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Intel",
+      "name": "Intel Arc A750",
+      "vram": 8,
+      "price": 210,
+      "powerdraw": 225,
+      "image": "images/arc-a750.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Mid Range",
       "brand": "AMD",
       "name": "AMD Radeon RX 7800 XT",
@@ -132,6 +293,26 @@
       "link": "https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4070"
     },
     {
+      "category": "Mid Range",
+      "brand": "NVIDIA",
+      "name": "NVIDIA GeForce RTX 4070 Super",
+      "vram": 12,
+      "price": 599,
+      "powerdraw": 220,
+      "image": "images/rtx-4070s.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "AMD",
+      "name": "AMD Radeon RX 6700 XT",
+      "vram": 12,
+      "price": 350,
+      "powerdraw": 230,
+      "image": "images/rx-6700xt.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "High End",
       "brand": "NVIDIA",
       "name": "NVIDIA GeForce RTX 4080 Super",
@@ -140,9 +321,58 @@
       "powerdraw": 320,
       "image": "images/rtx-4080s.jpg",
       "link": "https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4080-super/"
+    },
+    {
+      "category": "High End",
+      "brand": "AMD",
+      "name": "AMD Radeon RX 7900 XTX",
+      "vram": 24,
+      "price": 949,
+      "powerdraw": 355,
+      "image": "images/rx-7900xtx.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "NVIDIA",
+      "name": "NVIDIA GeForce RTX 4090",
+      "vram": 24,
+      "price": 1799,
+      "powerdraw": 450,
+      "image": "images/rtx-4090.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "AMD",
+      "name": "AMD Radeon RX 7900 XT",
+      "vram": 20,
+      "price": 749,
+      "powerdraw": 315,
+      "image": "images/rx-7900xt.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "NVIDIA",
+      "name": "NVIDIA GeForce RTX 3070",
+      "vram": 8,
+      "price": 450,
+      "powerdraw": 220,
+      "image": "images/rtx-3070.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "NVIDIA",
+      "name": "NVIDIA GeForce RTX 4070 Ti Super",
+      "vram": 16,
+      "price": 799,
+      "powerdraw": 285,
+      "image": "images/rtx-4070ti-s.jpg",
+      "link": "https://example.com"
     }
   ],
-
   "Motherboards": [
     {
       "category": "Budget",
@@ -165,6 +395,36 @@
       "link": "https://www.gigabyte.com/Motherboard/B760M-DS3H-DDR4-rev-10"
     },
     {
+      "category": "Budget",
+      "brand": "ASUS",
+      "name": "ASUS Prime B450M-A II",
+      "price": 79,
+      "socket": "AM4",
+      "formfactor": "Micro-ATX",
+      "image": "images/asus-b450m.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "MSI",
+      "name": "MSI PRO H610M-G",
+      "price": 99,
+      "socket": "LGA1700",
+      "formfactor": "Micro-ATX",
+      "image": "images/msi-h610m.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "ASRock",
+      "name": "ASRock A620M-HDV/M.2+",
+      "price": 119,
+      "socket": "AM5",
+      "formfactor": "Micro-ATX",
+      "image": "images/asrock-a620m.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Mid Range",
       "brand": "MSI",
       "name": "MSI B650 Gaming Plus",
@@ -185,6 +445,36 @@
       "link": "https://rog.asus.com/motherboards/rog-strix/rog-strix-b650e-f-gaming-wifi-model"
     },
     {
+      "category": "Mid Range",
+      "brand": "Gigabyte",
+      "name": "Gigabyte B550 AORUS Elite",
+      "price": 159,
+      "socket": "AM4",
+      "formfactor": "ATX",
+      "image": "images/gb-b550-aorus.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "ASUS",
+      "name": "ASUS TUF Gaming B760-PLUS",
+      "price": 189,
+      "socket": "LGA1700",
+      "formfactor": "ATX",
+      "image": "images/asus-tuf-b760.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "ASRock",
+      "name": "ASRock Z790 PG Lightning",
+      "price": 199,
+      "socket": "LGA1700",
+      "formfactor": "ATX",
+      "image": "images/asrock-z790-pg.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "High End",
       "brand": "MSI",
       "name": "MSI Z690 Tomahawk",
@@ -193,9 +483,98 @@
       "formfactor": "ATX",
       "image": "images/msi-z690.jpg",
       "link": "https://www.msi.com/Motherboard/MAG-Z690-TOMAHAWK-WIFI"
+    },
+    {
+      "category": "High End",
+      "brand": "Gigabyte",
+      "name": "Gigabyte X670 AORUS Elite AX",
+      "price": 289,
+      "socket": "AM5",
+      "formfactor": "ATX",
+      "image": "images/gb-x670-aorus.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "ASUS",
+      "name": "ASUS ROG STRIX Z790-E",
+      "price": 499,
+      "socket": "LGA1700",
+      "formfactor": "ATX",
+      "image": "images/asus-z790-e.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "MSI",
+      "name": "MSI MPG X670E Carbon",
+      "price": 479,
+      "socket": "AM5",
+      "formfactor": "ATX",
+      "image": "images/msi-x670e-carbon.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "ASUS",
+      "name": "ASUS ROG Crosshair X670E Hero",
+      "price": 699,
+      "socket": "AM5",
+      "formfactor": "ATX",
+      "image": "images/asus-x670e-hero.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Gigabyte",
+      "name": "Gigabyte A520M S2H",
+      "price": 69,
+      "socket": "AM4",
+      "formfactor": "Micro-ATX",
+      "image": "images/gb-a520m.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "MSI",
+      "name": "MSI B550-A PRO",
+      "price": 139,
+      "socket": "AM4",
+      "formfactor": "ATX",
+      "image": "images/msi-b550-a-pro.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Gigabyte",
+      "name": "Gigabyte H510M H",
+      "price": 85,
+      "socket": "LGA1200",
+      "formfactor": "Micro-ATX",
+      "image": "images/gb-h510m.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "ASRock",
+      "name": "ASRock Z790 Taichi",
+      "price": 479,
+      "socket": "LGA1700",
+      "formfactor": "ATX",
+      "image": "images/asrock-z790-taichi.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Workstation",
+      "brand": "ASUS",
+      "name": "ASUS Pro WS W790-ACE",
+      "price": 899,
+      "socket": "LGA4677",
+      "formfactor": "ATX",
+      "image": "images/asus-w790-ace.jpg",
+      "link": "https://example.com"
     }
   ],
-
   "PSUs": [
     {
       "category": "Budget",
@@ -218,6 +597,26 @@
       "link": "https://www.coolermaster.com/catalog/power-supplies/mwe-series/mwe-bronze-v2-650/"
     },
     {
+      "category": "Budget",
+      "brand": "Thermaltake",
+      "name": "Thermaltake Smart 500W",
+      "wattage": 500,
+      "price": 45,
+      "rating": "80+",
+      "image": "images/tt-smart-500.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Apevia",
+      "name": "Apevia Prestige 600W",
+      "wattage": 600,
+      "price": 55,
+      "rating": "Bronze",
+      "image": "images/apevia-600.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Mid Range",
       "brand": "Corsair",
       "name": "Corsair RM750x",
@@ -228,6 +627,36 @@
       "link": "https://www.corsair.com/us/en/p/CP-9020179-NA"
     },
     {
+      "category": "Mid Range",
+      "brand": "SeaSonic",
+      "name": "SeaSonic FOCUS Plus Gold 750W",
+      "wattage": 750,
+      "price": 120,
+      "rating": "Gold",
+      "image": "images/seasonic-focus-750.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "EVGA",
+      "name": "EVGA SuperNOVA 850 G6",
+      "wattage": 850,
+      "price": 150,
+      "rating": "Gold",
+      "image": "images/evga-850-g6.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "MSI",
+      "name": "MSI MPG A850G PCIE5",
+      "wattage": 850,
+      "price": 160,
+      "rating": "Gold",
+      "image": "images/msi-a850g.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "High End",
       "brand": "Seasonic",
       "name": "Seasonic Prime TX-1000",
@@ -236,9 +665,68 @@
       "rating": "Titanium",
       "image": "images/seasonic-tx1000.jpg",
       "link": "https://seasonic.com/prime-tx"
+    },
+    {
+      "category": "High End",
+      "brand": "Corsair",
+      "name": "Corsair HX1000i",
+      "wattage": 1000,
+      "price": 279,
+      "rating": "Platinum",
+      "image": "images/corsair-hx1000i.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "EVGA",
+      "name": "EVGA SuperNOVA 1200 P3",
+      "wattage": 1200,
+      "price": 299,
+      "rating": "Platinum",
+      "image": "images/evga-1200-p3.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "ASUS",
+      "name": "ASUS ROG Thor 1000W",
+      "wattage": 1000,
+      "price": 319,
+      "rating": "Platinum",
+      "image": "images/asus-thor-1000.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "be quiet!",
+      "name": "be quiet! Dark Power Pro 12 1500W",
+      "wattage": 1500,
+      "price": 449,
+      "rating": "Titanium",
+      "image": "images/bq-dark-power-1500.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Cooler Master",
+      "name": "Cooler Master V850 Gold V2",
+      "wattage": 850,
+      "price": 145,
+      "rating": "Gold",
+      "image": "images/cm-v850-gold.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Corsair",
+      "name": "Corsair CX650M",
+      "wattage": 650,
+      "price": 79,
+      "rating": "Bronze",
+      "image": "images/corsair-cx650m.jpg",
+      "link": "https://example.com"
     }
   ],
-
   "Storage": [
     {
       "category": "Budget",
@@ -261,6 +749,36 @@
       "link": "https://www.westerndigital.com/products/internal-drives/wd-blue-hdd"
     },
     {
+      "category": "Budget",
+      "brand": "Kingston",
+      "name": "Kingston NV2 1TB",
+      "capacity": "1TB",
+      "price": 65,
+      "socket": "M.2",
+      "image": "images/kingston-nv2-1tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Western Digital",
+      "name": "WD Blue SA510 500GB",
+      "capacity": "500GB",
+      "price": 49,
+      "socket": "SATA",
+      "image": "images/wd-blue-500gb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "TeamGroup",
+      "name": "TeamGroup MP33 1TB",
+      "capacity": "1TB",
+      "price": 62,
+      "socket": "M.2",
+      "image": "images/team-mp33-1tb.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Mid Range",
       "brand": "Samsung",
       "name": "Samsung 980 Pro SSD",
@@ -271,6 +789,36 @@
       "link": "https://www.samsung.com/semiconductor/minisite/ssd/product/consumer/980pro/"
     },
     {
+      "category": "Mid Range",
+      "brand": "Crucial",
+      "name": "Crucial P5 Plus 2TB",
+      "capacity": "2TB",
+      "price": 149,
+      "socket": "M.2",
+      "image": "images/crucial-p5-plus-2tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Samsung",
+      "name": "Samsung 970 Evo Plus 2TB",
+      "capacity": "2TB",
+      "price": 139,
+      "socket": "M.2",
+      "image": "images/samsung-970-evo-2tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Seagate",
+      "name": "Seagate BarraCuda 4TB HDD",
+      "capacity": "4TB",
+      "price": 89,
+      "socket": "SATA",
+      "image": "images/seagate-4tb.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "High End",
       "brand": "Western Digital",
       "name": "WD Black SN850X 2TB",
@@ -279,9 +827,58 @@
       "socket": "M.2",
       "image": "images/wd-black-sn850x.jpg",
       "link": "https://www.westerndigital.com/products/internal-drives/wd-black-sn850x-nvme-ssd"
+    },
+    {
+      "category": "High End",
+      "brand": "Samsung",
+      "name": "Samsung 990 Pro 2TB",
+      "capacity": "2TB",
+      "price": 169,
+      "socket": "M.2",
+      "image": "images/samsung-990-pro-2tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "Sabrent",
+      "name": "Sabrent Rocket 4 Plus 4TB",
+      "capacity": "4TB",
+      "price": 399,
+      "socket": "M.2",
+      "image": "images/sabrent-rocket-4tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "Samsung",
+      "name": "Samsung 870 QVO 8TB",
+      "capacity": "8TB",
+      "price": 479,
+      "socket": "SATA",
+      "image": "images/samsung-870-qvo-8tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "Western Digital",
+      "name": "WD Black SN850X 4TB",
+      "capacity": "4TB",
+      "price": 299,
+      "socket": "M.2",
+      "image": "images/wd-black-sn850x-4tb.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Crucial",
+      "name": "Crucial MX500 1TB",
+      "capacity": "1TB",
+      "price": 75,
+      "socket": "SATA",
+      "image": "images/crucial-mx500-1tb.jpg",
+      "link": "https://example.com"
     }
   ],
-
   "Cases": [
     {
       "category": "Budget",
@@ -304,6 +901,36 @@
       "link": "https://www.fractal-design.com/products/cases/focus/focus-g/black/"
     },
     {
+      "category": "Budget",
+      "brand": "Phanteks",
+      "name": "Phanteks Eclipse G300A",
+      "price": 69,
+      "formfactor": "ATX",
+      "color": "Black",
+      "image": "images/phanteks-g300a.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Deepcool",
+      "name": "Deepcool MATREXX 40",
+      "price": 55,
+      "formfactor": "Micro-ATX",
+      "color": "Black",
+      "image": "images/deepcool-matrexx-40.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Budget",
+      "brand": "Montech",
+      "name": "Montech X3 Mesh",
+      "price": 65,
+      "formfactor": "ATX",
+      "color": "White",
+      "image": "images/montech-x3-white.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "Mid Range",
       "brand": "NZXT",
       "name": "NZXT H510",
@@ -314,6 +941,46 @@
       "link": "https://nzxt.com/product/h510"
     },
     {
+      "category": "Mid Range",
+      "brand": "Lian Li",
+      "name": "Lian Li LANCOOL 216",
+      "price": 99,
+      "formfactor": "ATX",
+      "color": "Black",
+      "image": "images/lianli-216.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Corsair",
+      "name": "Corsair 4000D Airflow",
+      "price": 105,
+      "formfactor": "ATX",
+      "color": "Black",
+      "image": "images/corsair-4000d.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "Fractal Design",
+      "name": "Fractal Design Pop Air",
+      "price": 89,
+      "formfactor": "ATX",
+      "color": "White",
+      "image": "images/fractal-pop-air.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "Mid Range",
+      "brand": "HYTE",
+      "name": "HYTE Y40",
+      "price": 129,
+      "formfactor": "ATX",
+      "color": "Red",
+      "image": "images/hyte-y40-red.jpg",
+      "link": "https://example.com"
+    },
+    {
       "category": "High End",
       "brand": "Lian Li",
       "name": "Lian Li O11 Dynamic",
@@ -322,9 +989,48 @@
       "color": "White",
       "image": "images/o11-dynamic.jpg",
       "link": "https://lian-li.com/product/o11-dynamic/"
+    },
+    {
+      "category": "High End",
+      "brand": "HYTE",
+      "name": "HYTE Y60",
+      "price": 199,
+      "formfactor": "ATX",
+      "color": "Black",
+      "image": "images/hyte-y60.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "Fractal Design",
+      "name": "Fractal Design Torrent",
+      "price": 205,
+      "formfactor": "ATX",
+      "color": "Black",
+      "image": "images/fractal-torrent.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "Corsair",
+      "name": "Corsair 7000D Airflow",
+      "price": 269,
+      "formfactor": "ATX",
+      "color": "White",
+      "image": "images/corsair-7000d.jpg",
+      "link": "https://example.com"
+    },
+    {
+      "category": "High End",
+      "brand": "Phanteks",
+      "name": "Phanteks NV7",
+      "price": 219,
+      "formfactor": "ATX",
+      "color": "Black",
+      "image": "images/phanteks-nv7.jpg",
+      "link": "https://example.com"
     }
   ],
-  
   "RAM": [
     {
       "category": "Budget",
@@ -372,6 +1078,198 @@
         "modules": "2x16GB"
       },
       "image": "images/kingston-fury-beast-ddr5.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category": "Budget",
+      "id": "ram4",
+      "name": "Silicon Power Value 16GB",
+      "brand": "Silicon Power",
+      "price": 34.99,
+      "specs": {
+        "type": "DDR4",
+        "speed": "3200MHz",
+        "capacity": "16GB",
+        "latency": "CL16",
+        "modules": "2x8GB"
+      },
+      "image": "images/sp-value-ddr4.jpg",
+      "compatibility": ["DDR4 motherboards"]
+    },
+    {
+      "category": "Budget",
+      "id": "ram5",
+      "name": "TeamGroup T-Force Vulcan Z 16GB",
+      "brand": "TeamGroup",
+      "price": 37.99,
+      "specs": {
+        "type": "DDR4",
+        "speed": "3200MHz",
+        "capacity": "16GB",
+        "latency": "CL16",
+        "modules": "2x8GB"
+      },
+      "image": "images/team-vulcan-z-ddr4.jpg",
+      "compatibility": ["DDR4 motherboards"]
+    },
+    {
+      "category": "Mid Range",
+      "id": "ram6",
+      "name": "Corsair Vengeance 32GB DDR5",
+      "brand": "Corsair",
+      "price": 99.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "5600MHz",
+        "capacity": "32GB",
+        "latency": "CL36",
+        "modules": "2x16GB"
+      },
+      "image": "images/corsair-vengeance-ddr5.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category": "Mid Range",
+      "id": "ram7",
+      "name": "G.Skill Flare X5 32GB (AMD EXPO)",
+      "brand": "G.Skill",
+      "price": 104.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "32GB",
+        "latency": "CL30",
+        "modules": "2x16GB"
+      },
+      "image": "images/gskill-flare-x5.jpg",
+      "compatibility": ["DDR5 motherboards", "AMD EXPO"]
+    },
+    {
+      "category": "Mid Range",
+      "id": "ram8",
+      "name": "G.Skill Ripjaws S5 32GB (Intel XMP)",
+      "brand": "G.Skill",
+      "price": 104.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "32GB",
+        "latency": "CL30",
+        "modules": "2x16GB"
+      },
+      "image": "images/gskill-ripjaws-s5.jpg",
+      "compatibility": ["DDR5 motherboards", "Intel XMP"]
+    },
+    {
+      "category": "Mid Range",
+      "id": "ram9",
+      "name": "TeamGroup T-Create Expert 32GB",
+      "brand": "TeamGroup",
+      "price": 94.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "32GB",
+        "latency": "CL38",
+        "modules": "2x16GB"
+      },
+      "image": "images/team-t-create-expert.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category": "High End",
+      "id": "ram10",
+      "name": "G.Skill Trident Z5 RGB 32GB",
+      "brand": "G.Skill",
+      "price": 124.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "32GB",
+        "latency": "CL30",
+        "modules": "2x16GB"
+      },
+      "image": "images/gskill-trident-z5-rgb.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category": "High End",
+      "id": "ram11",
+      "name": "Corsair Dominator Platinum 32GB",
+      "brand": "Corsair",
+      "price": 159.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "32GB",
+        "latency": "CL36",
+        "modules": "2x16GB"
+      },
+      "image": "images/corsair-dominator-ddr5.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category": "High End",
+      "id": "ram12",
+      "name": "G.Skill Trident Z5 RGB 64GB",
+      "brand": "G.Skill",
+      "price": 219.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "64GB",
+        "latency": "CL32",
+        "modules": "2x32GB"
+      },
+      "image": "images/gskill-trident-z5-rgb-64gb.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category": "High End",
+      "id": "ram13",
+      "name": "Corsair Vengeance LPX 64GB",
+      "brand": "Corsair",
+      "price": 199.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "5200MHz",
+        "capacity": "64GB",
+        "latency": "CL40",
+        "modules": "2x32GB"
+      },
+      "image": "images/corsair-vengeance-lpx-64gb-ddr5.jpg",
+      "compatibility": ["DDR5 motherboards"]
+    },
+    {
+      "category":"Workstation",
+      "id": "ram14",
+      "name": "Kingston FURY Renegade Pro 64GB",
+      "brand": "Kingston",
+      "price": 279.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "64GB",
+        "latency": "CL32",
+        "modules": "4x16GB"
+      },
+      "image": "images/kingston-renegade-pro.jpg",
+      "compatibility": ["DDR5 motherboards", "Quad Channel"]
+    },
+    {
+      "category": "Mid Range",
+      "id": "ram15",
+      "name": "Patriot Viper Elite 5 32GB",
+      "brand": "Patriot",
+      "price": 97.99,
+      "specs": {
+        "type": "DDR5",
+        "speed": "6000MHz",
+        "capacity": "32GB",
+        "latency": "CL36",
+        "modules": "2x16GB"
+      },
+      "image": "images/patriot-viper-elite-5.jpg",
       "compatibility": ["DDR5 motherboards"]
     }
   ]
