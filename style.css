@@ -274,15 +274,9 @@ header h1 {
   .stat-number {
     font-size: 2rem;
   }
-  /* Removed extra '}' here */
 }
 
-  .about-title {
-    padding-top: 10px;
-  }
-
-
-.about-content {
+.about {
   padding: 80px 40px;
   background-color: #111;
   min-height: 60vh;
@@ -388,9 +382,19 @@ header h1 {
   }
 }
 
-/* Removed the fragmented @media (max-width: 768px) block from here.
-  Its rules are now in the consolidated block at the end.
-*/
+@media (max-width: 768px) {
+  .about {
+    padding: 60px 20px;
+  }
+  
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-feature {
+    padding: 25px 20px;
+  }
+}
 
 @media (max-width: 480px) {
   .about h2 {
@@ -1038,80 +1042,7 @@ footer {
   }
 }
 
-/* Removed the fragmented @media (max-width: 768px) block from here
-  and consolidated all 768px rules into one block below.
-*/
-
-
-/* ... all your existing styles ... */
-
-/* Added CTA Section for sub-pages */
-.cta-section {
-  padding: 60px 40px;
-  background-color: #111; /* Matches 'builder' section background */
-  text-align: center;
-  border-top: 1px solid #333;
-}
-
-.cta-section h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #fff;
-}
-
-.cta-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-/* Reusing the existing .feature-btn style */
-.cta-buttons .feature-btn {
-  min-width: 200px;
-}
-
-/* CONSOLIDATED 768px MEDIA QUERY */
 @media (max-width: 768px) {
-  /* From first block */
-  .header-content {
-    padding: 40px 20px;
-  }
-  
-  #welcome {
-    font-size: 2.5rem;
-  }
-  
-  #subtitle {
-    font-size: 1.1rem;
-  }
-  
-  .feature-cards {
-    grid-template-columns: 1fr;
-  }
-  
-  .stats-section {
-    gap: 30px;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-  }
-
-  /* From second block */
-  .about {
-    padding: 60px 20px;
-  }
-  
-  .about-features {
-    grid-template-columns: 1fr;
-  }
-  
-  .about-feature {
-    padding: 25px 20px;
-  }
-
-  /* From third block */
   header {
     flex-direction: column;
     padding: 15px 20px;
@@ -1124,9 +1055,31 @@ footer {
     justify-content: center;
   }
   
-  /* Removed .header-content h1/h4 rules (conflicted with #welcome)
-    Removed .home-nav rules (class doesn't exist)
-  */
+  .header-content {
+    padding: 40px 20px;
+  }
+
+  .header-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .header-content h4 {
+    font-size: 1.1rem;
+  }
+
+  .home-nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-nav li {
+    width: 100%;
+    max-width: none;
+  }
+
+  .home-nav a {
+    width: 100%;
+  }
   
   .chat, .builder, .browse, .about {
     padding: 40px 20px;
@@ -1147,4 +1100,29 @@ footer {
   #user-input {
     margin-bottom: 10px;
   }
+}
+
+/* CTA Section for sub-pages */
+.cta-section {
+  padding: 60px 40px;
+  background-color: #111;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+.cta-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-buttons .feature-btn {
+  min-width: 200px;
 }
