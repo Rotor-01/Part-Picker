@@ -273,7 +273,9 @@ header h1 {
   
   .stat-number {
     font-size: 2rem;
-  }}
+  }
+  /* Removed extra '}' here */
+}
 
   .about-title {
     padding-top: 10px;
@@ -386,19 +388,9 @@ header h1 {
   }
 }
 
-@media (max-width: 768px) {
-  .about {
-    padding: 60px 20px;
-  }
-  
-  .about-features {
-    grid-template-columns: 1fr;
-  }
-  
-  .about-feature {
-    padding: 25px 20px;
-  }
-}
+/* Removed the fragmented @media (max-width: 768px) block from here.
+  Its rules are now in the consolidated block at the end.
+*/
 
 @media (max-width: 480px) {
   .about h2 {
@@ -1046,65 +1038,10 @@ footer {
   }
 }
 
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    padding: 15px 20px;
-    text-align: center;
-  }
-  
-  .main-nav ul {
-    margin-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .header-content {
-    padding: 40px 20px;
-  }
+/* Removed the fragmented @media (max-width: 768px) block from here
+  and consolidated all 768px rules into one block below.
+*/
 
-  .header-content h1 {
-    font-size: 2.2rem;
-  }
-
-  .header-content h4 {
-    font-size: 1.1rem;
-  }
-
-  .home-nav ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .home-nav li {
-    width: 100%;
-    max-width: none;
-  }
-
-  .home-nav a {
-    width: 100%;
-  }
-  
-  .chat, .builder, .browse, .about {
-    padding: 40px 20px;
-  }
-  
-  .component-gallery, .parts-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .message {
-    max-width: 95%;
-  }
-  
-  #chat-form {
-    flex-direction: column;
-  }
-  
-  #user-input {
-    margin-bottom: 10px;
-  }
-}
 
 /* ... all your existing styles ... */
 
@@ -1132,4 +1069,82 @@ footer {
 /* Reusing the existing .feature-btn style */
 .cta-buttons .feature-btn {
   min-width: 200px;
+}
+
+/* CONSOLIDATED 768px MEDIA QUERY */
+@media (max-width: 768px) {
+  /* From first block */
+  .header-content {
+    padding: 40px 20px;
+  }
+  
+  #welcome {
+    font-size: 2.5rem;
+  }
+  
+  #subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .feature-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-section {
+    gap: 30px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  /* From second block */
+  .about {
+    padding: 60px 20px;
+  }
+  
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-feature {
+    padding: 25px 20px;
+  }
+
+  /* From third block */
+  header {
+    flex-direction: column;
+    padding: 15px 20px;
+    text-align: center;
+  }
+  
+  .main-nav ul {
+    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Removed .header-content h1/h4 rules (conflicted with #welcome)
+    Removed .home-nav rules (class doesn't exist)
+  */
+  
+  .chat, .builder, .browse, .about {
+    padding: 40px 20px;
+  }
+  
+  .component-gallery, .parts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .message {
+    max-width: 95%;
+  }
+  
+  #chat-form {
+    flex-direction: column;
+  }
+  
+  #user-input {
+    margin-bottom: 10px;
+  }
 }
