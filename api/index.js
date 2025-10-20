@@ -2,11 +2,10 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const fs = require('fs'); // Import 'fs'
-const path = require('path'); // Import 'path'
+const fs = require('fs');
+const path = require('path');
 
 // --- Gemini API Setup ---
-// Ensure you have GEMINI_API_KEY in your Vercel Environment Variables
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 // ------------------------
@@ -25,8 +24,7 @@ app.use((req, res, next) => {
 // --- Load the JSON data using 'fs' ---
 let pcData;
 try {
-    // --- THIS IS THE FIX ---
-    // Go UP one directory (../) from /var/task/api/ to /var/task/ to find data.json
+    // This path goes UP ONE DIRECTORY (../) from 'api/' to find 'data.json'
     const dataPath = path.join(__dirname, '../data.json'); 
     
     const data = fs.readFileSync(dataPath, 'utf-8');
@@ -34,7 +32,6 @@ try {
     console.log('✅ PC parts data loaded successfully via fs');
 } catch (error) {
     console.error('❌ Failed to read or parse data.json:', error);
-    // If it fails, create empty data to prevent a crash on the next line
     pcData = {}; 
 }
 // ------------------------------------------
@@ -64,7 +61,6 @@ app.post('/api/ask', async (req, res) => {
         return res.status(500).json({ reply: 'Server Error: API key is not configured.' });
     }
 
-    // Check if pcData loaded correctly
     if (Object.keys(pcData).length === 0) {
         console.error('Server Error: pcData is empty, cannot process request.');
         return res.status(500).json({ reply: 'Server Error: Could not load component database.' });
@@ -73,9 +69,6 @@ app.post('/api/ask', async (req, res) => {
     console.log('💬 AI Chat request:', userMessage);
 
     try {
-        // --- This is the new AI logic ---
-        
-        // 1. Create the full prompt for the AI
         const prompt = `
           You are a helpful PC build expert. A user will provide a request, and you will be given a JSON object of *all available parts*.
           
@@ -114,12 +107,10 @@ app.post('/api/ask', async (req, res) => {
           "${userMessage}"
         `;
 
-        // 2. Call the Gemini API
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const aiReply = response.text();
         
-        // 3. Send the AI's formatted reply to the user
         res.json({ reply: aiReply });
 
     } catch (error) {
@@ -134,7 +125,7 @@ app.get('/api/debug-data', (req, res) => {
     try {
         res.json({
             success: true,
-            fileExists: true, // We assume true if pcData loaded
+            fileExists: true,
             categories: Object.keys(pcData),
             itemCounts: Object.keys(pcData).reduce((acc, key) => {
                 acc[key] = pcData[key]?.length || 0;
@@ -150,5 +141,4 @@ app.get('/api/debug-data', (req, res) => {
     }
 });
 
-// Export the app for Vercel
 module.exports = app;
