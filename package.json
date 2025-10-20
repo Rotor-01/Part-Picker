@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AI PC Part Picker",
   "scripts": {
-    "build": "mkdir public && cp index.html ai-build.html manual-build.html browse-parts.html style.css script.js data.json public/ && cp -r images public/"
+    "build": "mkdir public && cp index.html ai-build.html manual-build.html browse-parts.html style.css script.js public/ && cp api/data.json public/data.json && cp -r images public/"
   },
   "dependencies": {
     "express": "^4.18.2",
