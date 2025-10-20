@@ -24,12 +24,12 @@ app.use((req, res, next) => {
 // --- Load the JSON data using 'fs' ---
 let pcData;
 try {
-    // This path goes UP ONE DIRECTORY (../) from 'api/' to find 'data.json'
-    const dataPath = path.join(__dirname, '../data.json'); 
+    // This path now looks for 'data.json' in the *same* folder (api/data.json)
+    const dataPath = path.join(__dirname, './data.json'); 
     
     const data = fs.readFileSync(dataPath, 'utf-8');
     pcData = JSON.parse(data);
-    console.log('✅ PC parts data loaded successfully via fs');
+    console.log('✅ PC parts data loaded successfully from api/data.json');
 } catch (error) {
     console.error('❌ Failed to read or parse data.json:', error);
     pcData = {}; 
