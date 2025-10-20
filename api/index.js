@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
-require('dotenv').config(); // Load environment variables from .env
+require('dotenv').config();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const fs = require('fs'); // Import 'fs'
+const path = require('path'); // Import 'path'
 
 // --- Gemini API Setup ---
-// Ensure you have GEMINI_API_KEY in your .env file or Vercel settings
+// Ensure you have GEMINI_API_KEY in your Vercel Environment Variables
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 // ------------------------
@@ -20,9 +22,21 @@ app.use((req, res, next) => {
     next();
 });
 
-// Import the JSON data.
-const pcData = require('./data.json');
-console.log('✅ PC parts data loaded successfully');
+// --- Load the JSON data using 'fs' ---
+let pcData;
+try {
+    // __dirname is the directory where the script is running
+    // Vercel will place data.json here thanks to vercel.json "includeFiles"
+    const dataPath = path.join(__dirname, 'data.json');
+    const data = fs.readFileSync(dataPath, 'utf-8');
+    pcData = JSON.parse(data);
+    console.log('✅ PC parts data loaded successfully via fs');
+} catch (error) {
+    console.error('❌ Failed to read or parse data.json:', error);
+    // If it fails, create empty data to prevent a crash on the next line
+    pcData = {}; 
+}
+// ------------------------------------------
 
 app.use(express.json());
 
@@ -31,7 +45,7 @@ app.get('/api/health', (req, res) => {
         status: 'online',
         data: {
             categories: Object.keys(pcData).length,
-            totalParts: Object.values(pcData).reduce((sum, arr) => sum + arr.length, 0)
+            totalParts: Object.values(pcData).reduce((sum, arr) => sum + (arr?.length || 0), 0)
         },
         timestamp: new Date().toISOString()
     });
@@ -47,6 +61,12 @@ app.post('/api/ask', async (req, res) => {
     if (!process.env.GEMINI_API_KEY) {
         console.error('Server Error: API key is not configured.');
         return res.status(500).json({ reply: 'Server Error: API key is not configured.' });
+    }
+
+    // Check if pcData loaded correctly
+    if (Object.keys(pcData).length === 0) {
+        console.error('Server Error: pcData is empty, cannot process request.');
+        return res.status(500).json({ reply: 'Server Error: Could not load component database.' });
     }
 
     console.log('💬 AI Chat request:', userMessage);
@@ -110,11 +130,10 @@ app.post('/api/ask', async (req, res) => {
 });
 
 app.get('/api/debug-data', (req, res) => {
-    // This is modified to not use 'fs'
     try {
         res.json({
             success: true,
-            fileExists: true, // Assumed true since we required it
+            fileExists: true, // We assume true if pcData loaded
             categories: Object.keys(pcData),
             itemCounts: Object.keys(pcData).reduce((acc, key) => {
                 acc[key] = pcData[key]?.length || 0;
