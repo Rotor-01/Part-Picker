@@ -1,13 +1,7 @@
 {
   "functions": {
-    "index.js": {
+    "api/index.js": {
       "includeFiles": "data.json"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/index.js"
-    }
-  ]
+  }
 }
