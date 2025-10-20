@@ -25,9 +25,10 @@ app.use((req, res, next) => {
 // --- Load the JSON data using 'fs' ---
 let pcData;
 try {
-    // __dirname is the directory where the script is running
-    // Vercel will place data.json here thanks to vercel.json "includeFiles"
-    const dataPath = path.join(__dirname, 'data.json');
+    // --- THIS IS THE FIX ---
+    // Go UP one directory (../) from /var/task/api/ to /var/task/ to find data.json
+    const dataPath = path.join(__dirname, '../data.json'); 
+    
     const data = fs.readFileSync(dataPath, 'utf-8');
     pcData = JSON.parse(data);
     console.log('✅ PC parts data loaded successfully via fs');
