@@ -1,9 +1,13 @@
 {
-  "version": 2,
-  "routes": [
+  "functions": {
+    "index.js": {
+      "includeFiles": "data.json"
+    }
+  },
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "source": "/api/(.*)",
+      "destination": "/index.js"
     }
   ]
 }
