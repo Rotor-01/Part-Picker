@@ -49,7 +49,7 @@ const Home = () => {
               </CardContent>
             </Card>
             
-            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary md:col-span-2 lg:col-span-1">
+            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary">
               <CardContent className="p-6 sm:p-8 text-center">
                 <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20">
                   <Search className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />

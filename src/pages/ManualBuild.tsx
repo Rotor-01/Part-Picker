@@ -3,7 +3,9 @@ import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Cpu, HardDrive, Zap, Box, CheckCircle2, XCircle, MemoryStick } from "lucide-react";
+import pcPartsData from "@/data/pc-parts-enhanced.json";
 
 interface BuildComponent {
   name: string;
@@ -36,6 +38,28 @@ const ManualBuild = () => {
   }, 0);
 
   const isCompatible = build.cpu !== null && build.motherboard !== null;
+
+  // Get available parts for each category
+  const getAvailableParts = (category: string) => {
+    const parts = pcPartsData[category as keyof typeof pcPartsData];
+    if (!Array.isArray(parts)) return [];
+    return parts.map((part: any) => ({
+      name: part.name,
+      price: part.price,
+      id: `${category}-${part.name}`,
+      ...part
+    }));
+  };
+
+  const handleComponentSelect = (category: string, component: any) => {
+    setBuild(prev => ({
+      ...prev,
+      [category]: {
+        name: component.name,
+        price: component.price
+      }
+    }));
+  };
 
   const componentCategories = [
     { key: "cpu", label: "CPU", icon: Cpu, required: true },
@@ -96,7 +120,26 @@ const ManualBuild = () => {
                   ) : (
                     <div className="text-center py-6 sm:py-8">
                       <p className="mb-3 sm:mb-4 text-sm sm:text-base text-muted-foreground">No {label.toLowerCase()} selected</p>
-                      <Button variant="outline" size="sm">Select {label}</Button>
+                      <Select onValueChange={(value) => {
+                        const selectedPart = getAvailableParts(key).find(part => part.id === value);
+                        if (selectedPart) {
+                          handleComponentSelect(key, selectedPart);
+                        }
+                      }}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder={`Select ${label}`} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {getAvailableParts(key).map((part) => (
+                            <SelectItem key={part.id} value={part.id}>
+                              <div className="flex justify-between items-center w-full">
+                                <span className="truncate">{part.name}</span>
+                                <span className="text-primary font-semibold ml-2">${part.price}</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   )}
                 </CardContent>

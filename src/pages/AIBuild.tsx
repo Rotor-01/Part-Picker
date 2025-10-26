@@ -8,7 +8,7 @@ import { Loader2, Send, Sparkles, Brain, Bot } from "lucide-react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import pcPartsData from "@/data/pc-parts.json";
+import pcPartsData from "@/data/pc-parts-enhanced.json";
 
 interface Message {
   role: "user" | "assistant";
@@ -57,7 +57,7 @@ const AIBuild = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Trinity, your AI PC building assistant. 🚀\n\nI can help you build the perfect PC based on your budget, use case, and preferences. To get started:\n\n1. Select your preferred AI provider (Gemini or ChatGPT)\n2. Enter your API key\n3. Tell me about your needs!\n\nWhat kind of PC are you looking to build?"
+      content: "Hello! I'm Trinity, your AI PC building assistant. 🚀\n\nI can help you build the perfect PC based on your budget, use case, and preferences. Just tell me what you need!\n\nWhat kind of PC are you looking to build?"
     }
   ]);
   const [input, setInput] = useState("");
@@ -191,13 +191,6 @@ const AIBuild = () => {
     const messageToSend = message || input;
     if (!messageToSend.trim() || isLoading) return;
 
-    // Check if API key is provided
-    const currentApiKey = selectedApi === "gemini" ? geminiApiKey : chatGptApiKey;
-    if (!currentApiKey.trim()) {
-      toast.error(`Please enter your ${selectedApi === "gemini" ? "Gemini" : "ChatGPT"} API key first.`);
-      return;
-    }
-
     const userMessage: Message = { role: "user", content: messageToSend };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
@@ -244,105 +237,34 @@ const AIBuild = () => {
 
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_2fr]">
           <div className="space-y-4 sm:space-y-6">
-            {/* API Configuration Card */}
+            {/* AI Provider Selection */}
             <Card className="card-gradient h-fit border-border">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                   <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                  AI Configuration
-                  {(isGeminiKeyEnv || isChatGptKeyEnv) && (
-                    <span className="ml-2 text-xs font-normal text-green-400 bg-green-400/10 px-2 py-1 rounded">ENV</span>
-                  )}
+                  AI Provider
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
-                <div>
-                  <Label htmlFor="api-select" className="text-sm font-medium">AI Provider</Label>
-                  <Select value={selectedApi} onValueChange={(val) => setSelectedApi(val as ApiProvider)}>
-                    <SelectTrigger id="api-select" className="mt-1">
-                      <SelectValue placeholder="Select AI Provider" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="gemini">
-                        <div className="flex items-center gap-2">
-                          <Brain className="h-4 w-4 text-blue-500" /> 
-                          <span>Google Gemini</span>
-                          <span className="text-xs text-muted-foreground">(Free tier available)</span>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="chatgpt">
-                        <div className="flex items-center gap-2">
-                          <Sparkles className="h-4 w-4 text-green-500" /> 
-                          <span>OpenAI ChatGPT</span>
-                          <span className="text-xs text-muted-foreground">(Pay per use)</span>
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {selectedApi === 'gemini' && (
-                  <div>
-                    <Label htmlFor="gemini-key" className="text-sm font-medium">Gemini API Key</Label>
-                    <div className="mt-1 space-y-2">
-                      <Input
-                        id="gemini-key"
-                        type="password"
-                        placeholder={isGeminiKeyEnv ? "Key loaded from environment" : "Enter your Gemini API Key"}
-                        value={geminiApiKey}
-                        onChange={(e) => setGeminiApiKey(e.target.value)}
-                        disabled={isGeminiKeyEnv}
-                        className={`${isGeminiKeyEnv ? "bg-secondary/50 cursor-not-allowed" : ""} ${geminiApiKey.trim() ? "border-green-500" : ""}`}
-                      />
-                      {!isGeminiKeyEnv && (
-                        <p className="text-xs text-muted-foreground">
-                          Get your free API key from{" "}
-                          <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                            Google AI Studio
-                          </a>
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {selectedApi === 'chatgpt' && (
-                  <div>
-                    <Label htmlFor="chatgpt-key" className="text-sm font-medium">ChatGPT API Key</Label>
-                    <div className="mt-1 space-y-2">
-                      <Input
-                        id="chatgpt-key"
-                        type="password"
-                        placeholder={isChatGptKeyEnv ? "Key loaded from environment" : "Enter your OpenAI API Key"}
-                        value={chatGptApiKey}
-                        onChange={(e) => setChatGptApiKey(e.target.value)}
-                        disabled={isChatGptKeyEnv}
-                        className={`${isChatGptKeyEnv ? "bg-secondary/50 cursor-not-allowed" : ""} ${chatGptApiKey.trim() ? "border-green-500" : ""}`}
-                      />
-                      {!isChatGptKeyEnv && (
-                        <p className="text-xs text-muted-foreground">
-                          Get your API key from{" "}
-                          <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                            OpenAI Platform
-                          </a>
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* API Key Status Indicator */}
-                <div className="pt-2 border-t border-border">
-                  <div className="flex items-center gap-2 text-xs">
-                    <div className={`w-2 h-2 rounded-full ${(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim() ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                    <span className="text-muted-foreground">
-                      {selectedApi === 'gemini' ? 'Gemini' : 'ChatGPT'} API Key: 
-                      <span className={`ml-1 font-medium ${(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim() ? 'text-green-500' : 'text-red-500'}`}>
-                        {(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim() ? 'Configured' : 'Required'}
-                      </span>
-                    </span>
-                  </div>
-                </div>
+              <CardContent>
+                <Select value={selectedApi} onValueChange={(val) => setSelectedApi(val as ApiProvider)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select AI Provider" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="gemini">
+                      <div className="flex items-center gap-2">
+                        <Brain className="h-4 w-4 text-blue-500" /> 
+                        <span>Google Gemini</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="chatgpt">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="h-4 w-4 text-green-500" /> 
+                        <span>OpenAI ChatGPT</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </CardContent>
             </Card>
 
@@ -362,7 +284,7 @@ const AIBuild = () => {
                     variant="outline"
                     className="w-full justify-start text-left h-auto p-3 hover:bg-primary/5 hover:border-primary/50 transition-all"
                     onClick={() => handleSend(prompt)}
-                    disabled={isLoading || !(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim()}
+                    disabled={isLoading}
                   >
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-primary/60"></div>
@@ -377,12 +299,8 @@ const AIBuild = () => {
           {/* Chat Card */}
           <Card className="card-gradient flex flex-col border-border">
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center justify-between text-base sm:text-lg">
-                <span>Chat with Trinity</span>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <div className={`w-2 h-2 rounded-full ${(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim() ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                  <span>{(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim() ? 'Ready' : 'API Key Required'}</span>
-                </div>
+              <CardTitle className="text-base sm:text-lg">
+                Chat with Trinity
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
@@ -454,16 +372,16 @@ const AIBuild = () => {
 
               <div className="flex gap-2">
                 <Input
-                  placeholder={!(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim() ? "Enter API key first..." : "Ask about PC builds..."}
+                  placeholder="Ask about PC builds..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  disabled={isLoading || !(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim()}
+                  disabled={isLoading}
                   className="flex-1 text-sm sm:text-base"
                 />
                 <Button 
                   onClick={() => handleSend()} 
-                  disabled={isLoading || !input.trim() || !(selectedApi === 'gemini' ? geminiApiKey : chatGptApiKey).trim()} 
+                  disabled={isLoading || !input.trim()} 
                   size="sm"
                   className="min-w-[40px]"
                 >

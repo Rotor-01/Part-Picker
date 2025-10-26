@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, ExternalLink } from "lucide-react";
-import pcPartsData from "@/data/pc-parts.json";
+import pcPartsData from "@/data/pc-parts-enhanced.json";
 
 interface Component {
   name: string;
