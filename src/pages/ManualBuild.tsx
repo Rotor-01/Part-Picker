@@ -51,36 +51,36 @@ const ManualBuild = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <main className="container py-8">
-        <div className="mb-8 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-gradient">Manual PC Builder</h1>
-          <p className="text-lg text-muted-foreground">
+      <main className="container py-6 sm:py-8">
+        <div className="mb-6 sm:mb-8 text-center">
+          <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">Manual PC Builder</h1>
+          <p className="text-base sm:text-lg text-muted-foreground px-4">
             Hand-pick every component for your perfect build
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-          <div className="space-y-4">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[2fr_1fr]">
+          <div className="space-y-3 sm:space-y-4">
             {componentCategories.map(({ key, label, icon: Icon, required }) => (
               <Card key={key} className="card-gradient border-border">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="flex items-center justify-between text-sm sm:text-base">
                     <div className="flex items-center gap-2">
-                      <Icon className="h-5 w-5 text-primary" />
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                       {label}
-                      {required && <Badge variant="secondary">Required</Badge>}
+                      {required && <Badge variant="secondary" className="text-xs">Required</Badge>}
                     </div>
                     {build[key as keyof Build] && (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                      <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
                     )}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0">
                   {build[key as keyof Build] ? (
-                    <div className="flex items-center justify-between rounded-lg bg-secondary p-4">
-                      <div>
-                        <p className="font-semibold">{build[key as keyof Build]?.name}</p>
-                        <p className="text-sm text-muted-foreground">
+                    <div className="flex items-center justify-between rounded-lg bg-secondary p-3 sm:p-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-sm sm:text-base truncate">{build[key as keyof Build]?.name}</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           ${build[key as keyof Build]?.price}
                         </p>
                       </div>
@@ -88,14 +88,15 @@ const ManualBuild = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => setBuild({ ...build, [key]: null })}
+                        className="ml-2 flex-shrink-0"
                       >
                         Change
                       </Button>
                     </div>
                   ) : (
-                    <div className="text-center py-8">
-                      <p className="mb-4 text-muted-foreground">No {label.toLowerCase()} selected</p>
-                      <Button variant="outline">Select {label}</Button>
+                    <div className="text-center py-6 sm:py-8">
+                      <p className="mb-3 sm:mb-4 text-sm sm:text-base text-muted-foreground">No {label.toLowerCase()} selected</p>
+                      <Button variant="outline" size="sm">Select {label}</Button>
                     </div>
                   )}
                 </CardContent>
@@ -103,41 +104,41 @@ const ManualBuild = () => {
             ))}
           </div>
 
-          <div className="space-y-4">
-            <Card className="card-gradient sticky top-24 border-border">
-              <CardHeader>
-                <CardTitle>Build Summary</CardTitle>
+          <div className="space-y-3 sm:space-y-4">
+            <Card className="card-gradient sticky top-20 sm:top-24 border-border">
+              <CardHeader className="pb-3 sm:pb-4">
+                <CardTitle className="text-sm sm:text-base">Build Summary</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="rounded-lg bg-secondary p-4">
-                  <div className="mb-2 flex justify-between text-sm">
+              <CardContent className="space-y-3 sm:space-y-4">
+                <div className="rounded-lg bg-secondary p-3 sm:p-4">
+                  <div className="mb-2 flex justify-between text-xs sm:text-sm">
                     <span className="text-muted-foreground">Total Cost</span>
-                    <span className="text-2xl font-bold text-gradient">${totalCost}</span>
+                    <span className="text-xl sm:text-2xl font-bold text-gradient">${totalCost}</span>
                   </div>
                 </div>
 
-                <div className="rounded-lg border border-border p-4">
+                <div className="rounded-lg border border-border p-3 sm:p-4">
                   <div className="mb-2 flex items-center gap-2">
                     {isCompatible ? (
                       <>
-                        <CheckCircle2 className="h-5 w-5 text-green-500" />
-                        <span className="font-semibold text-green-500">Compatible</span>
+                        <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                        <span className="font-semibold text-green-500 text-sm sm:text-base">Compatible</span>
                       </>
                     ) : (
                       <>
-                        <XCircle className="h-5 w-5 text-yellow-500" />
-                        <span className="font-semibold text-yellow-500">Incomplete</span>
+                        <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500" />
+                        <span className="font-semibold text-yellow-500 text-sm sm:text-base">Incomplete</span>
                       </>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     {isCompatible
                       ? "All selected components are compatible"
                       : "Select required components to validate compatibility"}
                   </p>
                 </div>
 
-                <Button className="w-full" disabled={!isCompatible}>
+                <Button className="w-full" disabled={!isCompatible} size="sm">
                   Save Build
                 </Button>
               </CardContent>

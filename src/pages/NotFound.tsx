@@ -9,23 +9,23 @@ const NotFound = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <main className="container py-20">
+      <main className="container py-12 sm:py-16 lg:py-20">
         <div className="text-center">
-          <div className="mb-8">
-            <h1 className="mb-4 text-8xl font-bold text-gradient">404</h1>
-            <h2 className="mb-6 text-4xl font-bold">Page Not Found</h2>
-            <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="mb-3 sm:mb-4 text-6xl sm:text-7xl lg:text-8xl font-bold text-gradient">404</h1>
+            <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl lg:text-4xl font-bold">Page Not Found</h2>
+            <p className="mx-auto mb-8 sm:mb-12 max-w-2xl text-base sm:text-lg lg:text-xl text-muted-foreground px-4">
               The page you're looking for doesn't exist or has been moved.
             </p>
           </div>
           
           <Card className="mx-auto max-w-md card-gradient border-border">
-            <CardContent className="p-8 text-center">
-              <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
-                <Home className="h-10 w-10 text-primary" />
+            <CardContent className="p-6 sm:p-8 text-center">
+              <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10">
+                <Home className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
               </div>
-              <h3 className="mb-4 text-2xl font-bold">Let's Get You Back</h3>
-              <p className="mb-6 text-muted-foreground">
+              <h3 className="mb-3 sm:mb-4 text-xl sm:text-2xl font-bold">Let's Get You Back</h3>
+              <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground">
                 Return to our homepage and explore our PC building tools.
               </p>
               <Button asChild className="w-full">

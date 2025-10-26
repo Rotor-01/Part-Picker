@@ -80,24 +80,24 @@ const BrowseParts = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <main className="container py-8">
-        <div className="mb-8 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-gradient">Browse PC Parts</h1>
-          <p className="text-lg text-muted-foreground">
+      <main className="container py-6 sm:py-8">
+        <div className="mb-6 sm:mb-8 text-center">
+          <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">Browse PC Parts</h1>
+          <p className="text-base sm:text-lg text-muted-foreground px-4">
             Explore our extensive catalog of components
           </p>
         </div>
 
-        <Card className="card-gradient mb-8 border-border">
-          <CardContent className="pt-6">
-            <div className="flex flex-col gap-4 md:flex-row">
+        <Card className="card-gradient mb-6 sm:mb-8 border-border">
+          <CardContent className="pt-4 sm:pt-6">
+            <div className="flex flex-col gap-3 sm:gap-4 md:flex-row">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search components..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 text-sm sm:text-base"
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -113,30 +113,30 @@ const BrowseParts = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="mt-4 text-sm text-muted-foreground">
+            <div className="mt-3 sm:mt-4 text-xs sm:text-sm text-muted-foreground">
               Found {filteredComponents.length} components
             </div>
           </CardContent>
         </Card>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredComponents.map((component, index) => (
             <Card key={index} className="group card-gradient border-border transition-all hover:glow hover:border-primary">
-              <CardContent className="p-6">
-                <div className="mb-4 flex items-start justify-between">
-                  <div>
-                    <Badge variant="secondary" className="mb-2">
+              <CardContent className="p-4 sm:p-6">
+                <div className="mb-3 sm:mb-4 flex items-start justify-between">
+                  <div className="flex-1 min-w-0">
+                    <Badge variant="secondary" className="mb-2 text-xs">
                       {component.category}
                     </Badge>
-                    <h3 className="font-bold">{component.name}</h3>
-                    <p className="text-sm text-muted-foreground">{component.brand}</p>
+                    <h3 className="font-bold text-sm sm:text-base truncate">{component.name}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{component.brand}</p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-primary">${component.price}</p>
+                  <div className="text-right flex-shrink-0 ml-2">
+                    <p className="text-lg sm:text-2xl font-bold text-primary">${component.price}</p>
                   </div>
                 </div>
 
-                <div className="mb-4 space-y-1 text-sm">
+                <div className="mb-3 sm:mb-4 space-y-1 text-xs sm:text-sm">
                   {/* CPU */}
                   {component.cores && (
                     <p className="text-muted-foreground">
@@ -198,13 +198,13 @@ const BrowseParts = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1">
+                  <Button variant="outline" className="flex-1 text-xs sm:text-sm" size="sm">
                     Add to Build
                   </Button>
                   {component.link && (
-                    <Button size="icon" variant="ghost" asChild>
+                    <Button size="sm" variant="ghost" asChild>
                       <a href={component.link} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4" />
+                        <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4" />
                       </a>
                     </Button>
                   )}
@@ -215,8 +215,8 @@ const BrowseParts = () => {
         </div>
 
         {filteredComponents.length === 0 && (
-          <div className="py-20 text-center">
-            <p className="text-lg text-muted-foreground">No components found matching your criteria</p>
+          <div className="py-12 sm:py-20 text-center">
+            <p className="text-base sm:text-lg text-muted-foreground">No components found matching your criteria</p>
           </div>
         )}
       </main>

@@ -221,28 +221,28 @@ const AIBuild = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <main className="container py-8">
-        <div className="mb-8 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-gradient">AI Build Assistant</h1>
-          <p className="text-lg text-muted-foreground">
+      <main className="container py-6 sm:py-8">
+        <div className="mb-6 sm:mb-8 text-center">
+          <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">AI Build Assistant</h1>
+          <p className="text-base sm:text-lg text-muted-foreground px-4">
             Let AI help you build the perfect PC based on your needs
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
-          <div className="space-y-6">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_2fr]">
+          <div className="space-y-4 sm:space-y-6">
             {/* API Configuration Card */}
             <Card className="card-gradient h-fit border-border">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bot className="h-5 w-5 text-primary" />
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   AI Configuration
                   {(isGeminiKeyEnv || isChatGptKeyEnv) && (
                     <span className="ml-2 text-xs font-normal text-green-400">(Key Loaded from ENV)</span>
                   )}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4">
                 <div>
                   <Label htmlFor="api-select">AI Provider</Label>
                   <Select value={selectedApi} onValueChange={(val) => setSelectedApi(val as ApiProvider)}>
@@ -298,13 +298,13 @@ const AIBuild = () => {
 
             {/* Quick Prompts Card */}
             <Card className="card-gradient h-fit border-border">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-primary" />
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   Quick Prompts
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-2 sm:space-y-3">
                 {quickPrompts.map((prompt, index) => (
                   <Button
                     key={index}
@@ -322,11 +322,11 @@ const AIBuild = () => {
 
           {/* Chat Card */}
           <Card className="card-gradient flex flex-col border-border">
-            <CardHeader>
-              <CardTitle>Chat</CardTitle>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-base sm:text-lg">Chat</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
-              <ScrollArea className="mb-4 flex-1 pr-4" style={{ height: "500px" }}>
+              <ScrollArea className="mb-3 sm:mb-4 flex-1 pr-2 sm:pr-4 scrollbar-thin" style={{ height: "400px" }}>
                 <div className="space-y-4">
                   {messages.map((message, index) => (
                     <div
@@ -334,7 +334,7 @@ const AIBuild = () => {
                       className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[80%] rounded-lg p-4 ${
+                        className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-3 sm:p-4 text-sm sm:text-base ${
                           message.role === "user"
                             ? "bg-primary text-primary-foreground"
                             : "bg-secondary text-secondary-foreground"
@@ -361,18 +361,18 @@ const AIBuild = () => {
 
               <div className="flex gap-2">
                 <Input
-                  placeholder="Ask about PC builds, components, compatibility..."
+                  placeholder="Ask about PC builds..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   disabled={isLoading}
-                  className="flex-1"
+                  className="flex-1 text-sm sm:text-base"
                 />
-                <Button onClick={() => handleSend()} disabled={isLoading || !input.trim()}>
+                <Button onClick={() => handleSend()} disabled={isLoading || !input.trim()} size="sm">
                   {isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
                   ) : (
-                    <Send className="h-4 w-4" />
+                    <Send className="h-3 w-3 sm:h-4 sm:w-4" />
                   )}
                 </Button>
               </div>
