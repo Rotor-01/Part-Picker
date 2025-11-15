@@ -7,8 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Send, Sparkles, Brain, Bot } from "lucide-react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import pcPartsData from "@/data/pc-parts-enhanced.json";
+import superiorParts from "@/data/superiorParts";
 
 interface Message {
   role: "user" | "assistant";
@@ -34,7 +33,7 @@ When you recommend a build:
 Be friendly, helpful, and use emojis occasionally to make responses engaging. Always ensure compatibility between components.
 
 Here is your entire parts catalog:
-${JSON.stringify(pcPartsData)}
+${JSON.stringify(superiorParts)}
 `;
 
 // Helper to check for environment variables (Vite convention)
@@ -67,9 +66,6 @@ const AIBuild = () => {
   const [selectedApi, setSelectedApi] = useState<ApiProvider>("gemini");
   const [geminiApiKey, setGeminiApiKey] = useState(initialGemini.key);
   const [chatGptApiKey, setChatGptApiKey] = useState(initialChatGpt.key);
-
-  const isGeminiKeyEnv = initialGemini.isEnv;
-  const isChatGptKeyEnv = initialChatGpt.isEnv;
 
   const quickPrompts = [
     "Gaming PC under $1500",

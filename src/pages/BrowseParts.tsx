@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, ExternalLink } from "lucide-react";
-import pcPartsData from "@/data/pc-parts-enhanced.json";
+import superiorParts from "@/data/superiorParts";
 
 interface Component {
   name: string;
@@ -55,9 +55,9 @@ const BrowseParts = () => {
   const [allComponents, setAllComponents] = useState<Component[]>([]);
 
   useEffect(() => {
-    // Flatten all components from the JSON data
+    // Flatten all components from the superior parts database
     const components: Component[] = [];
-    Object.entries(pcPartsData).forEach(([category, items]) => {
+    Object.entries(superiorParts).forEach(([category, items]) => {
       if (Array.isArray(items)) {
         items.forEach((item: any) => {
           components.push({ ...item, componentType: category });
@@ -67,7 +67,7 @@ const BrowseParts = () => {
     setAllComponents(components);
   }, []);
 
-  const categories = ["all", ...Object.keys(pcPartsData)];
+  const categories = ["all", ...Object.keys(superiorParts)];
 
   const filteredComponents = allComponents.filter((component) => {
     const matchesSearch = component.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

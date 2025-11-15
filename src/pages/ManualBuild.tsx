@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Cpu, HardDrive, Zap, Box, CheckCircle2, XCircle, MemoryStick } from "lucide-react";
-import pcPartsData from "@/data/pc-parts-enhanced.json";
+import superiorParts from "@/data/superiorParts";
 
 interface BuildComponent {
   name: string;
@@ -41,7 +41,7 @@ const ManualBuild = () => {
 
   // Get available parts for each category
   const getAvailableParts = (category: string) => {
-    const parts = pcPartsData[category as keyof typeof pcPartsData];
+    const parts = superiorParts[category as keyof typeof superiorParts];
     if (!Array.isArray(parts)) return [];
     return parts.map((part: any) => ({
       name: part.name,
