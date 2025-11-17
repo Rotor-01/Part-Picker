@@ -69,8 +69,8 @@ const AIBuild = () => {
 
   // API Configuration State
   const [selectedApi, setSelectedApi] = useState<ApiProvider>("gemini");
-  const [geminiApiKey, setGeminiApiKey] = useState(initialGemini.key);
-  const [chatGptApiKey, setChatGptApiKey] = useState(initialChatGpt.key);
+  const [geminiApiKey] = useState(initialGemini.key);
+  const [chatGptApiKey] = useState(initialChatGpt.key);
 
   const quickPrompts = [
     "Gaming PC under $1500",
@@ -226,14 +226,14 @@ const AIBuild = () => {
 
   const extractPartsFromConversation = () => {
     // Parse the AI conversation to extract parts
-    const components = {
-      cpu: null as any,
-      motherboard: null as any,
-      gpu: null as any,
-      ram: null as any,
-      storage: null as any,
-      psu: null as any,
-      case: null as any,
+    const components: Record<string, { name: string; price: number } | null> = {
+      cpu: null,
+      motherboard: null,
+      gpu: null,
+      ram: null,
+      storage: null,
+      psu: null,
+      case: null,
     };
 
     let totalCost = 0;

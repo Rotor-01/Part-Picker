@@ -186,9 +186,9 @@ const SavedBuilds = () => {
                       {showConversation && (
                         <div className="space-y-2 max-h-[400px] overflow-y-auto rounded-lg bg-secondary p-3">
                           {selectedBuild.conversation.map((msg, idx) => (
-                            <div key={idx} className="text-xs">
+                            <div key={idx} className="text-xs border-b border-border pb-2 last:border-b-0">
                               <p className="font-semibold text-primary capitalize mb-1">
-                                {msg.role}:
+                                {msg.role === "user" ? "You" : "Trinity"}:
                               </p>
                               <p className="text-muted-foreground whitespace-pre-wrap break-words">
                                 {msg.content}
