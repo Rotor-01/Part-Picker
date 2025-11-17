@@ -19,46 +19,46 @@ const Home = () => {
           </p>
           
           <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary">
-              <CardContent className="p-6 sm:p-8 text-center">
-                <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20">
+            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary flex flex-col h-full">
+              <CardContent className="p-6 sm:p-8 text-center flex flex-col h-full">
+                <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20 mx-auto">
                   <Bot className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                 </div>
                 <h3 className="mb-3 sm:mb-4 text-xl sm:text-2xl font-bold">AI Build Assistant</h3>
-                <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground">
+                <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground flex-grow">
                   Get personalized PC builds based on your budget, use case, and preferences with our intelligent AI.
                 </p>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full mt-auto">
                   <Link to="/ai-build">Try AI Builder</Link>
                 </Button>
               </CardContent>
             </Card>
             
-            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary">
-              <CardContent className="p-6 sm:p-8 text-center">
-                <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20">
+            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary flex flex-col h-full">
+              <CardContent className="p-6 sm:p-8 text-center flex flex-col h-full">
+                <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20 mx-auto">
                   <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                 </div>
                 <h3 className="mb-3 sm:mb-4 text-xl sm:text-2xl font-bold">Manual Builder</h3>
-                <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground">
+                <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground flex-grow">
                   Hand-pick every component with our compatibility checker ensuring your build works perfectly.
                 </p>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full mt-auto">
                   <Link to="/manual-build">Start Building</Link>
                 </Button>
               </CardContent>
             </Card>
             
-            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary">
-              <CardContent className="p-6 sm:p-8 text-center">
-                <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20">
+            <Card className="group card-gradient border-border transition-all hover:glow hover:border-primary flex flex-col h-full">
+              <CardContent className="p-6 sm:p-8 text-center flex flex-col h-full">
+                <div className="mb-4 sm:mb-6 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary/10 transition-all group-hover:bg-primary/20 mx-auto">
                   <Search className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                 </div>
                 <h3 className="mb-3 sm:mb-4 text-xl sm:text-2xl font-bold">Browse Parts</h3>
-                <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground">
+                <p className="mb-4 sm:mb-6 text-sm sm:text-base text-muted-foreground flex-grow">
                   Explore our extensive catalog of CPUs, GPUs, motherboards, and more with detailed specifications.
                 </p>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full mt-auto">
                   <Link to="/browse-parts">View Catalog</Link>
                 </Button>
               </CardContent>

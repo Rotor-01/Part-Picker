@@ -21,6 +21,7 @@ const Navigation = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
+          <img src="/logo.png" alt="Trinity Logo" className="h-8 w-8 sm:h-10 sm:w-10" />
           <h1 className="text-xl sm:text-2xl font-bold text-gradient">THE TRINITY</h1>
         </Link>
         
