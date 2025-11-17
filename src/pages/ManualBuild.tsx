@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Cpu, HardDrive, Zap, Box, CheckCircle2, XCircle, MemoryStick } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import superiorParts from "@/data/superiorParts";
+import { buildStorage } from "@/lib/buildStorage";
 
 interface BuildComponent {
   name: string;
@@ -32,6 +35,8 @@ const ManualBuild = () => {
     psu: null,
     case: null,
   });
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [buildName, setBuildName] = useState("");
 
   const totalCost = Object.values(build).reduce((sum, component) => {
     return sum + (component?.price || 0);
@@ -70,6 +75,28 @@ const ManualBuild = () => {
     { key: "psu", label: "Power Supply", icon: Zap, required: true },
     { key: "case", label: "Case", icon: Box, required: true },
   ];
+
+  const handleSaveBuild = () => {
+    if (!buildName.trim()) {
+      toast.error("Please enter a build name");
+      return;
+    }
+
+    try {
+      buildStorage.saveBuild({
+        name: buildName,
+        totalCost,
+        components: build,
+        source: "manual",
+      });
+      toast.success(`Build "${buildName}" saved successfully!`);
+      setBuildName("");
+      setShowSaveDialog(false);
+    } catch (error) {
+      toast.error("Failed to save build");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -181,13 +208,59 @@ const ManualBuild = () => {
                   </p>
                 </div>
 
-                <Button className="w-full" disabled={!isCompatible} size="sm">
+                <Button 
+                  className="w-full" 
+                  disabled={!isCompatible} 
+                  size="sm"
+                  onClick={() => setShowSaveDialog(true)}
+                >
                   Save Build
                 </Button>
               </CardContent>
             </Card>
           </div>
         </div>
+
+        {/* Save Build Dialog */}
+        {showSaveDialog && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <Card className="w-full max-w-md card-gradient border-border">
+              <CardHeader>
+                <CardTitle>Save Build</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Build Name</label>
+                  <Input
+                    placeholder="e.g., Gaming Rig 2024"
+                    value={buildName}
+                    onChange={(e) => setBuildName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSaveBuild()}
+                    autoFocus
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => {
+                      setShowSaveDialog(false);
+                      setBuildName("");
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="flex-1"
+                    onClick={handleSaveBuild}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </main>
     </div>
   );

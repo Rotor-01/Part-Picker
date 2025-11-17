@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import AIBuild from "./pages/AIBuild";
 import ManualBuild from "./pages/ManualBuild";
 import BrowseParts from "./pages/BrowseParts";
+import SavedBuilds from "./pages/SavedBuilds";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/ai-build" element={<AIBuild />} />
           <Route path="/manual-build" element={<ManualBuild />} />
           <Route path="/browse-parts" element={<BrowseParts />} />
+          <Route path="/saved-builds" element={<SavedBuilds />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

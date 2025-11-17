@@ -4,10 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Send, Sparkles, Brain, Bot } from "lucide-react";
+import { Loader2, Send, Sparkles, Brain, Bot, Save } from "lucide-react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import superiorParts from "@/data/superiorParts";
+import { buildStorage } from "@/lib/buildStorage";
 
 interface Message {
   role: "user" | "assistant";
@@ -63,6 +64,8 @@ const AIBuild = () => {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [buildName, setBuildName] = useState("");
 
   // API Configuration State
   const [selectedApi, setSelectedApi] = useState<ApiProvider>("gemini");
@@ -221,6 +224,37 @@ const AIBuild = () => {
     }
   };
 
+  const handleSaveConversation = () => {
+    if (!buildName.trim()) {
+      toast.error("Please enter a build name");
+      return;
+    }
+
+    try {
+      // Save the AI conversation as a build record
+      buildStorage.saveBuild({
+        name: buildName,
+        totalCost: 0, // AI builds don't have a calculated total yet
+        components: {
+          cpu: null,
+          motherboard: null,
+          gpu: null,
+          ram: null,
+          storage: null,
+          psu: null,
+          case: null,
+        },
+        source: "ai",
+      });
+      toast.success(`Build "${buildName}" saved successfully!`);
+      setBuildName("");
+      setShowSaveDialog(false);
+    } catch (error) {
+      toast.error("Failed to save build");
+      console.error(error);
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -368,31 +402,84 @@ const AIBuild = () => {
                 </div>
               </ScrollArea>
 
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Ask about PC builds..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  disabled={isLoading}
-                  className="flex-1 text-sm sm:text-base"
-                />
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Ask about PC builds..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                    disabled={isLoading}
+                    className="flex-1 text-sm sm:text-base"
+                  />
+                  <Button 
+                    onClick={() => handleSend()} 
+                    disabled={isLoading || !input.trim()} 
+                    size="sm"
+                    className="min-w-[40px]"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-3 w-3 sm:h-4 sm:w-4" />
+                    )}
+                  </Button>
+                </div>
                 <Button 
-                  onClick={() => handleSend()} 
-                  disabled={isLoading || !input.trim()} 
+                  onClick={() => setShowSaveDialog(true)} 
+                  disabled={messages.length <= 1}
+                  variant="outline"
+                  className="w-full"
                   size="sm"
-                  className="min-w-[40px]"
                 >
-                  {isLoading ? (
-                    <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-3 w-3 sm:h-4 sm:w-4" />
-                  )}
+                  <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                  Save Build
                 </Button>
               </div>
             </CardContent>
           </Card>
         </div>
+
+        {/* Save Build Dialog */}
+        {showSaveDialog && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <Card className="w-full max-w-md card-gradient border-border">
+              <CardHeader>
+                <CardTitle>Save Build</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Build Name</label>
+                  <Input
+                    placeholder="e.g., Gaming Rig 2024"
+                    value={buildName}
+                    onChange={(e) => setBuildName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSaveConversation()}
+                    autoFocus
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => {
+                      setShowSaveDialog(false);
+                      setBuildName("");
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="flex-1"
+                    onClick={handleSaveConversation}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </main>
     </div>
   );
