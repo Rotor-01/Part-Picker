@@ -16,8 +16,9 @@ interface Message {
 
 type ApiProvider = "gemini" | "chatgpt";
 
-// System prompt to instruct the AI
-const SYSTEM_PROMPT = `
+// Helper function to generate system prompt with parts data
+const generateSystemPrompt = (): string => {
+  return `
 You are 'Trinity', an expert PC building assistant. Your goal is to help users build a PC based on their budget, needs (like gaming, video editing, or office work), and preferences.
 
 You MUST use the following JSON data as your ONLY source of truth for available PC parts, their specifications, and their prices. Do not invent parts, specifications, or prices. If a user asks for something not in this catalog, inform them it's unavailable and suggest an alternative from the catalog.
@@ -35,6 +36,7 @@ Be friendly, helpful, and use emojis occasionally to make responses engaging. Al
 Here is your entire parts catalog:
 ${JSON.stringify(superiorParts)}
 `;
+};
 
 // Helper to check for environment variables (Vite convention)
 const getInitialKey = (keyName: string): { key: string, isEnv: boolean } => {
@@ -125,7 +127,7 @@ const AIBuild = () => {
     const payload = {
       contents: contents,
       systemInstruction: {
-        parts: [{ text: SYSTEM_PROMPT }]
+        parts: [{ text: generateSystemPrompt() }]
       }
     };
 
@@ -155,7 +157,7 @@ const AIBuild = () => {
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     const messages = [
-      { role: "system", content: SYSTEM_PROMPT },
+      { role: "system", content: generateSystemPrompt() },
       ...history.map(msg => ({ role: msg.role, content: msg.content })),
       { role: "user", content: userMessage }
     ];

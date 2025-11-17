@@ -1,10 +1,10 @@
-import cpuJson from "../../pc-part-dataset-main/data/json/cpu.json";
-import gpuJson from "../../pc-part-dataset-main/data/json/video-card.json";
-import motherboardJson from "../../pc-part-dataset-main/data/json/motherboard.json";
-import memoryJson from "../../pc-part-dataset-main/data/json/memory.json";
-import storageJson from "../../pc-part-dataset-main/data/json/internal-hard-drive.json";
-import psuJson from "../../pc-part-dataset-main/data/json/power-supply.json";
-import caseJson from "../../pc-part-dataset-main/data/json/case.json";
+import cpuJson from "../../pc-part-dataset-main/data/json/cpu.json" assert { type: "json" };
+import gpuJson from "../../pc-part-dataset-main/data/json/video-card.json" assert { type: "json" };
+import motherboardJson from "../../pc-part-dataset-main/data/json/motherboard.json" assert { type: "json" };
+import memoryJson from "../../pc-part-dataset-main/data/json/memory.json" assert { type: "json" };
+import storageJson from "../../pc-part-dataset-main/data/json/internal-hard-drive.json" assert { type: "json" };
+import psuJson from "../../pc-part-dataset-main/data/json/power-supply.json" assert { type: "json" };
+import caseJson from "../../pc-part-dataset-main/data/json/case.json" assert { type: "json" };
 
 // Normalized shape the rest of the app can rely on
 export interface NormalizedPart {
