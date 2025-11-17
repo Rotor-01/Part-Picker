@@ -21,6 +21,7 @@ export interface SavedBuild {
     case: BuildComponent | null;
   };
   source: "manual" | "ai"; // Track whether it came from manual or AI builder
+  conversation?: Array<{ role: "user" | "assistant"; content: string }>; // Optional: store AI conversation
 }
 
 const STORAGE_KEY = "pc-builds";

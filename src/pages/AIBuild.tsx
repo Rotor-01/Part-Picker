@@ -224,6 +224,53 @@ const AIBuild = () => {
     }
   };
 
+  const extractPartsFromConversation = () => {
+    // Parse the AI conversation to extract parts
+    const components = {
+      cpu: null as any,
+      motherboard: null as any,
+      gpu: null as any,
+      ram: null as any,
+      storage: null as any,
+      psu: null as any,
+      case: null as any,
+    };
+
+    let totalCost = 0;
+
+    // Get the last assistant message (most recent recommendation)
+    const lastAssistantMessage = [...messages]
+      .reverse()
+      .find((msg) => msg.role === "assistant");
+
+    if (!lastAssistantMessage) return { components, totalCost };
+
+    const text = lastAssistantMessage.content.toLowerCase();
+
+    // Try to find parts in the conversation by searching through superiorParts
+    const categories = ["cpu", "gpu", "motherboard", "ram", "storage", "psu", "case"];
+
+    categories.forEach((category) => {
+      const parts = superiorParts[category as keyof typeof superiorParts];
+      if (Array.isArray(parts)) {
+        // Find the first part mentioned in the conversation
+        for (const part of parts) {
+          const partNameLower = part.name.toLowerCase();
+          if (text.includes(partNameLower)) {
+            components[category as keyof typeof components] = {
+              name: part.name,
+              price: part.price,
+            };
+            totalCost += part.price;
+            break;
+          }
+        }
+      }
+    });
+
+    return { components, totalCost };
+  };
+
   const handleSaveConversation = () => {
     if (!buildName.trim()) {
       toast.error("Please enter a build name");
@@ -231,20 +278,16 @@ const AIBuild = () => {
     }
 
     try {
+      // Extract parts from the AI conversation
+      const { components, totalCost } = extractPartsFromConversation();
+
       // Save the AI conversation as a build record
       buildStorage.saveBuild({
         name: buildName,
-        totalCost: 0, // AI builds don't have a calculated total yet
-        components: {
-          cpu: null,
-          motherboard: null,
-          gpu: null,
-          ram: null,
-          storage: null,
-          psu: null,
-          case: null,
-        },
+        totalCost,
+        components,
         source: "ai",
+        conversation: messages, // Store the entire conversation for reference
       });
       toast.success(`Build "${buildName}" saved successfully!`);
       setBuildName("");

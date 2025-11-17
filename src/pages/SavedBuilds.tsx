@@ -3,13 +3,14 @@ import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Eye, Calendar } from "lucide-react";
+import { Trash2, Eye, Calendar, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { buildStorage, SavedBuild } from "@/lib/buildStorage";
 
 const SavedBuilds = () => {
   const [builds, setBuilds] = useState<SavedBuild[]>([]);
   const [selectedBuild, setSelectedBuild] = useState<SavedBuild | null>(null);
+  const [showConversation, setShowConversation] = useState(false);
 
   useEffect(() => {
     loadBuilds();
@@ -161,6 +162,43 @@ const SavedBuilds = () => {
                       ))}
                     </div>
                   </div>
+
+                  {/* AI Conversation (if available) */}
+                  {selectedBuild.source === "ai" && selectedBuild.conversation && (
+                    <div className="border-t border-border pt-4">
+                      <Button
+                        variant="outline"
+                        className="w-full mb-3"
+                        onClick={() => setShowConversation(!showConversation)}
+                      >
+                        {showConversation ? (
+                          <>
+                            <ChevronUp className="h-4 w-4 mr-2" />
+                            Hide Conversation
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown className="h-4 w-4 mr-2" />
+                            Show Conversation
+                          </>
+                        )}
+                      </Button>
+                      {showConversation && (
+                        <div className="space-y-2 max-h-[400px] overflow-y-auto rounded-lg bg-secondary p-3">
+                          {selectedBuild.conversation.map((msg, idx) => (
+                            <div key={idx} className="text-xs">
+                              <p className="font-semibold text-primary capitalize mb-1">
+                                {msg.role}:
+                              </p>
+                              <p className="text-muted-foreground whitespace-pre-wrap break-words">
+                                {msg.content}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Metadata */}
                   <div className="space-y-2 border-t border-border pt-4">
