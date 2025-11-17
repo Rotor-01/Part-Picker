@@ -20,9 +20,9 @@ const Navigation = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-          <img src="/logo.png" alt="Trinity Logo" className="h-8 w-8 sm:h-10 sm:w-10 object-contain" />
-          <h1 className="text-xl sm:text-2xl font-bold text-gradient">THE TRINITY</h1>
+        <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <img src="/logo.png" alt="Trinity Logo" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
+          <h1 className="text-lg sm:text-2xl font-bold text-gradient">THE TRINITY</h1>
         </Link>
         
         {/* Desktop Navigation */}
