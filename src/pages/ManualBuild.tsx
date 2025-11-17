@@ -19,7 +19,7 @@ interface Build {
   cpu: BuildComponent | null;
   motherboard: BuildComponent | null;
   gpu: BuildComponent | null;
-  ram: BuildComponent;
+  ram: BuildComponent | null;
   storage: BuildComponent | null;
   psu: BuildComponent | null;
   case: BuildComponent | null;
@@ -30,7 +30,7 @@ const ManualBuild = () => {
     cpu: null,
     motherboard: null,
     gpu: null,
-    ram: { name: "16GB DDR5 (Estimated)", price: 100 },
+    ram: null,
     storage: null,
     psu: null,
     case: null,
