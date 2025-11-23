@@ -22,169 +22,126 @@ const generateSystemPrompt = (): string => {
   return `
 You are 'Trinity', an expert PC building assistant. Your goal is to help users build a PC based on their budget, needs (like gaming, video editing, or office work), and preferences.
 
-You MUST use the following JSON data as your ONLY source of truth for available PC parts, their specifications, and their prices. Do not invent parts, specifications, or prices. If a user asks for something not in this catalog, inform them it's unavailable and suggest an alternative from the catalog.
+When you recommend a build, you MUST respond with a JSON object with the following structure:
+{
+  "cpu": { "name": "Part Name", "price": 123.45 },
+  "motherboard": { "name": "Part Name", "price": 123.45 },
+  "gpu": { "name": "Part Name", "price": 123.45 },
+  "ram": { "name": "Part Name", "price": 123.45 },
+  "storage": { "name": "Part Name", "price": 123.45 },
+  "psu": { "name": "Part Name", "price": 123.45 },
+  "case": { "name": "Part Name", "price": 123.45 },
+  "totalCost": 1234.56,
+  "explanation": "A brief explanation of why these parts were chosen."
+}
 
-When you recommend a build:
-1. List each component (CPU, GPU, Motherboard, RAM, Storage, PSU, Case) with **bold** component names
-2. State the price of each component clearly
-3. Calculate and state the **total price** of the build prominently
-4. Briefly explain why the components were chosen for the user's needs
-5. Use bullet points (•) for easy reading
-6. Format prices as $XXX
-
-Be friendly, helpful, and use emojis occasionally to make responses engaging. Always ensure compatibility between components.
-
-Here is your entire parts catalog:
-${JSON.stringify(superiorParts)}
+Do not include any other text in your response.
 `;
 };
 
-// Helper to check for environment variables (Vite convention)
-const getInitialKey = (keyName: string): { key: string, isEnv: boolean } => {
-  // This attempts to read keys set as VITE_... environment variables during the build process.
-  // We use the common import.meta.env convention for Vite.
-  const envKey = (import.meta.env as any)[keyName]; 
-  
-  if (envKey) {
-    return { key: envKey, isEnv: true };
+
+
+const AssistantMessage = ({ content }: { content: string }) => {
+  try {
+    const build = JSON.parse(content);
+    const { cpu, motherboard, gpu, ram, storage, psu, 'case': casePart, totalCost, explanation } = build;
+    const components = [
+      { name: 'CPU', value: cpu },
+      { name: 'Motherboard', value: motherboard },
+      { name: 'GPU', value: gpu },
+      { name: 'RAM', value: ram },
+      { name: 'Storage', value: storage },
+      { name: 'PSU', value: psu },
+      { name: 'Case', value: casePart },
+    ];
+
+    return (
+      <div>
+        <p className="mb-4">{explanation}</p>
+        <ul className="space-y-2">
+          {components.map((component) => (
+            component.value && (
+              <li key={component.name} className="flex justify-between">
+                <span><strong>{component.name}:</strong> {component.value.name}</span>
+                <span>${component.value.price.toFixed(2)}</span>
+              </li>
+            )
+          ))}
+        </ul>
+        <hr className="my-4" />
+        <div className="flex justify-between font-bold text-lg">
+          <span>Total Cost:</span>
+          <span>${totalCost.toFixed(2)}</span>
+        </div>
+      </div>
+    );
+  } catch (error) {
+    // If parsing fails, render as plain text with basic formatting
+    return (
+      <div className="space-y-2">
+        {content.split('\n').map((line, i) => {
+          if (line.trim().match(/^[\d]+\./)) {
+            return (
+              <div key={i} className="flex items-start gap-2">
+                <span className="text-primary font-semibold mt-0.5">{line.match(/^[\d]+/)?.[0]}.</span>
+                <span>{line.replace(/^[\d]+\.\s*/, '')}</span>
+              </div>
+            );
+          }
+          if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
+            return (
+              <div key={i} className="flex items-start gap-2">
+                <span className="text-primary mt-1">•</span>
+                <span>{line.replace(/^[•-]\s*/, '')}</span>
+              </div>
+            );
+          }
+          if (line.includes('**')) {
+            const parts = line.split(/(\*\*.*?\*\*)/g);
+            return (
+              <div key={i}>
+                {parts.map((part, j) =>
+                  part.startsWith('**') && part.endsWith('**') ? (
+                    <strong key={j} className="font-semibold">{part.slice(2, -2)}</strong>
+                  ) : (
+                    <span key={j}>{part}</span>
+                  )
+                )}
+              </div>
+            );
+          }
+          return <div key={i}>{line}</div>;
+        })}
+      </div>
+    );
   }
-  return { key: '', isEnv: false };
 };
 
 const AIBuild = () => {
-  // Initialize state from environment variables if they exist
-  const initialGemini = getInitialKey('VITE_GEMINI_API_KEY');
-  const initialChatGpt = getInitialKey('VITE_CHATGPT_API_KEY');
-
   const [messages, setMessages] = useState<Message[]>([
     {
-      role: "assistant",
-      content: "Hello! I'm Trinity, your AI PC building assistant. 🚀\n\nI can help you build the perfect PC based on your budget, use case, and preferences. Just tell me what you need!\n\nWhat kind of PC are you looking to build?"
-    }
+      role: 'assistant',
+      content:
+        "Hello! I'm Trinity, your AI PC building assistant. 🚀\n\nI can help you build the perfect PC based on your budget, use case, and preferences. Just tell me what you need!\n\nWhat kind of PC are you looking to build?",
+    },
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
-  const [buildName, setBuildName] = useState("");
+  const [buildName, setBuildName] = useState('');
 
   // API Configuration State
-  const [selectedApi, setSelectedApi] = useState<ApiProvider>("gemini");
-  const [geminiApiKey] = useState(initialGemini.key);
-  const [chatGptApiKey] = useState(initialChatGpt.key);
+  const [selectedApi, setSelectedApi] =
+    useState<ApiProvider>('gemini');
 
   const quickPrompts = [
-    "Gaming PC under $1500",
-    "Workstation for video editing",
-    "Budget gaming build $800",
-    "High-end gaming rig $3000",
-    "Office/Productivity PC $600",
-    "Content creation workstation $2000"
+    'Gaming PC under $1500',
+    'Workstation for video editing',
+    'Budget gaming build $800',
+    'High-end gaming rig $3000',
+    'Office/Productivity PC $600',
+    'Content creation workstation $2000',
   ];
-
-  // --- API Call Functions ---
-
-  /**
-   * Retries a fetch request with exponential backoff.
-   */
-  const fetchWithRetry = async (url: string, options: RequestInit, retries = 3, delay = 1000): Promise<any> => {
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        if (response.status === 429 && retries > 0) {
-          await new Promise(res => setTimeout(res, delay));
-          return fetchWithRetry(url, options, retries - 1, delay * 2);
-        }
-        throw new Error(`API Error: ${response.statusText} (Status: ${response.status})`);
-      }
-      return response.json();
-    } catch (error) {
-      if (retries > 0) {
-        await new Promise(res => setTimeout(res, delay));
-        return fetchWithRetry(url, options, retries - 1, delay * 2);
-      }
-      throw error;
-    }
-  };
-
-  /**
-   * Calls the Google Gemini API
-   */
-  const callGeminiApi = async (userMessage: string, history: Message[]): Promise<string> => {
-    const apiKey = geminiApiKey;
-    if (!apiKey) {
-      toast.error("Please enter your Gemini API Key.");
-      throw new Error("Missing API key");
-    }
-
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-    const contents = history.map(msg => ({
-      role: msg.role === "assistant" ? "model" : "user",
-      parts: [{ text: msg.content }]
-    }));
-    contents.push({
-      role: "user",
-      parts: [{ text: userMessage }]
-    });
-
-    const payload = {
-      contents: contents,
-      systemInstruction: {
-        parts: [{ text: generateSystemPrompt() }]
-      }
-    };
-
-    const result = await fetchWithRetry(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (result.candidates && result.candidates[0].content?.parts?.[0]?.text) {
-      return result.candidates[0].content.parts[0].text;
-    } else {
-      throw new Error("Invalid response structure from Gemini API.");
-    }
-  };
-
-  /**
-   * Calls the OpenAI (ChatGPT) API
-   */
-  const callChatGptApi = async (userMessage: string, history: Message[]): Promise<string> => {
-    const apiKey = chatGptApiKey;
-    if (!apiKey) {
-      toast.error("Please enter your ChatGPT API Key.");
-      throw new Error("Missing API key");
-    }
-
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
-
-    const messages = [
-      { role: "system", content: generateSystemPrompt() },
-      ...history.map(msg => ({ role: msg.role, content: msg.content })),
-      { role: "user", content: userMessage }
-    ];
-
-    const payload = {
-      model: "gpt-4o-mini", // Using a cost-effective and powerful model
-      messages: messages
-    };
-
-    const result = await fetchWithRetry(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (result.choices && result.choices[0].message?.content) {
-      return result.choices[0].message.content;
-    } else {
-      throw new Error("Invalid response structure from ChatGPT API.");
-    }
-  };
 
   // --- Main Send Handler ---
 
@@ -192,83 +149,62 @@ const AIBuild = () => {
     const messageToSend = message || input;
     if (!messageToSend.trim() || isLoading) return;
 
-    const userMessage: Message = { role: "user", content: messageToSend };
+    const userMessage: Message = { role: 'user', content: messageToSend };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
-    setInput("");
+    setInput('');
     setIsLoading(true);
 
     try {
-      let assistantResponse: string;
-      const history = newMessages.slice(0, -1); // Get all messages except the last user one
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          conversation: newMessages,
+          apis: selectedApi,
+          systemPrompt: generateSystemPrompt(),
+        }),
+      });
 
-      if (selectedApi === "gemini") {
-        assistantResponse = await callGeminiApi(messageToSend, history);
-      } else {
-        assistantResponse = await callChatGptApi(messageToSend, history);
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.statusText} (Status: ${response.status})`);
       }
 
+      const result = await response.json();
+
       const assistantMessage: Message = {
-        role: "assistant",
-        content: assistantResponse
+        role: 'assistant',
+        content: result.response,
       };
-      
-      setMessages(prev => [...prev, assistantMessage]);
+
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error: any) {
       toast.error(`Failed to get AI response: ${error.message}`);
       console.error(error);
       // Remove the user's message if the API call failed
-      setMessages(prev => prev.slice(0, -1));
+      setMessages((prev) => prev.slice(0, -1));
     } finally {
       setIsLoading(false);
     }
   };
 
   const extractPartsFromConversation = () => {
-    // Parse the AI conversation to extract parts
-    const components: Record<string, { name: string; price: number } | null> = {
-      cpu: null,
-      motherboard: null,
-      gpu: null,
-      ram: null,
-      storage: null,
-      psu: null,
-      case: null,
-    };
+    const lastAssistantMessage = messages.findLast((msg) => msg.role === "assistant");
 
-    let totalCost = 0;
+    if (!lastAssistantMessage) {
+      return { components: {}, totalCost: 0 };
+    }
 
-    // Get the last assistant message (most recent recommendation)
-    const lastAssistantMessage = [...messages]
-      .reverse()
-      .find((msg) => msg.role === "assistant");
-
-    if (!lastAssistantMessage) return { components, totalCost };
-
-    const text = lastAssistantMessage.content.toLowerCase();
-
-    // Try to find parts in the conversation by searching through superiorParts
-    const categories = ["cpu", "gpu", "motherboard", "ram", "storage", "psu", "case"];
-
-    categories.forEach((category) => {
-      const parts = superiorParts[category as keyof typeof superiorParts];
-      if (Array.isArray(parts)) {
-        // Find the first part mentioned in the conversation
-        for (const part of parts) {
-          const partNameLower = part.name.toLowerCase();
-          if (text.includes(partNameLower)) {
-            components[category as keyof typeof components] = {
-              name: part.name,
-              price: part.price,
-            };
-            totalCost += part.price;
-            break;
-          }
-        }
-      }
-    });
-
-    return { components, totalCost };
+    try {
+      const jsonResponse = JSON.parse(lastAssistantMessage.content);
+      const { totalCost, explanation, ...components } = jsonResponse;
+      return { components, totalCost };
+    } catch (error) {
+      console.error("Failed to parse AI response:", error);
+      return { components: {}, totalCost: 0 };
+    }
   };
 
   const handleSaveConversation = () => {
@@ -393,44 +329,11 @@ const AIBuild = () => {
                             : "bg-secondary text-secondary-foreground"
                         }`}
                       >
-                        {/* Enhanced message formatting */}
-                        <div className="space-y-2">
-                          {message.content.split('\n').map((line, i) => {
-                            // Handle bullet points and numbered lists
-                            if (line.trim().match(/^[\d]+\./)) {
-                              return (
-                                <div key={i} className="flex items-start gap-2">
-                                  <span className="text-primary font-semibold mt-0.5">{line.match(/^[\d]+/)?.[0]}.</span>
-                                  <span>{line.replace(/^[\d]+\.\s*/, '')}</span>
-                                </div>
-                              );
-                            }
-                            if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
-                              return (
-                                <div key={i} className="flex items-start gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span>{line.replace(/^[•-]\s*/, '')}</span>
-                                </div>
-                              );
-                            }
-                            // Handle bold text (simple **text** format)
-                            if (line.includes('**')) {
-                              const parts = line.split(/(\*\*.*?\*\*)/g);
-                              return (
-                                <div key={i}>
-                                  {parts.map((part, j) => 
-                                    part.startsWith('**') && part.endsWith('**') ? (
-                                      <strong key={j} className="font-semibold">{part.slice(2, -2)}</strong>
-                                    ) : (
-                                      <span key={j}>{part}</span>
-                                    )
-                                  )}
-                                </div>
-                              );
-                            }
-                            return <div key={i}>{line}</div>;
-                          })}
-                        </div>
+                        {message.role === 'assistant' ? (
+                              <AssistantMessage content={message.content} />
+                            ) : (
+                              <div>{message.content}</div>
+                            )}
                       </div>
                     </div>
                   ))}

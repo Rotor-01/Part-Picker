@@ -59,7 +59,7 @@ const BrowseParts = () => {
     const components: Component[] = [];
     Object.entries(superiorParts).forEach(([category, items]) => {
       if (Array.isArray(items)) {
-        items.forEach((item: any) => {
+        items.forEach((item: Component) => {
           components.push({ ...item, componentType: category });
         });
       }
@@ -121,7 +121,7 @@ const BrowseParts = () => {
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredComponents.map((component, index) => (
-            <Card key={index} className="group card-gradient border-border transition-all hover:glow hover:border-primary">
+            <Card key={component.name} className="group card-gradient border-border transition-all hover:glow hover:border-primary">
               <CardContent className="p-4 sm:p-6">
                 <div className="mb-3 sm:mb-4 flex items-start justify-between">
                   <div className="flex-1 min-w-0">

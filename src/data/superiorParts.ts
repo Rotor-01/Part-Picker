@@ -23,8 +23,22 @@ const normalizedPrice = (value?: number | null): number | null => {
   return Math.round(value * 100) / 100;
 };
 
+const KNOWN_BRANDS = [
+  "AMD", "Intel", "NVIDIA", "ASUS", "MSI", "Gigabyte",
+  "Corsair", "Crucial", "Kingston", "Samsung", "Seagate",
+  "Western Digital", "EVGA", "Cooler Master", "Noctua",
+  "be quiet!", "Lian Li", "Fractal Design", "NZXT",
+  "SeaSonic", "Thermaltake", "Logitech", "Razer"
+];
+
 const deriveBrand = (name?: string): string => {
   if (!name) return "Unknown";
+  const nameLower = name.toLowerCase();
+  for (const brand of KNOWN_BRANDS) {
+    if (nameLower.startsWith(brand.toLowerCase())) {
+      return brand;
+    }
+  }
   const [firstWord] = name.trim().split(/\s+/);
   if (!firstWord) return "Unknown";
   const clean = firstWord.replace(/[^A-Za-z0-9+.-]/g, "");
@@ -169,8 +183,6 @@ const normalizeCpu = (): NormalizedPart[] => {
       const threads =
         typeof item.thread_count === "number"
           ? item.thread_count
-          : typeof item.core_count === "number"
-          ? item.core_count * 2
           : undefined;
 
       const part: NormalizedPart = {
