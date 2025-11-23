@@ -180,7 +180,8 @@ const AIBuild = () => {
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error: unknown) {
-      toast.error(`Failed to get AI response: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      toast.error(`Failed to get AI response: ${errorMessage}`);
       console.error(error);
       // Remove the user's message if the API call failed
       setMessages((prev) => prev.slice(0, -1));

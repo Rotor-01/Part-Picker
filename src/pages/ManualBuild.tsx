@@ -48,11 +48,11 @@ const ManualBuild = () => {
   const getAvailableParts = (category: string) => {
     const parts = superiorParts[category as keyof typeof superiorParts];
     if (!Array.isArray(parts)) return [];
-    return parts.map((part: NormalizedPart) => ({
-      name: part.name,
-      price: part.price,
-      id: `${category}-${part.name}`,
-      ...part
+    return parts.map(({ name, price, ...rest }: NormalizedPart) => ({
+      name,
+      price,
+      id: `${category}-${name}`,
+      ...rest
     }));
   };
 
