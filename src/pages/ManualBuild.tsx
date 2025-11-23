@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Cpu, HardDrive, Zap, Box, CheckCircle2, XCircle, MemoryStick } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import superiorParts from "@/data/superiorParts";
+import superiorParts, { NormalizedPart } from "@/data/superiorParts";
 import { buildStorage } from "@/lib/buildStorage";
 
 interface BuildComponent {
@@ -48,7 +48,7 @@ const ManualBuild = () => {
   const getAvailableParts = (category: string) => {
     const parts = superiorParts[category as keyof typeof superiorParts];
     if (!Array.isArray(parts)) return [];
-    return parts.map((part: any) => ({
+    return parts.map((part: NormalizedPart) => ({
       name: part.name,
       price: part.price,
       id: `${category}-${part.name}`,
@@ -56,7 +56,7 @@ const ManualBuild = () => {
     }));
   };
 
-  const handleComponentSelect = (category: string, component: any) => {
+  const handleComponentSelect = (category: string, component: NormalizedPart) => {
     setBuild(prev => ({
       ...prev,
       [category]: {

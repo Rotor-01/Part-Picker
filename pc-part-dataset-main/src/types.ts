@@ -25,6 +25,7 @@ export type PartType =
 	| 'optical-drive'
 	| 'ups'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Part = Record<string, any>
 
 export type MappedSerialization = [string, boolean | 'custom']

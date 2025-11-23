@@ -7,7 +7,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Send, Sparkles, Brain, Bot, Save } from "lucide-react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import superiorParts from "@/data/superiorParts";
 import { buildStorage } from "@/lib/buildStorage";
 
 interface Message {
@@ -180,7 +179,7 @@ const AIBuild = () => {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error(`Failed to get AI response: ${error.message}`);
       console.error(error);
       // Remove the user's message if the API call failed
@@ -199,7 +198,7 @@ const AIBuild = () => {
 
     try {
       const jsonResponse = JSON.parse(lastAssistantMessage.content);
-      const { totalCost, explanation, ...components } = jsonResponse;
+      const { totalCost, ...components } = jsonResponse;
       return { components, totalCost };
     } catch (error) {
       console.error("Failed to parse AI response:", error);

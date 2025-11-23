@@ -1,6 +1,6 @@
 import { PartType } from './types'
 
-const SERIALIZED_VALUES: Record<string, any> = {
+const SERIALIZED_VALUES: Record<string, null | boolean> = {
 	none: null,
 	yes: true,
 	no: false,
@@ -31,7 +31,7 @@ export const genericSerialize = (value: string, extractNumber = false) => {
 }
 
 export const customSerializers: Partial<
-	Record<PartType, Record<string, (value: string) => any>>
+	Record<PartType, Record<string, (value: string) => unknown>>
 > = {
 	'internal-hard-drive': {
 		capacity: (value) => {

@@ -5,17 +5,19 @@ import type { Part } from './types'
 export const outputJsonLines = (parts: Part[]) =>
 	parts.map((p) => JSON.stringify(p)).join('\n')
 
-const serializeCsvValue = (value: any): string => {
-	if (
-		typeof value === 'string' &&
-		(value.includes(',') || value.includes('"'))
-	) {
-		return `"${value.replaceAll('"', '""')}"`
+const serializeCsvValue = (value: unknown): string => {
+	if (typeof value === 'string') {
+		if (value.includes(',') || value.includes('"')) {
+			return `"${value.replaceAll('"', '""')}"`
+		}
+		return value
 	} else if (Array.isArray(value)) {
 		return `"${value.map((v) => serializeCsvValue(v)).join(',')}"`
+	} else if (value === null || value === undefined) {
+		return ''
 	}
 
-	return value
+	return String(value)
 }
 
 export const outputCsv = (parts: Part[]) => {

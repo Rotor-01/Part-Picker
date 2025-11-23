@@ -120,7 +120,7 @@ const BrowseParts = () => {
         </Card>
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredComponents.map((component, index) => (
+          {filteredComponents.map((component) => (
             <Card key={component.name} className="group card-gradient border-border transition-all hover:glow hover:border-primary">
               <CardContent className="p-4 sm:p-6">
                 <div className="mb-3 sm:mb-4 flex items-start justify-between">

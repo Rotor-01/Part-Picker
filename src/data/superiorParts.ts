@@ -279,7 +279,7 @@ const normalizeStorage = (): NormalizedPart[] => {
       if (price == null) return null;
 
       const storageType = typeof item.type === "number" ? `${item.type} RPM` : item.type;
-      const formfactor = typeof item.form_factor === "number" ? `${item.form_factor}\"` : item.form_factor;
+      const formfactor = typeof item.form_factor === "number" ? `${item.form_factor}"` : item.form_factor;
 
       const part: NormalizedPart = {
         name: item.name,
