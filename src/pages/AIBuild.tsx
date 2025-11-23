@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { buildStorage } from "@/lib/buildStorage";
 
-interface Message {
+export interface Message {
   role: "user" | "assistant";
   content: string;
 }

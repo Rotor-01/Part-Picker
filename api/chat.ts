@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import OpenAI from 'openai';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { Message } from '../src/pages/AIBuild';
+import { Message } from '../src/pages/AIBuild.tsx';
 
 const openai = new OpenAI({
   apiKey: process.env.VITE_OPENAI_API_KEY,
