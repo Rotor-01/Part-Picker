@@ -14,14 +14,14 @@ export interface Message {
   content: string;
 }
 
-type ApiProvider = "gemini" | "chatgpt";
-
 // Helper function to generate system prompt with parts data
 const generateSystemPrompt = (): string => {
   return `
-You are 'Trinity', an expert PC building assistant. Your goal is to help users build a PC based on their budget, needs (like gaming, video editing, or office work), and preferences.
+You are 'Trinity', an expert PC building assistant. Your primary goal is to help users build a PC by providing a list of components that match their budget, needs (e.g., gaming, video editing, office work), and preferences.
 
-When you recommend a build, you MUST respond with a JSON object with the following structure:
+When a user asks for a PC build, you MUST respond with ONLY a valid JSON object. Do not include any other text, greetings, or explanations outside of the JSON structure.
+
+The JSON object must have the following structure:
 {
   "cpu": { "name": "Part Name", "price": 123.45 },
   "motherboard": { "name": "Part Name", "price": 123.45 },
@@ -31,10 +31,23 @@ When you recommend a build, you MUST respond with a JSON object with the followi
   "psu": { "name": "Part Name", "price": 123.45 },
   "case": { "name": "Part Name", "price": 123.45 },
   "totalCost": 1234.56,
-  "explanation": "A brief explanation of why these parts were chosen."
+  "explanation": "A brief explanation of why these parts were chosen for the user's specific needs."
 }
 
-Do not include any other text in your response.
+Example User Query: "I need a gaming PC for under $1000"
+
+Example JSON Response:
+{
+  "cpu": { "name": "AMD Ryzen 5 5600X", "price": 199.99 },
+  "motherboard": { "name": "MSI B550-A PRO", "price": 139.99 },
+  "gpu": { "name": "NVIDIA GeForce RTX 3060", "price": 329.99 },
+  "ram": { "name": "Corsair Vengeance LPX 16GB (2x8GB) DDR4-3200", "price": 54.99 },
+  "storage": { "name": "Western Digital Blue SN570 1TB NVMe SSD", "price": 79.99 },
+  "psu": { "name": "EVGA 600 W1, 80+ WHITE 600W", "price": 49.99 },
+  "case": { "name": "NZXT H510", "price": 79.99 },
+  "totalCost": 934.93,
+  "explanation": "This build provides excellent 1080p gaming performance and stays comfortably under your $1000 budget. The Ryzen 5 5600X is a great value CPU, and the RTX 3060 can handle most modern games at high settings."
+}
 `;
 };
 
@@ -129,10 +142,6 @@ const AIBuild = () => {
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [buildName, setBuildName] = useState('');
 
-  // API Configuration State
-  const [selectedApi, setSelectedApi] =
-    useState<ApiProvider>('gemini');
-
   const quickPrompts = [
     'Gaming PC under $1500',
     'Workstation for video editing',
@@ -162,7 +171,6 @@ const AIBuild = () => {
         },
         body: JSON.stringify({
           conversation: newMessages,
-          apis: selectedApi,
           systemPrompt: generateSystemPrompt(),
         }),
       });
@@ -248,37 +256,6 @@ const AIBuild = () => {
 
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_2fr]">
           <div className="space-y-4 sm:space-y-6">
-            {/* AI Provider Selection */}
-            <Card className="card-gradient h-fit border-border">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-                  <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                  AI Provider
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Select value={selectedApi} onValueChange={(val) => setSelectedApi(val as ApiProvider)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select AI Provider" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="gemini">
-                      <div className="flex items-center gap-2">
-                        <Brain className="h-4 w-4 text-blue-500" /> 
-                        <span>Google Gemini</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="chatgpt">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-green-500" /> 
-                        <span>OpenAI ChatGPT</span>
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </CardContent>
-            </Card>
-
             {/* Quick Prompts Card */}
             <Card className="card-gradient h-fit border-border">
               <CardHeader className="pb-4">

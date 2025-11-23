@@ -4,7 +4,7 @@ A modern React application for building PCs with AI-powered recommendations or m
 
 ## Features
 
-- **AI Build Assistant**: Get personalized PC builds using Google Gemini or OpenAI ChatGPT
+- **AI Build Assistant**: Get personalized PC builds using Google Gemini
 - **Manual Builder**: Hand-pick components with compatibility checking
 - **Browse Parts**: Explore an extensive catalog of CPUs, GPUs, motherboards, and more
 - **Modern UI**: Built with React, TypeScript, Tailwind CSS, and Radix UI components
@@ -54,7 +54,7 @@ The built files will be in the `dist` directory.
 For AI functionality, you can set these environment variables:
 
 - `VITE_GEMINI_API_KEY`: Your Google Gemini API key
-- `VITE_CHATGPT_API_KEY`: Your OpenAI API key
+
 
 ## Deployment on Vercel
 
