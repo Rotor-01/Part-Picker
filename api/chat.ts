@@ -7,7 +7,7 @@ export interface Message {
   content: string;
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
+const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY as string);
 
 export default async function handler(
   request: VercelRequest,
@@ -32,7 +32,7 @@ export default async function handler(
     const model = genAI.getGenerativeModel({
       model: 'gemini-pro',
       generationConfig: {
-        response_mime_type: 'application/json',
+        responseMimeType: 'application/json',
       },
     });
 
