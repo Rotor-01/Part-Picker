@@ -4,12 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Send, Sparkles, Brain, Bot, Save } from "lucide-react";
+import { Loader2, Send, Sparkles, Save } from "lucide-react";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { buildStorage } from "@/lib/buildStorage";
 
-export interface Message {
+interface Message {
   role: "user" | "assistant";
   content: string;
 }
@@ -176,10 +175,19 @@ const AIBuild = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API Error: ${response.statusText} (Status: ${response.status})`);
+        let errorMessage = `API Error: ${response.statusText} (Status: ${response.status})`;
+        try {
+          const errorResult = await response.json();
+          errorMessage = errorResult.error || errorMessage;
+        } catch (parseError) {
+          // If we can't parse the error response as JSON, use the default message
+          console.warn('Could not parse error response as JSON:', parseError);
+        }
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
+
 
       const assistantMessage: Message = {
         role: 'assistant',
