@@ -14,7 +14,7 @@ The main features are:
 
 The application is a single-page application (SPA) built with React. It uses React Router for client-side routing. The state management is handled by a combination of React's built-in state management and TanStack Query for server state.
 
-The AI chat functionality is powered by a Vercel serverless function located in `src/api/chat.ts`. This function acts as a proxy to the Google Gemini API, ensuring that the API keys are not exposed on the client-side.
+The AI chat functionality is powered by a Vercel serverless function located in `api/chat.ts`. This function acts as a proxy to the Google Gemini API, ensuring that the API keys are not exposed on the client-side.
 
 The PC parts data is sourced from the `pc-part-dataset-main` directory and is normalized in `src/data/superiorParts.ts` before being used in the application.
 
@@ -64,7 +64,7 @@ The PC parts data is sourced from the `pc-part-dataset-main` directory and is no
 - **`src/pages`**: Contains the main page components for each route.
 - **`src/data`**: Contains the data normalization logic.
 - **`src/lib`**: Contains utility functions, such as the local storage management for saved builds.
-- **`src/api`**: Contains the serverless function for the AI chat.
+- **`api`**: Contains the serverless function for the AI chat.
 
 ### State Management
 
@@ -73,9 +73,16 @@ The PC parts data is sourced from the `pc-part-dataset-main` directory and is no
 
 ### Environment Variables
 
-For AI functionality, you need to set the following environment variables in a `.env.local` file:
+For AI functionality, you need to set environment variables.
 
-- `VITE_GEMINI_API_KEY`: Your Google Gemini API key.
+#### Client-Side (Vite)
 
+For local development, create a `.env.local` file in the root of the project and add your Gemini API key:
 
-Note: For the serverless function, these variables should be set in the Vercel project settings. The current implementation reads them from `process.env` on the server-side.
+```
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
+
+#### Server-Side (Vercel)
+
+For the deployed application on Vercel, you need to set the `GEMINI_API_KEY` environment variable in your Vercel project settings. The serverless function will use this key to authenticate with the Google Gemini API.

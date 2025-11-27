@@ -49,11 +49,25 @@ npm run build
 
 The built files will be in the `dist` directory.
 
+## Backend
+
+The AI chat functionality is powered by a Vercel serverless function located in `api/chat.ts`. This function acts as a proxy to the Google Gemini API, ensuring that the API key is not exposed on the client-side.
+
 ## Environment Variables
 
-For AI functionality, you can set these environment variables:
+For AI functionality, you need to set environment variables.
 
-- `VITE_GEMINI_API_KEY`: Your Google Gemini API key
+### Client-Side (Vite)
+
+For local development, create a `.env.local` file in the root of the project and add your Gemini API key:
+
+```
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
+
+### Server-Side (Vercel)
+
+For the deployed application on Vercel, you need to set the `GEMINI_API_KEY` environment variable in your Vercel project settings. The serverless function will use this key to authenticate with the Google Gemini API.
 
 
 ## Deployment on Vercel

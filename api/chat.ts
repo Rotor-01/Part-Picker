@@ -36,19 +36,21 @@ export default async function handler(
       },
     });
 
+    const history = conversation.slice(0, -1);
+    const lastMessage = conversation[conversation.length - 1];
+
     const chat = model.startChat({
       history: [
         { role: 'user', parts: [{ text: systemPrompt }] },
         { role: 'model', parts: [{ text: 'OK.' }] },
-        ...conversation.map((c: Message) => ({
+        ...history.map((c: Message) => ({
           role: c.role === 'user' ? 'user' : 'model',
           parts: [{ text: c.content }],
         })),
       ],
     });
-    const result = await chat.sendMessage(
-      conversation[conversation.length - 1].content,
-    );
+
+    const result = await chat.sendMessage(lastMessage.content);
     const geminiResponse = result.response;
     aiResponse = geminiResponse.text();
 
