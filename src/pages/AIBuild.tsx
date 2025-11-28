@@ -316,7 +316,7 @@ const AIBuild = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col p-4 sm:p-6 min-h-0 overflow-hidden">
-              <ScrollArea className="flex-1 pr-2 sm:pr-4 scrollbar-thin mb-4">
+              <ScrollArea className="flex-1 min-h-0 pr-2 sm:pr-4 scrollbar-thin mb-4">
                 <div className="space-y-6">
                   {messages.map((message, index) => (
                     <div
