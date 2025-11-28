@@ -1032,10 +1032,7 @@ async function handler(request, response) {
   try {
     let aiResponse = "";
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash"
-      // Removed generationConfig with responseMimeType as it's not supported in v1
-    }, {
-      apiVersion: "v1"
+      model: "gemini-2.0-flash"
     });
     const history = conversation.slice(0, -1);
     const lastMessage = conversation[conversation.length - 1];

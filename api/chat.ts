@@ -28,12 +28,9 @@ export default async function handler(
 
   try {
     let aiResponse: string | null = '';
-    // Use v1 API version which should support gemini-1.5-flash
+    // Use gemini-2.0-flash as gemini-1.5-flash is not available for this key
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
-      // Removed generationConfig with responseMimeType as it's not supported in v1
-    }, {
-      apiVersion: 'v1'
+      model: 'gemini-2.0-flash',
     });
 
     const history = conversation.slice(0, -1);
