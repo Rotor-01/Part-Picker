@@ -103,3 +103,6 @@ dist
 
 # IDE
 .cursor
+
+# Documentation for AI
+GEMINI.md
