@@ -1052,15 +1052,16 @@ async function handler(request, response) {
     if (!aiResponse) {
       return response.status(500).json({ error: "The AI returned an empty response." });
     }
+    const cleanedResponse = aiResponse.replace(/^```json\s*/, "").replace(/^```\s*/, "").replace(/\s*```$/, "");
     try {
-      JSON.parse(aiResponse);
+      JSON.parse(cleanedResponse);
     } catch (e) {
       console.error("AI response is not valid JSON:", aiResponse);
       return response.status(500).json({
         error: "The AI returned an invalid response. Please try again."
       });
     }
-    return response.status(200).json({ response: aiResponse });
+    return response.status(200).json({ response: cleanedResponse });
   } catch (error) {
     console.error(error);
     return response.status(500).json({ error: "Internal Server Error" });
