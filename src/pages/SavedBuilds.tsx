@@ -43,10 +43,10 @@ const SavedBuilds = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
 
-      <main className="container py-6 sm:py-8">
+      <main className="container py-6 sm:py-8 flex-grow">
         <div className="mb-6 sm:mb-8 text-center">
           <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">
             Saved Builds
@@ -57,12 +57,15 @@ const SavedBuilds = () => {
         </div>
 
         {builds.length === 0 ? (
-          <Card className="card-gradient border-border">
+          <Card className="card-gradient border-border border-dashed">
             <CardContent className="py-12 sm:py-20 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-secondary/50">
+                <Eye className="h-8 w-8 text-muted-foreground" />
+              </div>
               <p className="text-base sm:text-lg text-muted-foreground mb-4">
                 No saved builds yet
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground max-w-sm mx-auto">
                 Create a build using the Manual or AI builder and save it to see it here
               </p>
             </CardContent>
@@ -74,11 +77,10 @@ const SavedBuilds = () => {
               {builds.map((build) => (
                 <Card
                   key={build.id}
-                  className={`card-gradient border-border cursor-pointer transition-all ${
-                    selectedBuild?.id === build.id
-                      ? "ring-2 ring-primary border-primary"
-                      : "hover:border-primary/50"
-                  }`}
+                  className={`card-gradient border-border cursor-pointer transition-all duration-200 ${selectedBuild?.id === build.id
+                      ? "ring-1 ring-primary border-primary bg-primary/5"
+                      : "hover:border-primary/50 hover:bg-white/5"
+                    }`}
                   onClick={() => setSelectedBuild(build)}
                 >
                   <CardContent className="p-3 sm:p-4">
@@ -88,7 +90,7 @@ const SavedBuilds = () => {
                           {build.name}
                         </h3>
                         <div className="flex items-center gap-2 mt-1">
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge variant="secondary" className="text-xs bg-secondary/50">
                             {build.source === "ai" ? "AI" : "Manual"}
                           </Badge>
                           <p className="text-xs text-muted-foreground">
@@ -104,54 +106,51 @@ const SavedBuilds = () => {
 
             {/* Build Details */}
             {selectedBuild ? (
-              <Card className="card-gradient border-border">
-                <CardHeader className="pb-3 sm:pb-4">
+              <Card className="card-gradient border-border h-fit">
+                <CardHeader className="pb-3 sm:pb-4 border-b border-white/5">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <CardTitle className="text-lg sm:text-xl truncate">
+                      <CardTitle className="text-lg sm:text-xl truncate flex items-center gap-2">
                         {selectedBuild.name}
-                      </CardTitle>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Badge variant="secondary" className="text-xs">
-                          {selectedBuild.source === "ai" ? "AI Build" : "Manual Build"}
+                        <Badge variant="outline" className="ml-2 text-xs font-normal text-muted-foreground border-white/10">
+                          {selectedBuild.source === "ai" ? "AI Generated" : "Manual Selection"}
                         </Badge>
-                      </div>
+                      </CardTitle>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4 sm:space-y-6">
+                <CardContent className="space-y-4 sm:space-y-6 pt-6">
                   {/* Build Summary */}
-                  <div className="rounded-lg bg-secondary p-3 sm:p-4">
-                    <div className="mb-2 flex justify-between text-xs sm:text-sm">
-                      <span className="text-muted-foreground">Total Cost</span>
-                      <span className="text-xl sm:text-2xl font-bold text-gradient">
-                        ${selectedBuild.totalCost}
-                      </span>
-                    </div>
+                  <div className="rounded-xl bg-secondary/30 border border-white/5 p-4 text-center">
+                    <span className="text-muted-foreground text-xs uppercase tracking-wider">Total Cost</span>
+                    <div className="text-3xl font-bold text-gradient mt-1">${selectedBuild.totalCost}</div>
                   </div>
 
                   {/* Components */}
                   <div className="space-y-2 sm:space-y-3">
-                    <h4 className="font-semibold text-sm sm:text-base">Components</h4>
+                    <h4 className="font-semibold text-sm sm:text-base flex items-center gap-2">
+                      <div className="w-1 h-4 bg-primary rounded-full"></div>
+                      Components
+                    </h4>
                     <div className="space-y-2">
                       {Object.entries(selectedBuild.components).map(([key, component]) => (
                         <div
                           key={key}
-                          className="flex items-center justify-between rounded-lg bg-secondary p-2 sm:p-3"
+                          className="flex items-center justify-between rounded-lg bg-secondary/30 border border-white/5 p-2 sm:p-3 hover:bg-secondary/50 transition-colors"
                         >
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs sm:text-sm font-medium capitalize">
+                            <p className="text-xs sm:text-sm font-medium capitalize text-muted-foreground mb-0.5">
                               {key}
                             </p>
                             {component ? (
-                              <>
-                                <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                              <div className="flex justify-between items-center gap-4">
+                                <p className="text-sm font-medium truncate text-foreground">
                                   {component.name}
                                 </p>
-                                <p className="text-xs font-semibold text-primary">
+                                <p className="text-sm font-semibold text-primary whitespace-nowrap">
                                   ${component.price}
                                 </p>
-                              </>
+                              </div>
                             ) : (
                               <p className="text-xs text-muted-foreground italic">
                                 Not selected
@@ -165,32 +164,30 @@ const SavedBuilds = () => {
 
                   {/* AI Conversation (if available) */}
                   {selectedBuild.source === "ai" && selectedBuild.conversation && (
-                    <div className="border-t border-border pt-4">
+                    <div className="border-t border-white/5 pt-4">
                       <Button
-                        variant="outline"
-                        className="w-full mb-3"
+                        variant="ghost"
+                        className="w-full mb-3 justify-between hover:bg-white/5"
                         onClick={() => setShowConversation(!showConversation)}
                       >
+                        <span className="flex items-center">
+                          {showConversation ? "Hide Conversation" : "Show Conversation"}
+                        </span>
                         {showConversation ? (
-                          <>
-                            <ChevronUp className="h-4 w-4 mr-2" />
-                            Hide Conversation
-                          </>
+                          <ChevronUp className="h-4 w-4" />
                         ) : (
-                          <>
-                            <ChevronDown className="h-4 w-4 mr-2" />
-                            Show Conversation
-                          </>
+                          <ChevronDown className="h-4 w-4" />
                         )}
                       </Button>
                       {showConversation && (
-                        <div className="space-y-2 max-h-[400px] overflow-y-auto rounded-lg bg-secondary p-3">
+                        <div className="space-y-3 max-h-[400px] overflow-y-auto rounded-xl bg-secondary/30 border border-white/5 p-4 scrollbar-thin">
                           {selectedBuild.conversation.map((msg, idx) => (
-                            <div key={idx} className="text-xs border-b border-border pb-2 last:border-b-0">
-                              <p className="font-semibold text-primary capitalize mb-1">
-                                {msg.role === "user" ? "You" : "Trinity"}:
+                            <div key={idx} className={`text-sm p-3 rounded-lg ${msg.role === "user" ? "bg-primary/10 ml-8" : "bg-secondary/50 mr-8"
+                              }`}>
+                              <p className="font-semibold text-xs text-muted-foreground mb-1 uppercase tracking-wider">
+                                {msg.role === "user" ? "You" : "Trinity"}
                               </p>
-                              <p className="text-muted-foreground whitespace-pre-wrap break-words">
+                              <p className="text-foreground/90 whitespace-pre-wrap break-words text-xs sm:text-sm leading-relaxed">
                                 {msg.content}
                               </p>
                             </div>
@@ -201,37 +198,31 @@ const SavedBuilds = () => {
                   )}
 
                   {/* Metadata */}
-                  <div className="space-y-2 border-t border-border pt-4">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
-                      <span>Created: {formatDate(selectedBuild.createdAt)}</span>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground border-t border-white/5 pt-4">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-3 w-3" />
+                      <span>{formatDate(selectedBuild.createdAt)}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
-                      <span>Updated: {formatDate(selectedBuild.updatedAt)}</span>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex gap-2 pt-2">
                     <Button
                       variant="destructive"
-                      className="flex-1"
                       size="sm"
+                      className="h-8"
                       onClick={() => handleDeleteBuild(selectedBuild.id)}
                     >
-                      <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                      Delete
+                      <Trash2 className="h-3 w-3 mr-2" />
+                      Delete Build
                     </Button>
                   </div>
                 </CardContent>
               </Card>
             ) : (
-              <Card className="card-gradient border-border flex items-center justify-center min-h-[400px]">
+              <Card className="card-gradient border-border flex items-center justify-center min-h-[400px] border-dashed">
                 <CardContent className="text-center">
-                  <Eye className="h-8 w-8 sm:h-10 sm:w-10 mx-auto mb-3 text-muted-foreground" />
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-secondary/50">
+                    <Eye className="h-8 w-8 text-muted-foreground" />
+                  </div>
                   <p className="text-sm sm:text-base text-muted-foreground">
-                    Select a build to view details
+                    Select a build from the list to view details
                   </p>
                 </CardContent>
               </Card>

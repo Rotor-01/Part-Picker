@@ -251,10 +251,10 @@ const AIBuild = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <main className="container py-6 sm:py-8">
+
+      <main className="container py-6 sm:py-8 flex-grow">
         <div className="mb-6 sm:mb-8 text-center">
           <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">AI Build Assistant</h1>
           <p className="text-base sm:text-lg text-muted-foreground px-4">
@@ -278,7 +278,7 @@ const AIBuild = () => {
                   <Button
                     key={index}
                     variant="outline"
-                    className="w-full justify-start text-left h-auto p-3 hover:bg-primary/5 hover:border-primary/50 transition-all"
+                    className="w-full justify-start text-left h-auto p-3 hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all bg-background/30"
                     onClick={() => handleSend(prompt)}
                     disabled={isLoading}
                   >
@@ -293,78 +293,78 @@ const AIBuild = () => {
           </div>
 
           {/* Chat Card */}
-          <Card className="card-gradient flex flex-col border-border">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-base sm:text-lg">
+          <Card className="card-gradient flex flex-col border-border h-[600px]">
+            <CardHeader className="pb-4 border-b border-white/5">
+              <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 Chat with Trinity
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-1 flex-col">
-              <ScrollArea className="mb-3 sm:mb-4 flex-1 pr-2 sm:pr-4 scrollbar-thin" style={{ height: "400px" }}>
-                <div className="space-y-4">
+            <CardContent className="flex flex-1 flex-col p-4 sm:p-6">
+              <ScrollArea className="flex-1 pr-2 sm:pr-4 scrollbar-thin mb-4">
+                <div className="space-y-6">
                   {messages.map((message, index) => (
                     <div
                       key={index}
                       className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-3 sm:p-4 text-sm sm:text-base ${
-                          message.role === "user"
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-secondary text-secondary-foreground"
-                        }`}
+                        className={`max-w-[85%] sm:max-w-[80%] rounded-2xl p-4 text-sm sm:text-base shadow-sm ${message.role === "user"
+                            ? "bg-primary text-primary-foreground rounded-tr-none"
+                            : "bg-secondary/50 backdrop-blur-sm border border-white/5 rounded-tl-none"
+                          }`}
                       >
                         {message.role === 'assistant' ? (
-                              <AssistantMessage content={message.content} />
-                            ) : (
-                              <div>{message.content}</div>
-                            )}
+                          <AssistantMessage content={message.content} />
+                        ) : (
+                          <div>{message.content}</div>
+                        )}
                       </div>
                     </div>
                   ))}
                   {isLoading && (
                     <div className="flex justify-start">
-                      <div className="rounded-lg bg-secondary p-4 flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                        <span className="text-sm text-muted-foreground">Trinity is thinking...</span>
+                      <div className="rounded-2xl rounded-tl-none bg-secondary/50 border border-white/5 p-4 flex items-center gap-3">
+                        <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                        <span className="text-sm text-muted-foreground">Trinity is analyzing components...</span>
                       </div>
                     </div>
                   )}
                 </div>
               </ScrollArea>
 
-              <div className="space-y-2">
+              <div className="space-y-3 pt-4 border-t border-white/5">
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Ask about PC builds..."
+                    placeholder="Describe your dream PC (e.g., 'White gaming PC for $2000')..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSend()}
                     disabled={isLoading}
-                    className="flex-1 text-sm sm:text-base"
+                    className="flex-1 text-sm sm:text-base bg-background/50 border-white/10 focus-visible:ring-primary"
                   />
-                  <Button 
-                    onClick={() => handleSend()} 
-                    disabled={isLoading || !input.trim()} 
-                    size="sm"
-                    className="min-w-[40px]"
+                  <Button
+                    onClick={() => handleSend()}
+                    disabled={isLoading || !input.trim()}
+                    size="icon"
+                    className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25"
                   >
                     {isLoading ? (
-                      <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      <Send className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <Send className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
-                <Button 
-                  onClick={() => setShowSaveDialog(true)} 
+                <Button
+                  onClick={() => setShowSaveDialog(true)}
                   disabled={messages.length <= 1}
-                  variant="outline"
-                  className="w-full"
+                  variant="ghost"
+                  className="w-full text-muted-foreground hover:text-primary hover:bg-primary/5"
                   size="sm"
                 >
                   <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                  Save Build
+                  Save This Build
                 </Button>
               </div>
             </CardContent>
@@ -373,26 +373,27 @@ const AIBuild = () => {
 
         {/* Save Build Dialog */}
         {showSaveDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <Card className="w-full max-w-md card-gradient border-border">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <Card className="w-full max-w-md card-gradient border-border shadow-2xl">
               <CardHeader>
                 <CardTitle>Save Build</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Build Name</label>
+                  <label className="text-sm font-medium mb-2 block text-muted-foreground">Build Name</label>
                   <Input
                     placeholder="e.g., Gaming Rig 2024"
                     value={buildName}
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveConversation()}
                     autoFocus
+                    className="bg-background/50 border-white/10"
                   />
                 </div>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 hover:bg-white/5"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");
@@ -401,7 +402,7 @@ const AIBuild = () => {
                     Cancel
                   </Button>
                   <Button
-                    className="flex-1"
+                    className="flex-1 bg-primary hover:bg-primary/90"
                     onClick={handleSaveConversation}
                   >
                     Save

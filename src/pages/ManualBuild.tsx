@@ -99,10 +99,10 @@ const ManualBuild = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <main className="container py-6 sm:py-8">
+
+      <main className="container py-6 sm:py-8 flex-grow">
         <div className="mb-6 sm:mb-8 text-center">
           <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">Manual PC Builder</h1>
           <p className="text-base sm:text-lg text-muted-foreground px-4">
@@ -113,39 +113,44 @@ const ManualBuild = () => {
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[2fr_1fr]">
           <div className="space-y-3 sm:space-y-4">
             {componentCategories.map(({ key, label, icon: Icon, required }) => (
-              <Card key={key} className="card-gradient border-border">
+              <Card key={key} className="card-gradient border-border transition-all hover:border-primary/30">
                 <CardHeader className="pb-3 sm:pb-4">
                   <CardTitle className="flex items-center justify-between text-sm sm:text-base">
                     <div className="flex items-center gap-2">
-                      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                      <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                        <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </div>
                       {label}
-                      {required && <Badge variant="secondary" className="text-xs">Required</Badge>}
+                      {required && <Badge variant="secondary" className="text-xs bg-secondary/50">Required</Badge>}
                     </div>
                     {build[key as keyof Build] && (
-                      <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                      <div className="flex items-center gap-2 text-green-500 animate-in fade-in">
+                        <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                        <span className="text-xs font-medium">Selected</span>
+                      </div>
                     )}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
                   {build[key as keyof Build] ? (
-                    <div className="flex items-center justify-between rounded-lg bg-secondary p-3 sm:p-4">
+                    <div className="flex items-center justify-between rounded-xl bg-secondary/30 border border-white/5 p-3 sm:p-4">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sm sm:text-base truncate">{build[key as keyof Build]?.name}</p>
-                        <p className="text-xs sm:text-sm text-muted-foreground">
+                        <p className="font-semibold text-sm sm:text-base truncate text-foreground">{build[key as keyof Build]?.name}</p>
+                        <p className="text-xs sm:text-sm text-primary font-medium mt-1">
                           ${build[key as keyof Build]?.price}
                         </p>
                       </div>
                       <Button
-                        variant="outline"
+                        variant="ghost"
                         size="sm"
                         onClick={() => setBuild({ ...build, [key]: null })}
-                        className="ml-2 flex-shrink-0"
+                        className="ml-2 flex-shrink-0 hover:bg-white/5 hover:text-destructive"
                       >
                         Change
                       </Button>
                     </div>
                   ) : (
-                    <div className="text-center py-6 sm:py-8">
+                    <div className="text-center py-6 sm:py-8 border-2 border-dashed border-white/5 rounded-xl hover:border-primary/20 transition-colors">
                       <p className="mb-3 sm:mb-4 text-sm sm:text-base text-muted-foreground">No {label.toLowerCase()} selected</p>
                       <Select onValueChange={(value) => {
                         const selectedPart = getAvailableParts(key).find(part => part.id === value);
@@ -153,13 +158,13 @@ const ManualBuild = () => {
                           handleComponentSelect(key, selectedPart);
                         }
                       }}>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full max-w-xs mx-auto bg-background/50 border-white/10">
                           <SelectValue placeholder={`Select ${label}`} />
                         </SelectTrigger>
                         <SelectContent>
                           {getAvailableParts(key).map((part) => (
                             <SelectItem key={part.id} value={part.id}>
-                              <div className="flex justify-between items-center w-full">
+                              <div className="flex justify-between items-center w-full gap-4">
                                 <span className="truncate">{part.name}</span>
                                 <span className="text-primary font-semibold ml-2">${part.price}</span>
                               </div>
@@ -175,43 +180,42 @@ const ManualBuild = () => {
           </div>
 
           <div className="space-y-3 sm:space-y-4">
-            <Card className="card-gradient sticky top-20 sm:top-24 border-border">
-              <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-sm sm:text-base">Build Summary</CardTitle>
+            <Card className="card-gradient sticky top-24 border-border shadow-xl shadow-black/20">
+              <CardHeader className="pb-3 sm:pb-4 border-b border-white/5">
+                <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                  <Box className="h-4 w-4 text-primary" />
+                  Build Summary
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
-                <div className="rounded-lg bg-secondary p-3 sm:p-4">
-                  <div className="mb-2 flex justify-between text-xs sm:text-sm">
-                    <span className="text-muted-foreground">Total Cost</span>
-                    <span className="text-xl sm:text-2xl font-bold text-gradient">${totalCost}</span>
+              <CardContent className="space-y-4 pt-4">
+                <div className="rounded-xl bg-secondary/30 border border-white/5 p-4 text-center">
+                  <span className="text-muted-foreground text-xs uppercase tracking-wider">Total Cost</span>
+                  <div className="text-3xl font-bold text-gradient mt-1">${totalCost.toFixed(2)}</div>
+                </div>
+
+                <div className={`rounded-xl border p-4 flex items-start gap-3 transition-colors ${isCompatible ? "bg-green-500/10 border-green-500/20" : "bg-yellow-500/10 border-yellow-500/20"
+                  }`}>
+                  {isCompatible ? (
+                    <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <XCircle className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                  )}
+                  <div>
+                    <p className={`font-semibold text-sm ${isCompatible ? "text-green-500" : "text-yellow-500"}`}>
+                      {isCompatible ? "Compatible Build" : "Build Incomplete"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {isCompatible
+                        ? "All selected components are compatible."
+                        : "Please select all required components to validate compatibility."}
+                    </p>
                   </div>
                 </div>
 
-                <div className="rounded-lg border border-border p-3 sm:p-4">
-                  <div className="mb-2 flex items-center gap-2">
-                    {isCompatible ? (
-                      <>
-                        <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
-                        <span className="font-semibold text-green-500 text-sm sm:text-base">Compatible</span>
-                      </>
-                    ) : (
-                      <>
-                        <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500" />
-                        <span className="font-semibold text-yellow-500 text-sm sm:text-base">Incomplete</span>
-                      </>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
-                    {isCompatible
-                      ? "All selected components are compatible"
-                      : "Select required components to validate compatibility"}
-                  </p>
-                </div>
-
-                <Button 
-                  className="w-full" 
-                  disabled={!isCompatible} 
-                  size="sm"
+                <Button
+                  className="w-full bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+                  disabled={!isCompatible}
+                  size="lg"
                   onClick={() => setShowSaveDialog(true)}
                 >
                   Save Build
@@ -223,26 +227,27 @@ const ManualBuild = () => {
 
         {/* Save Build Dialog */}
         {showSaveDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <Card className="w-full max-w-md card-gradient border-border">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <Card className="w-full max-w-md card-gradient border-border shadow-2xl">
               <CardHeader>
                 <CardTitle>Save Build</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Build Name</label>
+                  <label className="text-sm font-medium mb-2 block text-muted-foreground">Build Name</label>
                   <Input
                     placeholder="e.g., Gaming Rig 2024"
                     value={buildName}
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveBuild()}
                     autoFocus
+                    className="bg-background/50 border-white/10"
                   />
                 </div>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 hover:bg-white/5"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");
@@ -251,7 +256,7 @@ const ManualBuild = () => {
                     Cancel
                   </Button>
                   <Button
-                    className="flex-1"
+                    className="flex-1 bg-primary hover:bg-primary/90"
                     onClick={handleSaveBuild}
                   >
                     Save
