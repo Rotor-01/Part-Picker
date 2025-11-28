@@ -30,7 +30,7 @@ export default async function handler(
   try {
     let aiResponse: string | null = '';
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-1.5-flash-001',
       generationConfig: {
         responseMimeType: 'application/json',
       },
