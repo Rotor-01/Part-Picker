@@ -1032,10 +1032,8 @@ async function handler(request, response) {
   try {
     let aiResponse = "";
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: {
-        responseMimeType: "application/json"
-      }
+      model: "gemini-1.5-flash"
+      // Removed generationConfig with responseMimeType as it's not supported in v1
     }, {
       apiVersion: "v1"
     });

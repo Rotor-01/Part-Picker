@@ -31,9 +31,7 @@ export default async function handler(
     // Use v1 API version which should support gemini-1.5-flash
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
-      generationConfig: {
-        responseMimeType: 'application/json',
-      },
+      // Removed generationConfig with responseMimeType as it's not supported in v1
     }, {
       apiVersion: 'v1'
     });
