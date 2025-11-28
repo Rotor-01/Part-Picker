@@ -3,7 +3,6 @@ import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Send, Sparkles, Save } from "lucide-react";
 import { toast } from "sonner";
 import { buildStorage } from "@/lib/buildStorage";
@@ -316,7 +315,7 @@ const AIBuild = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col p-4 sm:p-6 min-h-0 overflow-hidden">
-              <ScrollArea className="flex-1 min-h-0 pr-2 sm:pr-4 scrollbar-thin mb-4">
+              <div className="flex-1 min-h-0 overflow-y-auto pr-2 sm:pr-4 scrollbar-thin mb-4">
                 <div className="space-y-6">
                   {messages.map((message, index) => (
                     <div
@@ -346,7 +345,7 @@ const AIBuild = () => {
                     </div>
                   )}
                 </div>
-              </ScrollArea>
+              </div>
 
               <div className="space-y-3 pt-4 border-t border-white/5">
                 <div className="flex gap-2">
