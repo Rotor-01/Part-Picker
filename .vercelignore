@@ -5,3 +5,30 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+
+# IDE and System
+.cursor
+.DS_Store
+Thumbs.db
+
+# Documentation
+GEMINI.md
+README.md
+LICENSE
+
+# Dev Scripts
+check-models.ts
+Dockerfile
+
+# Dataset Repo Metadata (keep only data)
+pc-part-dataset-main/.git
+pc-part-dataset-main/.gitignore
+pc-part-dataset-main/.editorconfig
+pc-part-dataset-main/.prettierrc.json
+pc-part-dataset-main/package.json
+pc-part-dataset-main/package-lock.json
+pc-part-dataset-main/tsconfig.json
+pc-part-dataset-main/README.md
+pc-part-dataset-main/LICENSE
+pc-part-dataset-main/API.md
+pc-part-dataset-main/src

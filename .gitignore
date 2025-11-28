@@ -100,3 +100,6 @@ dist
 
 # Vite build output
 dist
+
+# IDE
+.cursor

@@ -16,7 +16,7 @@ The application is a single-page application (SPA) built with React. It uses Rea
 
 The AI chat functionality is powered by a Vercel serverless function located in `api/chat.ts`. This function acts as a proxy to the Google Gemini API, ensuring that the API keys are not exposed on the client-side.
 
-The PC parts data is sourced from the `pc-part-dataset-main` directory and is normalized in `src/data/superiorParts.ts` before being used in the application.
+The PC parts data is sourced from the `pc-part-dataset-main/data` directory and is normalized in `src/data/superiorParts.ts` before being used in the application.
 
 ## Building and Running
 

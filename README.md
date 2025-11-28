@@ -96,8 +96,8 @@ src/
 │   ├── ManualBuild.tsx # Manual component selection
 │   ├── BrowseParts.tsx # Parts catalog
 │   └── NotFound.tsx    # 404 page
-├── data/               # Static data
-│   └── pc-parts.json   # PC components database
+├── data/               # Data normalization logic
+│   └── superiorParts.ts # Normalized parts data
 ├── lib/                # Utility functions
 └── App.tsx             # Main app component
 ```
