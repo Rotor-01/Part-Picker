@@ -55,7 +55,14 @@ Example JSON Response:
 const AssistantMessage = ({ content }: { content: string }) => {
   try {
     const build = JSON.parse(content);
+
+    // Ensure build is an object
+    if (!build || typeof build !== 'object') {
+      throw new Error('Invalid build data');
+    }
+
     const { cpu, motherboard, gpu, ram, storage, psu, 'case': casePart, totalCost, explanation } = build;
+
     const components = [
       { name: 'CPU', value: cpu },
       { name: 'Motherboard', value: motherboard },
@@ -68,13 +75,17 @@ const AssistantMessage = ({ content }: { content: string }) => {
 
     return (
       <div>
-        <p className="mb-4">{explanation}</p>
+        <p className="mb-4">{explanation || "Here is a build based on your request:"}</p>
         <ul className="space-y-2">
           {components.map((component) => (
             component.value && (
-              <li key={component.name} className="flex justify-between">
-                <span><strong>{component.name}:</strong> {component.value.name}</span>
-                <span>${component.value.price.toFixed(2)}</span>
+              <li key={component.name} className="flex justify-between items-start gap-4">
+                <span><strong>{component.name}:</strong> {component.value?.name || "Unknown Part"}</span>
+                <span className="whitespace-nowrap">
+                  {typeof component.value?.price === 'number'
+                    ? `$${component.value.price.toFixed(2)}`
+                    : 'Price N/A'}
+                </span>
               </li>
             )
           ))}
@@ -82,7 +93,11 @@ const AssistantMessage = ({ content }: { content: string }) => {
         <hr className="my-4" />
         <div className="flex justify-between font-bold text-lg">
           <span>Total Cost:</span>
-          <span>${totalCost.toFixed(2)}</span>
+          <span>
+            {typeof totalCost === 'number'
+              ? `$${totalCost.toFixed(2)}`
+              : 'N/A'}
+          </span>
         </div>
       </div>
     );
@@ -300,7 +315,7 @@ const AIBuild = () => {
                 Chat with Trinity
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-4 sm:p-6">
+            <CardContent className="flex flex-1 flex-col p-4 sm:p-6 min-h-0 overflow-hidden">
               <ScrollArea className="flex-1 pr-2 sm:pr-4 scrollbar-thin mb-4">
                 <div className="space-y-6">
                   {messages.map((message, index) => (
@@ -309,9 +324,9 @@ const AIBuild = () => {
                       className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[85%] sm:max-w-[80%] rounded-2xl p-4 text-sm sm:text-base shadow-sm ${message.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-tr-none"
-                            : "bg-secondary/50 backdrop-blur-sm border border-white/5 rounded-tl-none"
+                        className={`max-w-[85%] sm:max-w-[80%] rounded-2xl p-4 text-sm sm:text-base shadow-sm break-words overflow-hidden ${message.role === "user"
+                          ? "bg-primary text-primary-foreground rounded-tr-none"
+                          : "bg-secondary/50 backdrop-blur-sm border border-white/5 rounded-tl-none"
                           }`}
                       >
                         {message.role === 'assistant' ? (
