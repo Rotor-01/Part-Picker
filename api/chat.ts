@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-// import { Message } from '../src/pages/AIBuild.tsx'; // Remove client-side import
 
 export interface Message {
   role: "user" | "assistant";
@@ -29,11 +28,14 @@ export default async function handler(
 
   try {
     let aiResponse: string | null = '';
+    // Use v1 API version which should support gemini-1.5-flash
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash-001',
+      model: 'gemini-1.5-flash',
       generationConfig: {
         responseMimeType: 'application/json',
       },
+    }, {
+      apiVersion: 'v1'
     });
 
     const history = conversation.slice(0, -1);
