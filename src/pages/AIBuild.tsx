@@ -79,8 +79,8 @@ const AssistantMessage = ({ content }: { content: string }) => {
           {components.map((component) => (
             component.value && (
               <li key={component.name} className="flex justify-between items-start gap-4">
-                <span><strong>{component.name}:</strong> {component.value?.name || "Unknown Part"}</span>
-                <span className="whitespace-nowrap">
+                <span className="min-w-0 break-words flex-1"><strong>{component.name}:</strong> {component.value?.name || "Unknown Part"}</span>
+                <span className="whitespace-nowrap font-medium">
                   {typeof component.value?.price === 'number'
                     ? `$${component.value.price.toFixed(2)}`
                     : 'Price N/A'}
@@ -307,14 +307,14 @@ const AIBuild = () => {
           </div>
 
           {/* Chat Card */}
-          <Card className="card-gradient flex flex-col border-border h-[600px]">
+          <Card className="card-gradient flex flex-col border-border h-[600px] min-w-0">
             <CardHeader className="pb-4 border-b border-white/5">
               <CardTitle className="text-base sm:text-lg flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 Chat with Trinity
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-4 sm:p-6 min-h-0 overflow-hidden">
+            <CardContent className="flex flex-1 flex-col p-4 sm:p-6 min-h-0 min-w-0 overflow-hidden">
               <div className="flex-1 min-h-0 overflow-y-auto pr-2 sm:pr-4 scrollbar-thin mb-4">
                 <div className="space-y-6">
                   {messages.map((message, index) => (
