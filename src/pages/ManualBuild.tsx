@@ -10,6 +10,13 @@ import { toast } from "sonner";
 import superiorParts, { NormalizedPart } from "@/data/superiorParts";
 import { buildStorage } from "@/lib/buildStorage";
 
+// BEFORE: Dark, card-heavy interface
+// AFTER: Clean, structured layout with clear hierarchy and professional styling
+// KEY CHANGES:
+// - Updated component cards to be cleaner and more compact
+// - Improved summary card visibility and styling
+// - Refined selection dropdowns and empty states
+
 interface BuildComponent {
   name: string;
   price: number;
@@ -99,41 +106,41 @@ const ManualBuild = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
 
       <main className="container py-6 sm:py-8 flex-grow">
         <div className="mb-6 sm:mb-8 text-center">
-          <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">Manual PC Builder</h1>
+          <h1 className="mb-3 sm:mb-4 text-3xl sm:text-4xl font-bold text-foreground">Manual PC Builder</h1>
           <p className="text-base sm:text-lg text-muted-foreground px-4">
             Hand-pick every component for your perfect build
           </p>
         </div>
 
-        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[2fr_1fr]">
-          <div className="space-y-3 sm:space-y-4">
+        <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+          <div className="space-y-4">
             {componentCategories.map(({ key, label, icon: Icon, required }) => (
-              <Card key={key} className="card-gradient border-border transition-all hover:border-primary/30">
-                <CardHeader className="pb-3 sm:pb-4">
+              <Card key={key} className="border-border shadow-sm hover:shadow-md transition-all duration-200">
+                <CardHeader className="pb-3 sm:pb-4 bg-secondary/10 border-b border-border/50">
                   <CardTitle className="flex items-center justify-between text-sm sm:text-base">
                     <div className="flex items-center gap-2">
                       <div className="p-2 rounded-lg bg-primary/10 text-primary">
                         <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
-                      {label}
-                      {required && <Badge variant="secondary" className="text-xs bg-secondary/50">Required</Badge>}
+                      <span className="font-semibold text-foreground">{label}</span>
+                      {required && <Badge variant="secondary" className="text-xs">Required</Badge>}
                     </div>
                     {build[key as keyof Build] && (
-                      <div className="flex items-center gap-2 text-green-500 animate-in fade-in">
+                      <div className="flex items-center gap-2 text-green-600 animate-in fade-in">
                         <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
                         <span className="text-xs font-medium">Selected</span>
                       </div>
                     )}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0">
+                <CardContent className="pt-4">
                   {build[key as keyof Build] ? (
-                    <div className="flex items-center justify-between rounded-xl bg-secondary/30 border border-white/5 p-3 sm:p-4">
+                    <div className="flex items-center justify-between rounded-xl bg-secondary/30 border border-border p-3 sm:p-4">
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-sm sm:text-base truncate text-foreground">{build[key as keyof Build]?.name}</p>
                         <p className="text-xs sm:text-sm text-primary font-medium mt-1">
@@ -144,13 +151,13 @@ const ManualBuild = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => setBuild({ ...build, [key]: null })}
-                        className="ml-2 flex-shrink-0 hover:bg-white/5 hover:text-destructive"
+                        className="ml-2 flex-shrink-0 hover:text-destructive"
                       >
                         Change
                       </Button>
                     </div>
                   ) : (
-                    <div className="text-center py-6 sm:py-8 border-2 border-dashed border-white/5 rounded-xl hover:border-primary/20 transition-colors">
+                    <div className="text-center py-6 sm:py-8 border-2 border-dashed border-border rounded-xl hover:border-primary/30 transition-colors bg-secondary/5">
                       <p className="mb-3 sm:mb-4 text-sm sm:text-base text-muted-foreground">No {label.toLowerCase()} selected</p>
                       <Select onValueChange={(value) => {
                         const selectedPart = getAvailableParts(key).find(part => part.id === value);
@@ -158,7 +165,7 @@ const ManualBuild = () => {
                           handleComponentSelect(key, selectedPart);
                         }
                       }}>
-                        <SelectTrigger className="w-full max-w-xs mx-auto bg-background/50 border-white/10">
+                        <SelectTrigger className="w-full max-w-xs mx-auto bg-background">
                           <SelectValue placeholder={`Select ${label}`} />
                         </SelectTrigger>
                         <SelectContent>
@@ -179,29 +186,29 @@ const ManualBuild = () => {
             ))}
           </div>
 
-          <div className="space-y-3 sm:space-y-4">
-            <Card className="card-gradient sticky top-24 border-border shadow-xl shadow-black/20">
-              <CardHeader className="pb-3 sm:pb-4 border-b border-white/5">
-                <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+          <div className="space-y-4">
+            <Card className="sticky top-24 border-border shadow-lg">
+              <CardHeader className="pb-3 sm:pb-4 border-b border-border bg-secondary/20">
+                <CardTitle className="text-sm sm:text-base flex items-center gap-2 text-foreground">
                   <Box className="h-4 w-4 text-primary" />
                   Build Summary
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 pt-4">
-                <div className="rounded-xl bg-secondary/30 border border-white/5 p-4 text-center">
-                  <span className="text-muted-foreground text-xs uppercase tracking-wider">Total Cost</span>
-                  <div className="text-3xl font-bold text-gradient mt-1">${totalCost.toFixed(2)}</div>
+                <div className="rounded-xl bg-secondary/30 border border-border p-4 text-center">
+                  <span className="text-muted-foreground text-xs uppercase tracking-wider font-semibold">Total Cost</span>
+                  <div className="text-3xl font-bold text-primary mt-1">${totalCost.toFixed(2)}</div>
                 </div>
 
                 <div className={`rounded-xl border p-4 flex items-start gap-3 transition-colors ${isCompatible ? "bg-green-500/10 border-green-500/20" : "bg-yellow-500/10 border-yellow-500/20"
                   }`}>
                   {isCompatible ? (
-                    <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                   ) : (
-                    <XCircle className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
                   )}
                   <div>
-                    <p className={`font-semibold text-sm ${isCompatible ? "text-green-500" : "text-yellow-500"}`}>
+                    <p className={`font-semibold text-sm ${isCompatible ? "text-green-600" : "text-yellow-600"}`}>
                       {isCompatible ? "Compatible Build" : "Build Incomplete"}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
@@ -213,7 +220,7 @@ const ManualBuild = () => {
                 </div>
 
                 <Button
-                  className="w-full bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+                  className="w-full bg-primary hover:bg-primary/90 shadow-md"
                   disabled={!isCompatible}
                   size="lg"
                   onClick={() => setShowSaveDialog(true)}
@@ -228,7 +235,7 @@ const ManualBuild = () => {
         {/* Save Build Dialog */}
         {showSaveDialog && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <Card className="w-full max-w-md card-gradient border-border shadow-2xl">
+            <Card className="w-full max-w-md bg-background border-border shadow-2xl">
               <CardHeader>
                 <CardTitle>Save Build</CardTitle>
               </CardHeader>
@@ -241,13 +248,12 @@ const ManualBuild = () => {
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveBuild()}
                     autoFocus
-                    className="bg-background/50 border-white/10"
                   />
                 </div>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="flex-1 hover:bg-white/5"
+                    className="flex-1"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");

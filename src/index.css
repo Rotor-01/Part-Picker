@@ -2,48 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* 
+  IdeaRocket-inspired Design System
+  Primary Font: Inter / Plus Jakarta Sans (Proxy for Centra/Avenir)
+  Primary Color: #0d6efd (Bright Blue)
+  Background: #FFFFFF
+  Text: #212529
 */
 
 @layer base {
   :root {
-    --background: 240 10% 6%;
-    --foreground: 0 0% 98%;
+    /* Light Mode (Default - IdeaRocket Style) */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 210 11% 15%; /* #212529 - Dark Gray for text */
 
-    --card: 240 8% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 210 11% 15%;
 
-    --popover: 240 8% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 11% 15%;
 
-    --primary: 263 70% 50%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 263 70% 65%;
+    --primary: 216 98% 52%; /* #0d6efd - Bright Blue */
+    --primary-foreground: 0 0% 100%; /* White text on blue */
+    --primary-glow: 216 98% 52%; /* Matches primary for glow effects */
 
-    --secondary: 240 6% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 40% 96.1%; /* Very light gray/blue for secondary backgrounds */
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 240 6% 15%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* #6c757d - Muted text */
 
-    --accent: 263 70% 50%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 240 6% 20%;
-    --input: 240 6% 20%;
-    --ring: 263 70% 50%;
+    --border: 214.3 31.8% 91.4%; /* Light gray border */
+    --input: 214.3 31.8% 91.4%;
+    --ring: 216 98% 52%; /* Blue focus ring */
 
-    --radius: 0.75rem;
+    --radius: 0.75rem; /* 12px - Slightly rounded but professional */
 
-    --gradient-primary: linear-gradient(135deg, hsl(263 70% 50%), hsl(263 70% 65%));
-    --gradient-card: linear-gradient(145deg, hsl(240 8% 12%), hsl(240 8% 8%));
-    --gradient-glass: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    --shadow-glow: 0 0 40px hsl(263 70% 50% / 0.3);
-    --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.5);
+    /* Custom Gradients & Shadows */
+    --gradient-primary: linear-gradient(135deg, hsl(216 98% 52%), hsl(200 98% 52%));
+    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 249, 250, 1) 100%);
+    --gradient-glass: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+    
+    --shadow-glow: 0 0 20px hsl(216 98% 52% / 0.15);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  }
+
+  .dark {
+    /* Dark Mode (Preserved but Refined - Professional Dark) */
+    --background: 222.2 84% 4.9%; /* #020817 - Deep Blue/Black */
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%; /* Lighter Blue for Dark Mode */
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-glow: 217.2 91.2% 59.8%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(217.2 91.2% 59.8%), hsl(200 91.2% 59.8%));
+    --gradient-card: linear-gradient(180deg, hsl(222.2 84% 4.9%), hsl(222.2 84% 6%));
+    --gradient-glass: linear-gradient(145deg, rgba(2, 8, 23, 0.9), rgba(2, 8, 23, 0.6));
+    
+    --shadow-glow: 0 0 30px hsl(217.2 91.2% 59.8% / 0.2);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -53,20 +101,12 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    background: radial-gradient(circle at 20% 80%, hsl(263 70% 50% / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(263 70% 50% / 0.05) 0%, transparent 50%),
-      hsl(var(--background));
-    background-attachment: fixed;
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-bold;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-foreground;
   }
 }
 
@@ -79,21 +119,30 @@ All colors MUST be HSL.
   }
 
   .card-gradient {
-    background: var(--gradient-glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--background); /* Solid background for cleaner look in light mode */
+    @apply dark:bg-card; /* Use card color in dark mode */
   }
 
   .glass-panel {
     background: var(--gradient-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    @apply dark:border-white/10;
   }
 
   .glow {
     box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-hover {
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
   }
 
   /* Improved scrollbar styling */
@@ -111,27 +160,16 @@ All colors MUST be HSL.
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--muted-foreground));
+    background-color: hsl(var(--muted-foreground) / 0.3);
     border-radius: 3px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--foreground));
+    background-color: hsl(var(--muted-foreground) / 0.5);
   }
-
-  /* Smooth transitions for better UX */
-  .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
+  
   /* Focus improvements */
   .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  }
-
-  /* Better text selection */
-  ::selection {
-    background-color: hsl(var(--primary) / 0.2);
-    color: hsl(var(--primary-foreground));
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 }
