@@ -159,7 +159,7 @@ const AIBuild = () => {
     {
       role: 'assistant',
       content:
-        "Hello! I'm Trinity, your AI PC building assistant. 🚀\n\nI can help you build the perfect PC based on your budget, use case, and preferences. Just tell me what you need!\n\nWhat kind of PC are you looking to build?",
+        "Hello! I'm Trinity, your Creative Build Assistant. 🚀\n\nI can help you design the perfect workstation or gaming rig based on your specific creative needs. Tell me what you want to create!",
     },
   ]);
   const [input, setInput] = useState('');
@@ -277,40 +277,42 @@ const AIBuild = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Navigation />
 
-      <main className="container py-6 sm:py-8 flex-grow">
-        <div className="mb-6 sm:mb-8 text-center">
-          <h1 className="mb-3 sm:mb-4 text-3xl sm:text-4xl font-bold text-foreground">AI Build Assistant</h1>
-          <p className="text-base sm:text-lg text-muted-foreground px-4">
-            Let AI help you build the perfect PC based on your needs
+      <main className="container py-8 flex-grow">
+        <div className="mb-8 text-center animate-fade-in-up">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 mb-4 shadow-sm">
+            <Sparkles className="w-8 h-8" />
+          </div>
+          <h1 className="mb-3 text-4xl font-bold text-slate-900">Creative Assistant</h1>
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+            Describe your dream workflow, and let Trinity design the perfect machine for you.
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
-          <div className="space-y-6">
+        <div className="grid gap-8 lg:grid-cols-[300px_1fr] max-w-6xl mx-auto">
+          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             {/* Quick Prompts Card */}
-            <Card className="h-fit border-border shadow-sm">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-base sm:text-lg text-foreground">
-                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                  Quick Prompts
+            <Card className="h-fit border-0 shadow-xl shadow-slate-200/50 bg-white/80 backdrop-blur-sm sticky top-24">
+              <CardHeader className="pb-4 border-b border-slate-100">
+                <CardTitle className="flex items-center gap-2 text-lg text-slate-900">
+                  <Sparkles className="h-5 w-5 text-orange-500" />
+                  Quick Starts
                 </CardTitle>
-                <p className="text-xs text-muted-foreground">Click any prompt to get started quickly</p>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-2 pt-4">
                 {quickPrompts.map((prompt, index) => (
                   <Button
                     key={index}
-                    variant="outline"
-                    className="w-full justify-start text-left h-auto p-3 hover:bg-primary/5 hover:text-primary hover:border-primary/30 transition-all"
+                    variant="ghost"
+                    className="w-full justify-start text-left h-auto p-3 hover:bg-orange-50 hover:text-orange-700 rounded-xl transition-all group"
                     onClick={() => handleSend(prompt)}
                     disabled={isLoading}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
-                      <span className="text-sm">{prompt}</span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-slate-200 group-hover:bg-orange-400 transition-colors"></div>
+                      <span className="text-sm font-medium text-slate-600 group-hover:text-orange-700">{prompt}</span>
                     </div>
                   </Button>
                 ))}
@@ -319,31 +321,41 @@ const AIBuild = () => {
           </div>
 
           {/* Chat Card */}
-          <Card className="flex flex-col border-border shadow-md h-[600px] min-w-0 bg-card">
-            <CardHeader className="pb-4 border-b border-border bg-secondary/20">
-              <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-foreground">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                Chat with Trinity
+          <Card className="flex flex-col border-0 shadow-2xl shadow-slate-200/60 h-[700px] min-w-0 bg-white rounded-3xl overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <CardHeader className="pb-4 border-b border-slate-100 bg-white z-10">
+              <CardTitle className="text-lg flex items-center gap-3 text-slate-900">
+                <div className="relative">
+                  <div className="w-3 h-3 rounded-full bg-green-500 border-2 border-white absolute -right-0.5 -bottom-0.5"></div>
+                  <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                    <Bot className="w-6 h-6" />
+                  </div>
+                </div>
+                <div>
+                  <div className="font-bold">Trinity AI</div>
+                  <div className="text-xs font-normal text-slate-500">Always active</div>
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-4 sm:p-6 min-h-0 min-w-0 overflow-hidden">
-              <div className="flex-1 min-h-0 overflow-y-auto pr-2 sm:pr-4 scrollbar-thin mb-4">
-                <div className="space-y-6">
+            <CardContent className="flex flex-1 flex-col p-0 min-h-0 min-w-0 bg-slate-50/50">
+              <div className="flex-1 min-h-0 overflow-y-auto p-6 scrollbar-thin">
+                <div className="space-y-8">
                   {messages.map((message, index) => (
                     <div
                       key={index}
-                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in-up`}
                     >
-                      <div className={`flex gap-3 max-w-[85%] sm:max-w-[80%] ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
+                      <div className={`flex gap-4 max-w-[85%] ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
+                        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${message.role === "user"
+                            ? "bg-gradient-to-br from-orange-500 to-red-500 text-white"
+                            : "bg-white text-orange-600 border border-slate-100"
                           }`}>
-                          {message.role === "user" ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
+                          {message.role === "user" ? <User className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
                         </div>
 
                         <div
-                          className={`rounded-2xl p-4 text-sm sm:text-base shadow-sm break-words overflow-hidden ${message.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-tr-none"
-                            : "bg-background border border-border rounded-tl-none"
+                          className={`rounded-2xl p-6 shadow-sm text-[15px] leading-relaxed ${message.role === "user"
+                              ? "bg-slate-900 text-white rounded-tr-none shadow-slate-200/50"
+                              : "bg-white text-slate-700 border border-slate-100 rounded-tl-none shadow-sm"
                             }`}
                         >
                           {message.role === 'assistant' ? (
@@ -356,14 +368,14 @@ const AIBuild = () => {
                     </div>
                   ))}
                   {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="flex gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center">
-                          <Bot className="w-5 h-5" />
+                    <div className="flex justify-start animate-pulse">
+                      <div className="flex gap-4">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white text-orange-600 border border-slate-100 flex items-center justify-center shadow-sm">
+                          <Bot className="w-6 h-6" />
                         </div>
-                        <div className="rounded-2xl rounded-tl-none bg-background border border-border p-4 flex items-center gap-3 shadow-sm">
-                          <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                          <span className="text-sm text-muted-foreground">Trinity is analyzing components...</span>
+                        <div className="rounded-2xl rounded-tl-none bg-white border border-slate-100 p-4 flex items-center gap-3 shadow-sm">
+                          <Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+                          <span className="text-sm text-slate-500 font-medium">Trinity is designing your build...</span>
                         </div>
                       </div>
                     </div>
@@ -371,39 +383,41 @@ const AIBuild = () => {
                 </div>
               </div>
 
-              <div className="space-y-3 pt-4 border-t border-border bg-background">
-                <div className="flex gap-2">
+              <div className="p-4 bg-white border-t border-slate-100">
+                <div className="relative flex items-center gap-2 max-w-3xl mx-auto">
                   <Input
-                    placeholder="Describe your dream PC (e.g., 'White gaming PC for $2000')..."
+                    placeholder="Type your request here..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSend()}
                     disabled={isLoading}
-                    className="flex-1 text-sm sm:text-base"
+                    className="flex-1 h-14 pl-6 pr-14 rounded-full border-slate-200 bg-slate-50 focus:bg-white text-base shadow-inner"
                   />
                   <Button
                     onClick={() => handleSend()}
                     disabled={isLoading || !input.trim()}
                     size="icon"
-                    className="bg-primary hover:bg-primary/90 shadow-sm"
+                    className="absolute right-2 w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 shadow-md transition-transform hover:scale-105"
                   >
                     {isLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <Loader2 className="h-5 w-5 animate-spin text-white" />
                     ) : (
-                      <Send className="h-4 w-4" />
+                      <Send className="h-5 w-5 text-white" />
                     )}
                   </Button>
                 </div>
-                <Button
-                  onClick={() => setShowSaveDialog(true)}
-                  disabled={messages.length <= 1}
-                  variant="ghost"
-                  className="w-full text-muted-foreground hover:text-primary hover:bg-primary/5"
-                  size="sm"
-                >
-                  <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                  Save This Build
-                </Button>
+                <div className="text-center mt-3">
+                  <Button
+                    onClick={() => setShowSaveDialog(true)}
+                    disabled={messages.length <= 1}
+                    variant="ghost"
+                    className="text-xs text-slate-400 hover:text-orange-600 hover:bg-transparent"
+                    size="sm"
+                  >
+                    <Save className="h-3 w-3 mr-1.5" />
+                    Save this conversation
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -411,26 +425,27 @@ const AIBuild = () => {
 
         {/* Save Build Dialog */}
         {showSaveDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <Card className="w-full max-w-md bg-background border-border shadow-2xl">
-              <CardHeader>
-                <CardTitle>Save Build</CardTitle>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <Card className="w-full max-w-md bg-white border-0 shadow-2xl rounded-3xl overflow-hidden">
+              <CardHeader className="bg-slate-50 border-b border-slate-100 pb-6">
+                <CardTitle className="text-xl text-slate-900">Save Your Build</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 pt-6">
                 <div>
-                  <label className="text-sm font-medium mb-2 block text-muted-foreground">Build Name</label>
+                  <label className="text-sm font-semibold mb-2 block text-slate-700">Name your masterpiece</label>
                   <Input
-                    placeholder="e.g., Gaming Rig 2024"
+                    placeholder="e.g., The Orange Beast"
                     value={buildName}
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveConversation()}
                     autoFocus
+                    className="h-12 bg-slate-50 border-slate-200"
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                   <Button
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 h-12 rounded-xl border-slate-200 hover:bg-slate-50 text-slate-600"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");
@@ -439,10 +454,10 @@ const AIBuild = () => {
                     Cancel
                   </Button>
                   <Button
-                    className="flex-1 bg-primary hover:bg-primary/90"
+                    className="flex-1 h-12 rounded-xl bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20"
                     onClick={handleSaveConversation}
                   >
-                    Save
+                    Save Build
                   </Button>
                 </div>
               </CardContent>

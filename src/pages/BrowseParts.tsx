@@ -185,44 +185,48 @@ const BrowseParts = () => {
                 {filteredParts.map((part, index) => (
                   <Card
                     key={`${part.category}-${index}`}
-                    className={`group border-border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${viewMode === "list" ? "flex flex-row items-center" : "flex flex-col"
+                    className={`group border-0 shadow-sm hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300 overflow-hidden bg-white ${viewMode === "list" ? "flex flex-row items-center" : "flex flex-col"
                       }`}
                   >
-                    <div className={`bg-secondary/20 flex items-center justify-center ${viewMode === "list" ? "w-32 h-32 shrink-0 border-r border-border" : "h-48 w-full border-b border-border"
+                    <div className={`relative overflow-hidden bg-slate-50 flex items-center justify-center p-6 ${viewMode === "list" ? "w-48 h-full shrink-0 border-r border-slate-100" : "h-56 w-full border-b border-slate-100"
                       }`}>
-                      {/* Placeholder for product image */}
-                      <div className="text-primary/20">
-                        <ShoppingCart className="h-12 w-12" />
+                      {/* Image Container with Blend Mode */}
+                      <div className="absolute inset-0 bg-white/50 mix-blend-overlay z-10" />
+                      <div className="relative z-0 w-full h-full flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500">
+                        {/* Placeholder for product image - In real app, use <img src={part.image} className="mix-blend-multiply object-contain" /> */}
+                        <div className="text-slate-300 group-hover:text-orange-300 transition-colors duration-300">
+                          <ShoppingCart className="h-16 w-16" />
+                        </div>
                       </div>
                     </div>
 
-                    <div className={`flex flex-col flex-grow p-5 ${viewMode === "list" ? "flex-row items-center justify-between gap-6" : ""}`}>
-                      <div className="space-y-2 min-w-0">
+                    <div className={`flex flex-col flex-grow p-6 ${viewMode === "list" ? "flex-row items-center justify-between gap-8" : ""}`}>
+                      <div className="space-y-3 min-w-0">
                         <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="text-[10px] uppercase tracking-wider font-semibold">
+                          <Badge variant="secondary" className="text-[10px] uppercase tracking-wider font-bold bg-slate-100 text-slate-600">
                             {part.category}
                           </Badge>
                           {part.price > 500 && (
-                            <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">
+                            <Badge variant="outline" className="text-[10px] border-orange-200 text-orange-600 bg-orange-50">
                               Premium
                             </Badge>
                           )}
                         </div>
-                        <h3 className="font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                        <h3 className="font-bold text-slate-900 text-lg line-clamp-2 group-hover:text-orange-600 transition-colors">
                           {part.name}
                         </h3>
                       </div>
 
-                      <div className={`flex items-center gap-4 ${viewMode === "grid" ? "mt-4 justify-between" : "shrink-0"}`}>
-                        <span className="text-xl font-bold text-primary">
+                      <div className={`flex items-center gap-4 ${viewMode === "grid" ? "mt-6 justify-between pt-4 border-t border-slate-50" : "shrink-0"}`}>
+                        <span className="text-2xl font-bold text-slate-900">
                           ${part.price.toFixed(2)}
                         </span>
                         <Button
                           size="sm"
-                          className="bg-primary hover:bg-primary/90 shadow-sm"
+                          className="rounded-full bg-slate-900 hover:bg-orange-500 text-white shadow-lg shadow-slate-900/10 hover:shadow-orange-500/20 transition-all duration-300 px-6"
                           onClick={() => handleAddToBuild(part.name)}
                         >
-                          <Plus className="h-4 w-4 mr-1" /> Add
+                          <Plus className="h-4 w-4 mr-2" /> Add
                         </Button>
                       </div>
                     </div>
