@@ -29,7 +29,7 @@
 - **Manual Studio**: Classic part picker interface with real-time compatibility checking and cost estimation.
 - **Component Catalog**: Searchable database of PC parts with filtering by category, price, and specs.
 - **Saved Builds**: Local storage-based system to save, view, and manage custom builds.
-- **Brutalist Design**: Distinctive, high-contrast UI with hard shadows and bold typography.
+- **Minimalist Design**: Clean, typography-driven UI with cream backgrounds, generous whitespace, and subtle interactions.
 
 ### Deployment
 - **Platform**: Vercel
@@ -57,11 +57,11 @@ npm run lint         # Run ESLint
 - **Language**: TypeScript
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS + Tailwind Animate
-- **UI Library**: Shadcn UI (Radix UI primitives)
+- **UI Library**: Shadcn UI (Radix UI primitives) - Custom Minimalist Theme
 - **Routing**: React Router DOM v6
 - **State Management**: React Query (TanStack Query) + Local State
 - **Icons**: Lucide React
-- **Notifications**: Sonner + Toaster
+- **Notifications**: Sonner
 
 ## 4. Project Structure
 ```
@@ -133,180 +133,145 @@ project-root/
 
 ### Core Components
 - **App**: Sets up `QueryClientProvider`, `TooltipProvider`, `Toaster`, and `BrowserRouter`. Defines routes.
-- **Navigation**: Responsive navigation bar. Handles theme toggling (light/dark) and mobile menu state.
-- **Layout**: No dedicated layout component; `Navigation` is included in each page or wrapped in `App` (currently included in each page).
+- **Navigation**: Responsive navigation bar with light theme. Features a clean logo, horizontal links, and a mobile menu.
+- **Layout**: No dedicated layout component; `Navigation` is included in each page.
 
 ### UI Library (`src/components/ui`)
 Built on **Radix UI** primitives and styled with **Tailwind CSS**.
-- **Button**: Supports variants (default, destructive, outline, secondary, ghost, link) and sizes.
-- **Input**: Standard text input with focus rings.
-- **Select**: Custom dropdown using Radix Select.
-- **Card**: Composable card components (Header, Title, Content, Footer).
-- **Badge**: Status indicators.
+- **Button**: Minimalist variants (default, outline, ghost). Rounded corners (`rounded-full` often used in pages).
+- **Input**: Clean text input with subtle borders and focus rings.
+- **Select**: Custom dropdown with light background and shadow.
+- **Card**: Clean container with thin borders (`border`) and subtle shadows (`shadow-subtle`).
+- **Badge**: Pill-shaped status indicators with soft colors.
 - **Toast/Sonner**: Notification system for success/error messages.
 
 ### Feature Components
 - **AIBuild**:
   - Manages chat state (`messages`).
-  - Handles API calls to `/api/chat` (mocked/proxied).
-  - Renders `AssistantMessage` to display structured build data.
-  - Integration with `buildStorage` to save generated builds.
+  - Renders `AssistantMessage` with clean, card-based layout for build parts.
+  - Uses `Input` and `Button` for chat interface.
 - **ManualBuild**:
-  - Manages `build` state (object with slots for cpu, gpu, etc.).
-  - Computes `totalCost` and `isCompatible`.
-  - Uses `Select` components populated by `superiorParts` data.
+  - Grid layout for component categories.
+  - Uses `Select` for part choosing.
+  - Real-time cost calculation and compatibility check (CPU + Mobo presence).
 - **BrowseParts**:
-  - Filters `superiorParts` based on search, category, and price.
-  - Toggles between Grid and List views.
+  - Filterable grid/list of parts.
+  - Sidebar with `Select` and `Input` filters.
 - **SavedBuilds**:
-  - Fetches builds from `localStorage` via `buildStorage`.
-  - Displays build summaries and allows deletion.
+  - Card-based grid of saved configurations.
+  - Displays metadata (date, cost, source) with `Badge` and icons.
 
 ## 7. Data Flow & State Management
 
 ### Global State
-- **Theme**: Managed via `localStorage` ('theme') and DOM class manipulation in `Navigation.tsx`.
-- **Server State**: `React Query` is configured but primarily used for potential future API caching. Current data is mostly static or local.
+- **Theme**: Light theme by default. Dark mode structure exists in CSS but is currently unused/hidden.
+- **Server State**: `React Query` configured.
 
 ### Local State
-- **Page Level**: Each page manages its own state (e.g., `ManualBuild` manages the current selection, `AIBuild` manages chat history).
-- **Data Persistence**: `src/lib/buildStorage.ts` acts as a facade for `localStorage`.
-  - Key: `pc-part-dataset-main` (actually `pc-builds` in implementation).
-  - Methods: `getAllBuilds`, `saveBuild`, `deleteBuild`.
+- **Page Level**: Managed via `useState` (e.g., `ManualBuild` selection state, `AIBuild` chat history).
+- **Data Persistence**: `src/lib/buildStorage.ts` interfaces with `localStorage`.
 
 ### Data Source
-- **Static Data**: `src/data/superiorParts.ts` imports raw JSON files from `pc-part-dataset-main` and normalizes them into a consistent `NormalizedPart` interface.
-- **Normalization**: Handles missing prices, categorizes parts (Budget/High End), and formats specs (e.g., "32GB DDR5").
+- **Static Data**: `src/data/superiorParts.ts` normalizes raw JSON data into `NormalizedPart` objects.
 
 ## 8. Routing & Navigation
-Defined in `src/App.tsx` using `react-router-dom`.
+Defined in `src/App.tsx`.
 
 | Path | Component | Purpose |
 |------|-----------|---------|
-| `/` | `Home` | Landing page with hero and feature grid. |
-| `/ai-build` | `AIBuild` | Chat interface for AI build generation. |
-| `/manual-build` | `ManualBuild` | Manual component selection tool. |
-| `/browse-parts` | `BrowseParts` | Searchable catalog of all parts. |
-| `/saved-builds` | `SavedBuilds` | Gallery of user's saved configurations. |
+| `/` | `Home` | Landing page with massive typography hero. |
+| `/ai-build` | `AIBuild` | AI Architect chat interface. |
+| `/manual-build` | `ManualBuild` | Manual component selection studio. |
+| `/browse-parts` | `BrowseParts` | Component catalog. |
+| `/saved-builds` | `SavedBuilds` | User's saved configurations. |
 | `*` | `NotFound` | 404 Error page. |
 
 ## 9. Styling System
-The project uses a **Brutalist** design aesthetic implemented via Tailwind CSS.
+The project uses a **Minimalist, Typography-Driven** design aesthetic.
 
 ### Design Tokens (`tailwind.config.js`)
 - **Colors**:
-  - `primary`: Main action color (black/white depending on mode).
-  - `accent`: Highlight color (often a vibrant purple/blue).
-  - `background`: Page background.
-  - `foreground`: Text color.
+  - `background`: `#FAFAF9` (Cream/Off-white).
+  - `foreground`: `#0A0A0A` (Deep Black).
+  - `primary`: `#2563EB` (Blue Accent).
+  - `secondary`: `#F5F5F4` (Light Gray/Alternate Background).
+  - `border`: `#E5E5E5` (Subtle Gray).
 - **Typography**:
   - `font-sans`: Inter (System UI).
-  - `font-display`: Oswald (Bold headers).
+  - `font-display`: Inter (Clean, bold headers).
 - **Shadows**:
-  - `brutal`: `4px 4px 0px 0px rgba(0,0,0,1)` (Hard shadow).
-- **Animations**:
-  - `accordion-down/up`: For collapsible elements.
-  - `fade-in`, `slide-up`: Entry animations.
+  - `subtle`: `0 1px 3px rgba(0,0,0,0.05)`
+  - `medium`: `0 4px 6px -1px rgba(0, 0, 0, 0.05)...`
+  - `large`: `0 10px 25px -5px rgba(0, 0, 0, 0.05)...`
+- **Border Radius**:
+  - `radius`: `0.5rem` (Rounded corners).
 
 ### Styling Patterns
-- **Borders**: Heavy usage of `border-2 border-black`.
-- **Rounding**: `rounded-none` is used extensively for the brutalist look.
-- **Uppercase**: Headers and buttons often use `uppercase tracking-widest`.
+- **Layouts**: Asymmetric grids, generous padding (`py-24`, `p-10`).
+- **Cards**: White/Cream backgrounds, thin borders, subtle hover lift (`hover:-translate-y-1`).
+- **Typography**: Massive headings (`text-6xl` to `text-9xl`) for impact.
 
 ## 10. Configuration Files
-- **`package.json`**: Defines scripts (`dev`, `build`, `lint`) and dependencies.
-- **`tsconfig.json`**: TypeScript config. Sets path alias `@/*` to `./src/*`.
-- **`vite.config.js`**: Vite config. Sets up React plugin and Vercel plugin. Defines build chunk size limits.
-- **`vercel.json`**: Vercel deployment config. Rewrites `/api/*` to backend functions (if any) and SPA fallback for other routes.
-- **`.eslintrc.cjs`**: Linting rules. Extends `react-hooks` and `typescript-eslint`.
+- **`package.json`**: Dependencies and scripts.
+- **`tsconfig.json`**: TypeScript config (`@/*` alias).
+- **`vite.config.js`**: Vite build config.
+- **`tailwind.config.js`**: Design system definition.
 
 ## 11. Dependencies
-
-### Core Framework
-- `react`, `react-dom`: UI library.
-- `react-router-dom`: Routing.
-
-### UI & Styling
-- `tailwindcss`, `postcss`, `autoprefixer`: CSS framework.
-- `tailwindcss-animate`: Animation utilities.
-- `class-variance-authority`: Component variant management.
-- `clsx`, `tailwind-merge`: Class name utilities.
-- `lucide-react`: Icon set.
-- `@radix-ui/*`: Headless UI primitives for accessibility.
-- `sonner`: Toast notifications.
-
-### Data & State
-- `@tanstack/react-query`: Async state management.
-- `dotenv`: Environment variable management.
-
-### AI
-- `@google/generative-ai`: Gemini API client (used in API routes, likely server-side or proxied).
+- `react`, `react-dom`, `react-router-dom`
+- `tailwindcss`, `tailwindcss-animate`, `clsx`, `tailwind-merge`
+- `lucide-react` (Icons)
+- `@radix-ui/*` (Headless UI)
+- `sonner` (Toasts)
+- `@tanstack/react-query`
 
 ## 12. Features & Functionality
-
-### AI Build Assistant
-- **Flow**: User enters prompt -> System sends to API -> Returns JSON build -> Parsed & Displayed.
-- **Key Tech**: `fetch('/api/chat')`, JSON parsing, `AssistantMessage` component.
-
-### Manual Builder
-- **Flow**: User selects category -> Chooses part -> System updates state -> Checks compatibility.
-- **Compatibility Logic**: Checks if CPU and Motherboard are both selected (basic check).
-
-### Part Browser
-- **Flow**: Lists all parts -> User filters by category/price/search.
-- **Performance**: Uses `useMemo` to cache filtered results.
+- **AI Architect**: Natural language processing (mocked/proxied) to generate builds.
+- **Manual Studio**: Step-by-step part selection with validation.
+- **Catalog**: Search and filter parts by category and price.
+- **Persistence**: Save builds to browser local storage.
 
 ## 13. Code Patterns & Standards
-- **Imports**: Absolute imports using `@/` alias.
-- **Components**: Functional components with hooks.
-- **Props**: TypeScript interfaces for all component props.
-- **Naming**: PascalCase for components, camelCase for functions/vars.
-- **File Structure**: Feature-based pages, shared UI components.
+- **Imports**: Absolute imports (`@/components/...`).
+- **Components**: Functional components, typed props.
+- **Styling**: Utility-first (Tailwind) with `cn()` helper for class merging.
 
 ## 14. Integration Points
-- **AI API**: Expects a POST to `/api/chat`.
-  - Request: `{ conversation: Message[], systemPrompt: string }`
-  - Response: `{ response: string (JSON string) }`
-- **LocalStorage**: Used for `pc-builds` and `theme`.
+- **AI API**: POST `/api/chat` (Expects JSON response with build details).
+- **LocalStorage**: Key `pc-builds`.
 
 ## 15. Build & Deployment
-- **Build**: `npm run build` runs `tsc` then `vite build`.
-- **Output**: `dist/` directory.
-- **Vercel**: Configured for seamless deployment with `vite-plugin-vercel`.
+- **Build**: `npm run build` (Vite).
+- **Output**: `dist/`.
 
 ## 16. Development Guide
-1. **Adding a Component**: Create in `src/components/ui` if generic, or `src/components` if specific. Use `cn` for classes.
-2. **Adding a Page**: Create in `src/pages`, add route in `App.tsx`, add to `Navigation.tsx`.
-3. **Updating Data**: Modify `src/data/superiorParts.ts` or update the raw JSON in `pc-part-dataset-main`.
+1. **Adding Components**: Use `src/components/ui` for atoms.
+2. **Theming**: Update `tailwind.config.js` and `src/index.css` variables.
+3. **Data**: Update `src/data/superiorParts.ts`.
 
 ## 17. Known Issues & Future Considerations
-- **Compatibility Checks**: Currently very basic (only checks if CPU/Mobo exist). Needs socket/chipset matching.
-- **API Mocking**: The `/api/chat` endpoint needs to be implemented (likely as a Vercel Function) for the AI feature to work in production.
-- **Performance**: Large datasets in `superiorParts.ts` might impact bundle size. Consider lazy loading or server-side pagination.
-- **Type Safety**: Some `any` types in data normalization could be tightened.
+- **Compatibility**: Logic is basic (CPU + Mobo check only).
+- **API**: AI endpoint needs backend implementation.
+- **Performance**: Large data set loaded client-side.
 
 ## Appendix A: Code Snippets
-**Data Normalization Example (`superiorParts.ts`):**
-```typescript
-const normalizeCpu = (): NormalizedPart[] => {
-  return limitItems(
-    mapDataset(cpuJson as RawCpu[], (item) => {
-      const price = normalizedPrice(item.price ?? null);
-      if (price == null) return null;
-      return {
-        name: item.name,
-        brand: deriveBrand(item.name),
-        category: categorizePrice(price),
-        price,
+**Button Variant Example:**
+```tsx
+const buttonVariants = cva(
+  "inline-flex items-center... rounded-md...",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
         // ...
-      };
-    })
-  );
-};
+      },
+    },
+  }
+)
 ```
 
 ## Appendix B: Design Assets
-- **Font Family**: Inter (Sans), Oswald (Display).
-- **Primary Color**: `hsl(var(--primary))` (Black/White).
-- **Accent Color**: `hsl(var(--accent))` (Purple/Blue).
-- **Border Radius**: `0` (Hard edges).
+- **Font**: Inter.
+- **Primary Color**: Blue (`#2563EB`).
+- **Background**: Cream (`#FAFAF9`).
+- **Corner Radius**: `0.5rem` (8px).

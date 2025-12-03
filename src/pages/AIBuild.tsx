@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Send, Sparkles, Save, Bot, User } from "lucide-react";
+import { Loader2, Send, Sparkles, Save, Bot } from "lucide-react";
 import { toast } from "sonner";
 import { buildStorage } from "@/lib/buildStorage";
 

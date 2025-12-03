@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const location = useLocation();
@@ -35,7 +35,7 @@ const Navigation = () => {
     >
       <div className="container flex h-20 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-bold text-lg rounded-sm group-hover:bg-primary transition-colors duration-300">
+          <div className="w-8 h-8 bg-foreground text-background flex items-center justify-center font-bold text-lg rounded-sm group-hover:bg-primary transition-colors duration-300">
             T
           </div>
           <span className="text-xl font-bold tracking-tight text-foreground">

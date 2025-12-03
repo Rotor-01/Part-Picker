@@ -59,7 +59,7 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
-        display: ["Inter", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"], // Using Inter for a clean, modern look
+        display: ["Inter", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
       },
       boxShadow: {
         'subtle': '0 1px 3px rgba(0,0,0,0.05)',
