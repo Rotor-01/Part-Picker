@@ -17,10 +17,6 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
-        display: ["Oswald", "Impact", "sans-serif"], // Bold headers
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -60,11 +56,15 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        "none": "0",
+      },
+      fontFamily: {
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
+        display: ["Inter", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"], // Using Inter for a clean, modern look
       },
       boxShadow: {
-        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'brutal': '4px 4px 0px 0px rgba(0,0,0,1)', // Hard shadow for brutalist feel
+        'subtle': '0 1px 3px rgba(0,0,0,0.05)',
+        'medium': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+        'large': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)',
       },
       keyframes: {
         "accordion-down": {
@@ -76,28 +76,16 @@ export default {
           to: { height: "0" },
         },
         "fade-in": {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "slide-up": {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        "reveal": {
-          "0%": { clipPath: "inset(0 100% 0 0)" },
-          "100%": { clipPath: "inset(0 0 0 0)" },
-        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        "slide-up": "slide-up 0.6s ease-out forwards",
-        "reveal": "reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards",
+        "fade-in": "fade-in 0.6s ease-out forwards",
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-  ],
+  plugins: [require("tailwindcss-animate")],
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Send, Sparkles, Save, Bot, User } from "lucide-react";
@@ -55,19 +54,19 @@ const AssistantMessage = ({ content }: { content: string }) => {
 
     return (
       <div className="w-full">
-        <p className="mb-6 text-lg font-medium leading-relaxed">{explanation || "Here is a build based on your request:"}</p>
-        <div className="border-2 border-black p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <ul className="space-y-4">
+        <p className="mb-6 text-base leading-relaxed text-foreground/80">{explanation || "Here is a build based on your request:"}</p>
+        <div className="border border-border rounded-xl overflow-hidden bg-background shadow-subtle">
+          <ul className="divide-y divide-border">
             {components.map((component) => (
               component.value && (
-                <li key={component.name} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-border pb-2 last:border-0">
-                  <span className="font-bold uppercase tracking-wider text-sm text-muted-foreground w-32">
+                <li key={component.name} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-4 hover:bg-secondary/50 transition-colors">
+                  <span className="text-sm font-medium text-muted-foreground w-32">
                     {component.name}
                   </span>
-                  <span className="font-bold text-foreground flex-1 text-right sm:text-left">
+                  <span className="font-medium text-foreground flex-1 text-right sm:text-left">
                     {component.value?.name || "Unknown Part"}
                   </span>
-                  <span className="font-mono font-bold bg-black text-white px-2 py-0.5 text-sm">
+                  <span className="font-mono text-sm font-medium bg-secondary px-2 py-1 rounded-md">
                     {typeof component.value?.price === 'number'
                       ? `$${component.value.price.toFixed(2)}`
                       : 'N/A'}
@@ -76,9 +75,9 @@ const AssistantMessage = ({ content }: { content: string }) => {
               )
             ))}
           </ul>
-          <div className="mt-6 pt-4 border-t-2 border-black flex justify-between items-center">
-            <span className="font-bold uppercase tracking-widest text-lg">Total Cost</span>
-            <span className="text-2xl font-bold font-display text-accent">
+          <div className="p-4 bg-secondary/30 border-t border-border flex justify-between items-center">
+            <span className="font-bold text-sm uppercase tracking-wide text-muted-foreground">Total Cost</span>
+            <span className="text-xl font-bold text-primary">
               {typeof totalCost === 'number'
                 ? `$${totalCost.toFixed(2)}`
                 : 'N/A'}
@@ -103,7 +102,7 @@ const AIBuild = () => {
     {
       role: 'assistant',
       content:
-        "SYSTEM ONLINE. I AM TRINITY. STATE YOUR REQUIREMENTS.",
+        "Hello. I am Trinity. Describe your ideal computer, and I will design it for you.",
     },
   ]);
   const [input, setInput] = useState('');
@@ -207,28 +206,28 @@ const AIBuild = () => {
       <Navigation />
 
       <main className="container py-12 flex-grow">
-        <div className="mb-12 border-b-4 border-black pb-6">
-          <h1 className="text-6xl font-bold uppercase tracking-tighter mb-2 font-display">
-            AI <span className="text-accent">ARCHITECT</span>
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 font-display">
+            AI Architect
           </h1>
-          <p className="text-xl font-mono uppercase tracking-widest text-muted-foreground">
-            // Initialize Build Sequence
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Describe your needs, and let our intelligence engine design the perfect specification.
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[300px_1fr] max-w-7xl mx-auto">
+        <div className="grid gap-8 lg:grid-cols-[300px_1fr] max-w-6xl mx-auto">
           <div className="space-y-6">
             {/* Quick Prompts */}
-            <div className="border-2 border-black p-6 bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sticky top-24">
-              <h3 className="font-bold uppercase tracking-widest mb-6 flex items-center gap-2 border-b-2 border-black pb-2">
-                <Sparkles className="h-5 w-5" />
+            <div className="border border-border rounded-2xl p-6 bg-card shadow-subtle sticky top-24">
+              <h3 className="font-semibold mb-4 flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                <Sparkles className="h-4 w-4" />
                 Quick Commands
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {quickPrompts.map((prompt, index) => (
                   <button
                     key={index}
-                    className="w-full text-left p-3 border-2 border-transparent hover:border-black hover:bg-accent hover:text-white transition-all font-bold uppercase text-sm tracking-tight"
+                    className="w-full text-left p-3 rounded-lg text-sm font-medium text-foreground/80 hover:bg-secondary hover:text-foreground transition-all duration-200"
                     onClick={() => handleSend(prompt)}
                     disabled={isLoading}
                   >
@@ -240,77 +239,79 @@ const AIBuild = () => {
           </div>
 
           {/* Chat Interface */}
-          <div className="flex flex-col border-2 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] h-[800px]">
-            <div className="p-4 border-b-2 border-black bg-accent text-white flex justify-between items-center">
+          <div className="flex flex-col border border-border rounded-2xl bg-card shadow-medium h-[800px] overflow-hidden">
+            <div className="p-4 border-b border-border bg-secondary/30 flex justify-between items-center backdrop-blur-sm">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-green-400 border border-black animate-pulse"></div>
-                <span className="font-mono font-bold uppercase tracking-widest">Trinity_Core_v2.0</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="font-medium text-sm text-muted-foreground">Trinity AI v2.0</span>
               </div>
-              <Bot className="h-6 w-6" />
+              <Bot className="h-5 w-5 text-muted-foreground" />
             </div>
 
-            <div className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-thin">
+            <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-thin">
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div className={`max-w-[85%] ${message.role === "user" ? "ml-auto" : "mr-auto"}`}>
-                    <div className={`p-6 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${message.role === "user"
-                        ? "bg-black text-white"
-                        : "bg-white text-black"
+                    <div className={`p-6 rounded-2xl shadow-subtle ${message.role === "user"
+                      ? "bg-primary text-primary-foreground rounded-br-none"
+                      : "bg-secondary text-foreground rounded-bl-none"
                       }`}>
                       {message.role === 'assistant' ? (
                         <AssistantMessage content={message.content} />
                       ) : (
-                        <div className="font-medium text-lg">{message.content}</div>
+                        <div className="font-medium text-lg leading-relaxed">{message.content}</div>
                       )}
                     </div>
-                    <div className={`mt-2 font-mono text-xs uppercase tracking-widest text-muted-foreground ${message.role === "user" ? "text-right" : "text-left"
+                    <div className={`mt-2 text-xs font-medium text-muted-foreground ${message.role === "user" ? "text-right" : "text-left"
                       }`}>
-                      {message.role === "user" ? "User_Input" : "System_Response"}
+                      {message.role === "user" ? "You" : "Trinity"}
                     </div>
                   </div>
                 </div>
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="p-6 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-3">
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    <span className="font-mono font-bold uppercase animate-pulse">Processing Data...</span>
+                  <div className="p-4 rounded-2xl bg-secondary text-foreground rounded-bl-none flex items-center gap-3">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm font-medium">Processing...</span>
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="p-6 border-t-2 border-black bg-slate-50">
-              <div className="flex gap-4">
+            <div className="p-4 border-t border-border bg-background">
+              <div className="flex gap-3">
                 <Input
-                  placeholder="ENTER COMMAND..."
+                  placeholder="Describe your ideal build..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   disabled={isLoading}
-                  className="h-14 rounded-none border-2 border-black bg-white focus:ring-0 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow font-mono text-lg placeholder:text-slate-400"
+                  className="h-12 rounded-full px-6 border-border focus:ring-primary/20 bg-secondary/30"
                 />
                 <Button
                   onClick={() => handleSend()}
                   disabled={isLoading || !input.trim()}
-                  className="h-14 w-14 rounded-none border-2 border-black bg-accent hover:bg-black text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  size="icon"
+                  className="h-12 w-12 rounded-full shrink-0 shadow-subtle hover:shadow-medium transition-all"
                 >
                   {isLoading ? (
-                    <Loader2 className="h-6 w-6 animate-spin" />
+                    <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
-                    <Send className="h-6 w-6" />
+                    <Send className="h-5 w-5" />
                   )}
                 </Button>
               </div>
-              <div className="flex justify-center mt-4">
+              <div className="flex justify-center mt-3">
                 <Button
                   onClick={() => setShowSaveDialog(true)}
                   disabled={messages.length <= 1}
                   variant="ghost"
-                  className="text-xs uppercase tracking-widest hover:bg-transparent hover:underline"
+                  size="sm"
+                  className="text-xs font-medium text-muted-foreground hover:text-foreground"
                 >
                   <Save className="h-3 w-3 mr-2" />
                   Save Configuration
@@ -322,25 +323,25 @@ const AIBuild = () => {
 
         {/* Save Build Dialog */}
         {showSaveDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <div className="w-full max-w-md bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] p-8">
-              <h2 className="text-2xl font-bold uppercase tracking-tighter mb-6 font-display">Save Configuration</h2>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <div className="w-full max-w-md bg-background border border-border rounded-2xl shadow-large p-8">
+              <h2 className="text-2xl font-bold tracking-tight mb-6">Save Configuration</h2>
               <div className="space-y-6">
                 <div>
-                  <label className="font-bold uppercase text-sm mb-2 block">Build Identifier</label>
+                  <label className="text-sm font-medium mb-2 block text-muted-foreground">Build Name</label>
                   <Input
-                    placeholder="ENTER NAME..."
+                    placeholder="e.g., Gaming Beast 2024"
                     value={buildName}
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveConversation()}
                     autoFocus
-                    className="h-12 rounded-none border-2 border-black font-mono"
+                    className="h-12 rounded-lg"
                   />
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <Button
                     variant="outline"
-                    className="flex-1 h-12 rounded-none border-2 border-black hover:bg-slate-100 font-bold uppercase"
+                    className="flex-1 h-12 rounded-lg"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");
@@ -349,7 +350,7 @@ const AIBuild = () => {
                     Cancel
                   </Button>
                   <Button
-                    className="flex-1 h-12 rounded-none bg-accent text-white border-2 border-black hover:bg-black font-bold uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                    className="flex-1 h-12 rounded-lg"
                     onClick={handleSaveConversation}
                   >
                     Save

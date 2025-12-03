@@ -2,84 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  TRINITY - Accordion Productions Inspired Theme
-  Style: Brutalist, Minimalist, Typography-First
-*/
-
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
-
 @layer base {
   :root {
-    /* Light Mode (Default - Cream/Black/Red) */
-    --background: 44 8% 98%;
-    /* #FAFAF9 Stone-50 */
-    --foreground: 0 0% 3.9%;
-    /* #0A0A0A Neutral-950 */
+    /* Light Theme (Default) */
+    --background: 30 20% 98%;
+    /* #FAFAF9 */
+    --foreground: 0 0% 4%;
+    /* #0A0A0A */
 
     --card: 0 0% 100%;
-    /* White */
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 0 0% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover-foreground: 0 0% 4%;
 
-    --primary: 0 0% 9%;
-    /* Almost Black */
-    --primary-foreground: 0 0% 98%;
+    --primary: 221 83% 53%;
+    /* #2563EB (Blue Accent) */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 44 8% 92%;
-    /* Stone-200 */
+    --secondary: 30 10% 96%;
+    /* #F5F5F4 */
     --secondary-foreground: 0 0% 9%;
 
-    --muted: 44 8% 92%;
+    --muted: 30 10% 96%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 0 72% 51%;
-    /* #DC2626 Red-600 - Bold Accent */
-    --accent-foreground: 0 0% 98%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 44 8% 90%;
-    /* Subtle border */
-    --input: 44 8% 90%;
-    --ring: 0 0% 9%;
+    --border: 0 0% 90%;
+    /* #E5E5E5 */
+    --input: 0 0% 90%;
+    --ring: 221 83% 53%;
 
-    --radius: 0rem;
-    /* Sharp corners for brutalist feel */
+    --radius: 0.5rem;
   }
 
   .dark {
-    /* Dark Mode - Inverted but keeping the brutalist feel */
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Dark Theme (Optional/Hidden for now as per request for light theme, but kept for structure) */
+    --background: 0 0% 4%;
+    --foreground: 30 20% 98%;
 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 30 20% 98%;
 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 30 20% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 9%;
+    --secondary-foreground: 30 20% 98%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 0 0% 9%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 0 72% 51%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 221 83% 53%;
   }
 }
 
@@ -89,8 +79,7 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 
   h1,
@@ -99,54 +88,6 @@
   h4,
   h5,
   h6 {
-    font-family: 'Oswald', sans-serif;
-    @apply font-bold uppercase tracking-tight;
-  }
-
-  h1 {
-    @apply text-5xl md:text-7xl lg:text-8xl leading-none;
-  }
-
-  h2 {
-    @apply text-3xl md:text-5xl leading-tight;
-  }
-}
-
-@layer utilities {
-  .text-stroke {
-    -webkit-text-stroke: 1px currentColor;
-    color: transparent;
-  }
-
-  .text-stroke-sm {
-    -webkit-text-stroke: 0.5px currentColor;
-    color: transparent;
-  }
-
-  /* Brutalist Utilities */
-  .brutal-border {
-    @apply border-2 border-black dark:border-white;
-  }
-
-  .brutal-shadow {
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-  }
-
-  .brutal-shadow-sm {
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
-  }
-
-  .brutal-hover:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
-  }
-
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    @apply font-display tracking-tight text-foreground;
   }
 }
