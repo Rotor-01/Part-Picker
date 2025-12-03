@@ -3,98 +3,83 @@
 @tailwind utilities;
 
 /* 
-  IdeaRocket-inspired Design System
-  Primary Font: Plus Jakarta Sans
-  Primary Color: Orange/Amber Gradient
-  Background: #FFFFFF
-  Text: Slate-900 / Slate-500
+  TRINITY - Accordion Productions Inspired Theme
+  Style: Brutalist, Minimalist, Typography-First
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
 
 @layer base {
   :root {
-    /* Light Mode (Default - IdeaRocket Style) */
-    --background: 0 0% 100%;
-    /* #FFFFFF */
-    --foreground: 222.2 47.4% 11.2%;
-    /* Slate-900 */
+    /* Light Mode (Default - Cream/Black/Red) */
+    --background: 44 8% 98%;
+    /* #FAFAF9 Stone-50 */
+    --foreground: 0 0% 3.9%;
+    /* #0A0A0A Neutral-950 */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
+    /* White */
+    --card-foreground: 0 0% 3.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 0 0% 3.9%;
 
-    /* Agency Orange: Vibrant, energetic, professional */
-    --primary: 24.6 95% 53.1%;
-    /* Orange-500 */
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 24.6 95% 53.1%;
+    --primary: 0 0% 9%;
+    /* Almost Black */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    /* Slate-100 */
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 44 8% 92%;
+    /* Stone-200 */
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    /* Slate-500 */
+    --muted: 44 8% 92%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 72% 51%;
+    /* #DC2626 Red-600 - Bold Accent */
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    /* Slate-200 */
-    --input: 214.3 31.8% 91.4%;
-    --ring: 24.6 95% 53.1%;
-    /* Orange focus ring */
+    --border: 44 8% 90%;
+    /* Subtle border */
+    --input: 44 8% 90%;
+    --ring: 0 0% 9%;
 
-    --radius: 1rem;
-    /* 16px - Soft rounded corners */
-
-    /* Custom Gradients & Shadows */
-    --gradient-primary: linear-gradient(135deg, hsl(24.6 95% 53.1%), hsl(12 90% 55%));
-    /* Orange to Red-Orange */
-    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 1) 100%);
-
-    --shadow-glow: 0 0 20px rgba(249, 115, 22, 0.15);
-    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --shadow-card-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    --radius: 0rem;
+    /* Sharp corners for brutalist feel */
   }
 
   .dark {
-    /* Dark Mode (Preserved but subordinated) */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark Mode - Inverted but keeping the brutalist feel */
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 24.6 95% 53.1%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --primary-glow: 24.6 95% 53.1%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 72% 51%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 24.6 95% 53.1%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
   }
 }
 
@@ -104,9 +89,8 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased transition-colors duration-300;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
   }
 
   h1,
@@ -115,72 +99,54 @@
   h4,
   h5,
   h6 {
-    @apply font-bold tracking-tight text-foreground;
+    font-family: 'Oswald', sans-serif;
+    @apply font-bold uppercase tracking-tight;
+  }
+
+  h1 {
+    @apply text-5xl md:text-7xl lg:text-8xl leading-none;
+  }
+
+  h2 {
+    @apply text-3xl md:text-5xl leading-tight;
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .text-stroke {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
   }
 
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
+  .text-stroke-sm {
+    -webkit-text-stroke: 0.5px currentColor;
+    color: transparent;
   }
 
-  .card-gradient {
-    background: var(--gradient-card);
+  /* Brutalist Utilities */
+  .brutal-border {
+    @apply border-2 border-black dark:border-white;
   }
 
-  .glass-panel {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+  .brutal-shadow {
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   }
 
-  .glow {
-    box-shadow: var(--shadow-glow);
+  .brutal-shadow-sm {
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
   }
 
-  .shadow-hover {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-card);
+  .brutal-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
   }
 
-  .shadow-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  /* Improved scrollbar styling */
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted-foreground)) transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--muted-foreground) / 0.3);
-    border-radius: 3px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--muted-foreground) / 0.5);
-  }
-
-  /* Focus improvements */
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

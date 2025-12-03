@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Cpu, HardDrive, Zap, Box, CheckCircle2, XCircle, MemoryStick, Save } from "lucide-react";
+import { Cpu, HardDrive, Zap, Box, CheckCircle2, XCircle, MemoryStick, Save, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import superiorParts, { NormalizedPart } from "@/data/superiorParts";
@@ -44,7 +44,6 @@ const ManualBuild = () => {
 
   const isCompatible = build.cpu !== null && build.motherboard !== null;
 
-  // Get available parts for each category
   const getAvailableParts = (category: string) => {
     const parts = superiorParts[category as keyof typeof superiorParts];
     if (!Array.isArray(parts)) return [];
@@ -94,82 +93,79 @@ const ManualBuild = () => {
       setShowSaveDialog(false);
     } catch (error) {
       toast.error("Failed to save build");
-      console.error(error);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-background font-sans">
       <Navigation />
 
-      <main className="container py-8 flex-grow">
-        <div className="mb-8 text-center animate-fade-in-up">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 mb-4 shadow-sm">
-            <Box className="w-8 h-8" />
-          </div>
-          <h1 className="mb-3 text-4xl font-bold text-slate-900">Manual Builder</h1>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-            Hand-pick every component for your perfect build with our precision tools.
+      <main className="container py-12 flex-grow">
+        <div className="mb-12 border-b-4 border-black pb-6">
+          <h1 className="text-6xl font-bold uppercase tracking-tighter mb-2 font-display">
+            MANUAL <span className="text-accent">STUDIO</span>
+          </h1>
+          <p className="text-xl font-mono uppercase tracking-widest text-muted-foreground">
+            // Precision Component Selection
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[2fr_1fr] max-w-6xl mx-auto">
-          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+        <div className="grid gap-8 lg:grid-cols-[2fr_1fr] max-w-7xl mx-auto">
+          <div className="space-y-6">
             {componentCategories.map(({ key, label, icon: Icon, required }) => (
-              <Card key={key} className="border-0 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-300 overflow-visible">
-                <CardHeader className="pb-4 border-b border-slate-100 bg-white rounded-t-2xl">
-                  <CardTitle className="flex items-center justify-between text-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-orange-50 text-orange-600">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <span className="font-bold text-slate-900">{label}</span>
-                      {required && <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-500 font-medium">Required</Badge>}
+              <div key={key} className="border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-all duration-200">
+                <div className="p-4 border-b-2 border-black bg-slate-50 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-black text-white">
+                      <Icon className="h-5 w-5" />
                     </div>
-                    {build[key as keyof Build] && (
-                      <div className="flex items-center gap-2 text-green-600 animate-in fade-in bg-green-50 px-3 py-1 rounded-full">
-                        <CheckCircle2 className="h-4 w-4" />
-                        <span className="text-xs font-bold uppercase tracking-wide">Selected</span>
-                      </div>
-                    )}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6 bg-white rounded-b-2xl">
+                    <span className="font-bold uppercase tracking-wider text-lg">{label}</span>
+                    {required && <span className="text-xs font-bold bg-accent text-white px-2 py-0.5 uppercase">Required</span>}
+                  </div>
+                  {build[key as keyof Build] && (
+                    <div className="flex items-center gap-2 text-green-600 font-bold uppercase text-sm">
+                      <CheckCircle2 className="h-5 w-5" />
+                      <span>Selected</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-6">
                   {build[key as keyof Build] ? (
-                    <div className="flex items-center justify-between rounded-2xl bg-slate-50 border border-slate-100 p-4 group hover:border-orange-200 transition-colors">
+                    <div className="flex items-center justify-between bg-white border-2 border-black p-4">
                       <div className="flex-1 min-w-0">
-                        <p className="font-bold text-lg truncate text-slate-900">{build[key as keyof Build]?.name}</p>
-                        <p className="text-sm text-orange-600 font-bold mt-1">
+                        <p className="font-bold text-lg truncate">{build[key as keyof Build]?.name}</p>
+                        <p className="text-xl font-mono font-bold text-accent mt-1">
                           ${build[key as keyof Build]?.price}
                         </p>
                       </div>
                       <Button
                         variant="ghost"
-                        size="sm"
+                        size="icon"
                         onClick={() => setBuild({ ...build, [key]: null })}
-                        className="ml-4 flex-shrink-0 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full"
+                        className="ml-4 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-none"
                       >
-                        Change
+                        <Trash2 className="h-5 w-5" />
                       </Button>
                     </div>
                   ) : (
-                    <div className="text-center py-8 border-2 border-dashed border-slate-200 rounded-2xl hover:border-orange-300 hover:bg-orange-50/30 transition-all duration-300">
-                      <p className="mb-4 text-slate-500 font-medium">No {label.toLowerCase()} selected</p>
+                    <div className="text-center py-6 border-2 border-dashed border-slate-300 hover:border-black hover:bg-slate-50 transition-all">
+                      <p className="mb-4 text-muted-foreground font-mono uppercase text-sm">No component selected</p>
                       <Select onValueChange={(value) => {
                         const selectedPart = getAvailableParts(key).find(part => part.id === value);
                         if (selectedPart) {
                           handleComponentSelect(key, selectedPart);
                         }
                       }}>
-                        <SelectTrigger className="w-full max-w-sm mx-auto bg-white border-slate-200 shadow-sm h-12 rounded-xl focus:ring-orange-500/20">
-                          <SelectValue placeholder={`Select ${label}`} />
+                        <SelectTrigger className="w-full max-w-sm mx-auto bg-white border-2 border-black rounded-none h-12 font-bold focus:ring-0 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                          <SelectValue placeholder={`SELECT ${label.toUpperCase()}`} />
                         </SelectTrigger>
-                        <SelectContent className="max-h-[300px] shadow-xl shadow-slate-200/50 border-0 rounded-xl">
+                        <SelectContent className="border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                           {getAvailableParts(key).map((part) => (
-                            <SelectItem key={part.id} value={part.id} className="focus:bg-orange-50 focus:text-orange-900 cursor-pointer py-3">
+                            <SelectItem key={part.id} value={part.id} className="cursor-pointer py-3 focus:bg-accent focus:text-white rounded-none font-medium">
                               <div className="flex justify-between items-center w-full gap-4">
-                                <span className="truncate font-medium">{part.name}</span>
-                                <span className="text-orange-600 font-bold ml-2">${part.price}</span>
+                                <span className="truncate">{part.name}</span>
+                                <span className="font-bold font-mono ml-2">${part.price}</span>
                               </div>
                             </SelectItem>
                           ))}
@@ -177,82 +173,78 @@ const ManualBuild = () => {
                       </Select>
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
 
-          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <Card className="sticky top-24 border-0 shadow-2xl shadow-slate-200/60 bg-white rounded-3xl overflow-hidden">
-              <CardHeader className="pb-4 border-b border-slate-100 bg-slate-50/50">
-                <CardTitle className="text-lg flex items-center gap-2 text-slate-900">
-                  <Box className="h-5 w-5 text-orange-500" />
+          <div className="space-y-6">
+            <div className="sticky top-24 border-2 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+              <div className="p-4 border-b-2 border-black bg-black text-white">
+                <h3 className="font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Box className="h-5 w-5" />
                   Build Summary
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 pt-6">
-                <div className="rounded-2xl bg-slate-900 p-6 text-center shadow-lg shadow-slate-900/20 text-white relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-orange-500/20 rounded-full blur-2xl -mr-10 -mt-10"></div>
-                  <span className="text-slate-400 text-xs uppercase tracking-widest font-bold relative z-10">Total Estimated Cost</span>
-                  <div className="text-4xl font-bold text-white mt-2 relative z-10">${totalCost.toFixed(2)}</div>
+                </h3>
+              </div>
+
+              <div className="p-6 space-y-6">
+                <div className="bg-slate-100 p-6 border-2 border-black text-center">
+                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground block mb-2">Total Estimated Cost</span>
+                  <div className="text-5xl font-bold font-display text-accent">${totalCost.toFixed(2)}</div>
                 </div>
 
-                <div className={`rounded-2xl p-4 flex items-start gap-3 transition-all duration-300 ${isCompatible ? "bg-green-50 border border-green-100" : "bg-amber-50 border border-amber-100"
-                  }`}>
+                <div className={`p-4 border-2 border-black flex items-start gap-3 ${isCompatible ? "bg-green-100" : "bg-amber-100"}`}>
                   {isCompatible ? (
-                    <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-6 w-6 text-green-700 flex-shrink-0" />
                   ) : (
-                    <XCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <XCircle className="h-6 w-6 text-amber-700 flex-shrink-0" />
                   )}
                   <div>
-                    <p className={`font-bold text-sm ${isCompatible ? "text-green-700" : "text-amber-700"}`}>
-                      {isCompatible ? "Compatible Build" : "Build Incomplete"}
+                    <p className="font-bold uppercase text-sm mb-1">
+                      {isCompatible ? "System Compatible" : "Incomplete Build"}
                     </p>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    <p className="text-xs font-mono leading-relaxed opacity-80">
                       {isCompatible
-                        ? "All selected components are compatible."
-                        : "Please select all required components to validate compatibility."}
+                        ? "All systems nominal. Ready for fabrication."
+                        : "Critical components missing. Cannot validate."}
                     </p>
                   </div>
                 </div>
 
                 <Button
-                  className="w-full h-12 text-base shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40"
+                  className="w-full h-14 text-lg font-bold uppercase tracking-wider rounded-none bg-black text-white hover:bg-accent shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all border-2 border-transparent"
                   disabled={!isCompatible}
-                  size="lg"
                   onClick={() => setShowSaveDialog(true)}
                 >
-                  <Save className="w-4 h-4 mr-2" />
+                  <Save className="w-5 h-5 mr-2" />
                   Save Configuration
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Save Build Dialog */}
         {showSaveDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <Card className="w-full max-w-md bg-white border-0 shadow-2xl rounded-3xl overflow-hidden">
-              <CardHeader className="bg-slate-50 border-b border-slate-100 pb-6">
-                <CardTitle className="text-xl text-slate-900">Save Your Build</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 pt-6">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <div className="w-full max-w-md bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] p-8">
+              <h2 className="text-2xl font-bold uppercase tracking-tighter mb-6 font-display">Save Configuration</h2>
+              <div className="space-y-6">
                 <div>
-                  <label className="text-sm font-semibold mb-2 block text-slate-700">Name your masterpiece</label>
+                  <label className="font-bold uppercase text-sm mb-2 block">Build Identifier</label>
                   <Input
-                    placeholder="e.g., The Orange Beast"
+                    placeholder="ENTER NAME..."
                     value={buildName}
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveBuild()}
                     autoFocus
-                    className="h-12 bg-slate-50 border-slate-200"
+                    className="h-12 rounded-none border-2 border-black font-mono"
                   />
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   <Button
                     variant="outline"
-                    className="flex-1 h-12 rounded-xl border-slate-200 hover:bg-slate-50 text-slate-600"
+                    className="flex-1 h-12 rounded-none border-2 border-black hover:bg-slate-100 font-bold uppercase"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");
@@ -261,14 +253,14 @@ const ManualBuild = () => {
                     Cancel
                   </Button>
                   <Button
-                    className="flex-1 h-12 rounded-xl bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                    className="flex-1 h-12 rounded-none bg-accent text-white border-2 border-black hover:bg-black font-bold uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     onClick={handleSaveBuild}
                   >
-                    Save Build
+                    Save
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         )}
       </main>

@@ -7,20 +7,11 @@ import { Loader2, Send, Sparkles, Save, Bot, User } from "lucide-react";
 import { toast } from "sonner";
 import { buildStorage } from "@/lib/buildStorage";
 
-// BEFORE: Dark chat interface with heavy gradients
-// AFTER: Clean, professional chat interface with distinct message bubbles
-// KEY CHANGES:
-// - Updated message bubbles for better readability (Blue for user, White for AI)
-// - Cleaned up input area and quick prompts
-// - Improved typography and spacing
-// - Added professional loading states
-
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-// Helper function to generate system prompt with parts data
 const generateSystemPrompt = (): string => {
   return `
 You are 'Trinity', an expert PC building assistant. Your primary goal is to help users build a PC by providing a list of components that match their budget, needs (e.g., gaming, video editing, office work), and preferences.
@@ -39,31 +30,13 @@ The JSON object must have the following structure:
   "totalCost": 1234.56,
   "explanation": "A brief explanation of why these parts were chosen for the user's specific needs."
 }
-
-Example User Query: "I need a gaming PC for under $1000"
-
-Example JSON Response:
-{
-  "cpu": { "name": "AMD Ryzen 5 5600X", "price": 199.99 },
-  "motherboard": { "name": "MSI B550-A PRO", "price": 139.99 },
-  "gpu": { "name": "NVIDIA GeForce RTX 3060", "price": 329.99 },
-  "ram": { "name": "Corsair Vengeance LPX 16GB (2x8GB) DDR4-3200", "price": 54.99 },
-  "storage": { "name": "Western Digital Blue SN570 1TB NVMe SSD", "price": 79.99 },
-  "psu": { "name": "EVGA 600 W1, 80+ WHITE 600W", "price": 49.99 },
-  "case": { "name": "NZXT H510", "price": 79.99 },
-  "totalCost": 934.93,
-  "explanation": "This build provides excellent 1080p gaming performance and stays comfortably under your $1000 budget. The Ryzen 5 5600X is a great value CPU, and the RTX 3060 can handle most modern games at high settings."
-}
 `;
 };
-
-
 
 const AssistantMessage = ({ content }: { content: string }) => {
   try {
     const build = JSON.parse(content);
 
-    // Ensure build is an object
     if (!build || typeof build !== 'object') {
       throw new Error('Invalid build data');
     }
@@ -82,28 +55,30 @@ const AssistantMessage = ({ content }: { content: string }) => {
 
     return (
       <div className="w-full">
-        <p className="mb-4 text-foreground/80 leading-relaxed">{explanation || "Here is a build based on your request:"}</p>
-        <div className="bg-secondary/50 rounded-lg p-4 border border-border">
-          <ul className="space-y-3">
+        <p className="mb-6 text-lg font-medium leading-relaxed">{explanation || "Here is a build based on your request:"}</p>
+        <div className="border-2 border-black p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <ul className="space-y-4">
             {components.map((component) => (
               component.value && (
-                <li key={component.name} className="flex justify-between items-start gap-4 text-sm">
-                  <span className="min-w-0 break-words flex-1 text-muted-foreground">
-                    <strong className="text-foreground font-medium">{component.name}:</strong> {component.value?.name || "Unknown Part"}
+                <li key={component.name} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-border pb-2 last:border-0">
+                  <span className="font-bold uppercase tracking-wider text-sm text-muted-foreground w-32">
+                    {component.name}
                   </span>
-                  <span className="whitespace-nowrap font-semibold text-primary">
+                  <span className="font-bold text-foreground flex-1 text-right sm:text-left">
+                    {component.value?.name || "Unknown Part"}
+                  </span>
+                  <span className="font-mono font-bold bg-black text-white px-2 py-0.5 text-sm">
                     {typeof component.value?.price === 'number'
                       ? `$${component.value.price.toFixed(2)}`
-                      : 'Price N/A'}
+                      : 'N/A'}
                   </span>
                 </li>
               )
             ))}
           </ul>
-          <hr className="my-4 border-border" />
-          <div className="flex justify-between font-bold text-lg">
-            <span>Total Cost:</span>
-            <span className="text-primary">
+          <div className="mt-6 pt-4 border-t-2 border-black flex justify-between items-center">
+            <span className="font-bold uppercase tracking-widest text-lg">Total Cost</span>
+            <span className="text-2xl font-bold font-display text-accent">
               {typeof totalCost === 'number'
                 ? `$${totalCost.toFixed(2)}`
                 : 'N/A'}
@@ -113,42 +88,11 @@ const AssistantMessage = ({ content }: { content: string }) => {
       </div>
     );
   } catch (error) {
-    // If parsing fails, render as plain text with basic formatting
     return (
-      <div className="space-y-2 text-foreground/90">
-        {content.split('\n').map((line, i) => {
-          if (line.trim().match(/^[\d]+\./)) {
-            return (
-              <div key={i} className="flex items-start gap-2">
-                <span className="text-primary font-semibold mt-0.5">{line.match(/^[\d]+/)?.[0]}.</span>
-                <span>{line.replace(/^[\d]+\.\s*/, '')}</span>
-              </div>
-            );
-          }
-          if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
-            return (
-              <div key={i} className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>{line.replace(/^[•-]\s*/, '')}</span>
-              </div>
-            );
-          }
-          if (line.includes('**')) {
-            const parts = line.split(/(\*\*.*?\*\*)/g);
-            return (
-              <div key={i}>
-                {parts.map((part, j) =>
-                  part.startsWith('**') && part.endsWith('**') ? (
-                    <strong key={j} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>
-                  ) : (
-                    <span key={j}>{part}</span>
-                  )
-                )}
-              </div>
-            );
-          }
-          return <div key={i}>{line}</div>;
-        })}
+      <div className="space-y-2 text-foreground font-medium">
+        {content.split('\n').map((line, i) => (
+          <div key={i}>{line}</div>
+        ))}
       </div>
     );
   }
@@ -159,7 +103,7 @@ const AIBuild = () => {
     {
       role: 'assistant',
       content:
-        "Hello! I'm Trinity, your Creative Build Assistant. 🚀\n\nI can help you design the perfect workstation or gaming rig based on your specific creative needs. Tell me what you want to create!",
+        "SYSTEM ONLINE. I AM TRINITY. STATE YOUR REQUIREMENTS.",
     },
   ]);
   const [input, setInput] = useState('');
@@ -175,8 +119,6 @@ const AIBuild = () => {
     'Office/Productivity PC $600',
     'Content creation workstation $2000',
   ];
-
-  // --- Main Send Handler ---
 
   const handleSend = async (message?: string) => {
     const messageToSend = message || input;
@@ -201,19 +143,10 @@ const AIBuild = () => {
       });
 
       if (!response.ok) {
-        let errorMessage = `API Error: ${response.statusText} (Status: ${response.status})`;
-        try {
-          const errorResult = await response.json();
-          errorMessage = errorResult.error || errorMessage;
-        } catch (parseError) {
-          // If we can't parse the error response as JSON, use the default message
-          console.warn('Could not parse error response as JSON:', parseError);
-        }
-        throw new Error(errorMessage);
+        throw new Error(`API Error: ${response.statusText}`);
       }
 
       const result = await response.json();
-
 
       const assistantMessage: Message = {
         role: 'assistant',
@@ -224,8 +157,6 @@ const AIBuild = () => {
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       toast.error(`Failed to get AI response: ${errorMessage}`);
-      console.error(error);
-      // Remove the user's message if the API call failed
       setMessages((prev) => prev.slice(0, -1));
     } finally {
       setIsLoading(false);
@@ -244,7 +175,6 @@ const AIBuild = () => {
       const { totalCost, ...components } = jsonResponse;
       return { components, totalCost };
     } catch (error) {
-      console.error("Failed to parse AI response:", error);
       return { components: {}, totalCost: 0 };
     }
   };
@@ -256,196 +186,161 @@ const AIBuild = () => {
     }
 
     try {
-      // Extract parts from the AI conversation
       const { components, totalCost } = extractPartsFromConversation();
-
-      // Save the AI conversation as a build record
       buildStorage.saveBuild({
         name: buildName,
         totalCost,
         components,
         source: "ai",
-        conversation: messages, // Store the entire conversation for reference
+        conversation: messages,
       });
       toast.success(`Build "${buildName}" saved successfully!`);
       setBuildName("");
       setShowSaveDialog(false);
     } catch (error) {
       toast.error("Failed to save build");
-      console.error(error);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-background font-sans">
       <Navigation />
 
-      <main className="container py-8 flex-grow">
-        <div className="mb-8 text-center animate-fade-in-up">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 mb-4 shadow-sm">
-            <Sparkles className="w-8 h-8" />
-          </div>
-          <h1 className="mb-3 text-4xl font-bold text-slate-900">Creative Assistant</h1>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-            Describe your dream workflow, and let Trinity design the perfect machine for you.
+      <main className="container py-12 flex-grow">
+        <div className="mb-12 border-b-4 border-black pb-6">
+          <h1 className="text-6xl font-bold uppercase tracking-tighter mb-2 font-display">
+            AI <span className="text-accent">ARCHITECT</span>
+          </h1>
+          <p className="text-xl font-mono uppercase tracking-widest text-muted-foreground">
+            // Initialize Build Sequence
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[300px_1fr] max-w-6xl mx-auto">
-          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            {/* Quick Prompts Card */}
-            <Card className="h-fit border-0 shadow-xl shadow-slate-200/50 bg-white/80 backdrop-blur-sm sticky top-24">
-              <CardHeader className="pb-4 border-b border-slate-100">
-                <CardTitle className="flex items-center gap-2 text-lg text-slate-900">
-                  <Sparkles className="h-5 w-5 text-orange-500" />
-                  Quick Starts
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2 pt-4">
+        <div className="grid gap-8 lg:grid-cols-[300px_1fr] max-w-7xl mx-auto">
+          <div className="space-y-6">
+            {/* Quick Prompts */}
+            <div className="border-2 border-black p-6 bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sticky top-24">
+              <h3 className="font-bold uppercase tracking-widest mb-6 flex items-center gap-2 border-b-2 border-black pb-2">
+                <Sparkles className="h-5 w-5" />
+                Quick Commands
+              </h3>
+              <div className="space-y-3">
                 {quickPrompts.map((prompt, index) => (
-                  <Button
+                  <button
                     key={index}
-                    variant="ghost"
-                    className="w-full justify-start text-left h-auto p-3 hover:bg-orange-50 hover:text-orange-700 rounded-xl transition-all group"
+                    className="w-full text-left p-3 border-2 border-transparent hover:border-black hover:bg-accent hover:text-white transition-all font-bold uppercase text-sm tracking-tight"
                     onClick={() => handleSend(prompt)}
                     disabled={isLoading}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-slate-200 group-hover:bg-orange-400 transition-colors"></div>
-                      <span className="text-sm font-medium text-slate-600 group-hover:text-orange-700">{prompt}</span>
-                    </div>
-                  </Button>
+                    {prompt}
+                  </button>
                 ))}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
-          {/* Chat Card */}
-          <Card className="flex flex-col border-0 shadow-2xl shadow-slate-200/60 h-[700px] min-w-0 bg-white rounded-3xl overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <CardHeader className="pb-4 border-b border-slate-100 bg-white z-10">
-              <CardTitle className="text-lg flex items-center gap-3 text-slate-900">
-                <div className="relative">
-                  <div className="w-3 h-3 rounded-full bg-green-500 border-2 border-white absolute -right-0.5 -bottom-0.5"></div>
-                  <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-                    <Bot className="w-6 h-6" />
+          {/* Chat Interface */}
+          <div className="flex flex-col border-2 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] h-[800px]">
+            <div className="p-4 border-b-2 border-black bg-accent text-white flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-green-400 border border-black animate-pulse"></div>
+                <span className="font-mono font-bold uppercase tracking-widest">Trinity_Core_v2.0</span>
+              </div>
+              <Bot className="h-6 w-6" />
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-thin">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div className={`max-w-[85%] ${message.role === "user" ? "ml-auto" : "mr-auto"}`}>
+                    <div className={`p-6 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${message.role === "user"
+                        ? "bg-black text-white"
+                        : "bg-white text-black"
+                      }`}>
+                      {message.role === 'assistant' ? (
+                        <AssistantMessage content={message.content} />
+                      ) : (
+                        <div className="font-medium text-lg">{message.content}</div>
+                      )}
+                    </div>
+                    <div className={`mt-2 font-mono text-xs uppercase tracking-widest text-muted-foreground ${message.role === "user" ? "text-right" : "text-left"
+                      }`}>
+                      {message.role === "user" ? "User_Input" : "System_Response"}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <div className="font-bold">Trinity AI</div>
-                  <div className="text-xs font-normal text-slate-500">Always active</div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="p-6 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-3">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span className="font-mono font-bold uppercase animate-pulse">Processing Data...</span>
+                  </div>
                 </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-0 min-h-0 min-w-0 bg-slate-50/50">
-              <div className="flex-1 min-h-0 overflow-y-auto p-6 scrollbar-thin">
-                <div className="space-y-8">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in-up`}
-                    >
-                      <div className={`flex gap-4 max-w-[85%] ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${message.role === "user"
-                            ? "bg-gradient-to-br from-orange-500 to-red-500 text-white"
-                            : "bg-white text-orange-600 border border-slate-100"
-                          }`}>
-                          {message.role === "user" ? <User className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
-                        </div>
+              )}
+            </div>
 
-                        <div
-                          className={`rounded-2xl p-6 shadow-sm text-[15px] leading-relaxed ${message.role === "user"
-                              ? "bg-slate-900 text-white rounded-tr-none shadow-slate-200/50"
-                              : "bg-white text-slate-700 border border-slate-100 rounded-tl-none shadow-sm"
-                            }`}
-                        >
-                          {message.role === 'assistant' ? (
-                            <AssistantMessage content={message.content} />
-                          ) : (
-                            <div>{message.content}</div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  {isLoading && (
-                    <div className="flex justify-start animate-pulse">
-                      <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white text-orange-600 border border-slate-100 flex items-center justify-center shadow-sm">
-                          <Bot className="w-6 h-6" />
-                        </div>
-                        <div className="rounded-2xl rounded-tl-none bg-white border border-slate-100 p-4 flex items-center gap-3 shadow-sm">
-                          <Loader2 className="h-5 w-5 animate-spin text-orange-500" />
-                          <span className="text-sm text-slate-500 font-medium">Trinity is designing your build...</span>
-                        </div>
-                      </div>
-                    </div>
+            <div className="p-6 border-t-2 border-black bg-slate-50">
+              <div className="flex gap-4">
+                <Input
+                  placeholder="ENTER COMMAND..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                  disabled={isLoading}
+                  className="h-14 rounded-none border-2 border-black bg-white focus:ring-0 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow font-mono text-lg placeholder:text-slate-400"
+                />
+                <Button
+                  onClick={() => handleSend()}
+                  disabled={isLoading || !input.trim()}
+                  className="h-14 w-14 rounded-none border-2 border-black bg-accent hover:bg-black text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  ) : (
+                    <Send className="h-6 w-6" />
                   )}
-                </div>
+                </Button>
               </div>
-
-              <div className="p-4 bg-white border-t border-slate-100">
-                <div className="relative flex items-center gap-2 max-w-3xl mx-auto">
-                  <Input
-                    placeholder="Type your request here..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                    disabled={isLoading}
-                    className="flex-1 h-14 pl-6 pr-14 rounded-full border-slate-200 bg-slate-50 focus:bg-white text-base shadow-inner"
-                  />
-                  <Button
-                    onClick={() => handleSend()}
-                    disabled={isLoading || !input.trim()}
-                    size="icon"
-                    className="absolute right-2 w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 shadow-md transition-transform hover:scale-105"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="h-5 w-5 animate-spin text-white" />
-                    ) : (
-                      <Send className="h-5 w-5 text-white" />
-                    )}
-                  </Button>
-                </div>
-                <div className="text-center mt-3">
-                  <Button
-                    onClick={() => setShowSaveDialog(true)}
-                    disabled={messages.length <= 1}
-                    variant="ghost"
-                    className="text-xs text-slate-400 hover:text-orange-600 hover:bg-transparent"
-                    size="sm"
-                  >
-                    <Save className="h-3 w-3 mr-1.5" />
-                    Save this conversation
-                  </Button>
-                </div>
+              <div className="flex justify-center mt-4">
+                <Button
+                  onClick={() => setShowSaveDialog(true)}
+                  disabled={messages.length <= 1}
+                  variant="ghost"
+                  className="text-xs uppercase tracking-widest hover:bg-transparent hover:underline"
+                >
+                  <Save className="h-3 w-3 mr-2" />
+                  Save Configuration
+                </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Save Build Dialog */}
         {showSaveDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <Card className="w-full max-w-md bg-white border-0 shadow-2xl rounded-3xl overflow-hidden">
-              <CardHeader className="bg-slate-50 border-b border-slate-100 pb-6">
-                <CardTitle className="text-xl text-slate-900">Save Your Build</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 pt-6">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <div className="w-full max-w-md bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] p-8">
+              <h2 className="text-2xl font-bold uppercase tracking-tighter mb-6 font-display">Save Configuration</h2>
+              <div className="space-y-6">
                 <div>
-                  <label className="text-sm font-semibold mb-2 block text-slate-700">Name your masterpiece</label>
+                  <label className="font-bold uppercase text-sm mb-2 block">Build Identifier</label>
                   <Input
-                    placeholder="e.g., The Orange Beast"
+                    placeholder="ENTER NAME..."
                     value={buildName}
                     onChange={(e) => setBuildName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveConversation()}
                     autoFocus
-                    className="h-12 bg-slate-50 border-slate-200"
+                    className="h-12 rounded-none border-2 border-black font-mono"
                   />
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   <Button
                     variant="outline"
-                    className="flex-1 h-12 rounded-xl border-slate-200 hover:bg-slate-50 text-slate-600"
+                    className="flex-1 h-12 rounded-none border-2 border-black hover:bg-slate-100 font-bold uppercase"
                     onClick={() => {
                       setShowSaveDialog(false);
                       setBuildName("");
@@ -454,14 +349,14 @@ const AIBuild = () => {
                     Cancel
                   </Button>
                   <Button
-                    className="flex-1 h-12 rounded-xl bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                    className="flex-1 h-12 rounded-none bg-accent text-white border-2 border-black hover:bg-black font-bold uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     onClick={handleSaveConversation}
                   >
-                    Save Build
+                    Save
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         )}
       </main>

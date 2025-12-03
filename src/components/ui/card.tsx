@@ -2,13 +2,6 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-// BEFORE: Dark, glassmorphism card style
-// AFTER: Clean, white card with subtle border and shadow
-// KEY CHANGES:
-// - Removed glassmorphism effects in favor of solid backgrounds
-// - Added subtle border and shadow-sm by default
-// - Maintained rounded-lg radius
-
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -16,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl bg-card text-card-foreground shadow-xl shadow-slate-200/50 border-0 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-slate-200/60",
+      "rounded-none bg-card text-card-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black transition-all duration-300",
       className
     )}
     {...props}
@@ -43,7 +36,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight text-foreground",
+      "text-2xl font-bold uppercase leading-none tracking-tight text-foreground font-display",
       className
     )}
     {...props}
@@ -57,7 +50,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-muted-foreground font-medium uppercase tracking-wide", className)}
     {...props}
   />
 ))
