@@ -5,14 +5,18 @@
 @layer base {
   :root {
     --background: 30 20% 98%;
+    /* #FAFAF9 */
     --foreground: 0 0% 4%;
-    --card: 0 0% 100%;
+    /* #0A0A0A */
+    --card: 30 20% 98%;
     --card-foreground: 0 0% 4%;
-    --popover: 0 0% 100%;
+    --popover: 30 20% 98%;
     --popover-foreground: 0 0% 4%;
     --primary: 217 91% 60%;
+    /* #2563EB */
     --primary-foreground: 0 0% 100%;
     --secondary: 30 10% 96%;
+    /* #F5F5F4 */
     --secondary-foreground: 0 0% 4%;
     --muted: 30 10% 96%;
     --muted-foreground: 0 0% 32%;
@@ -20,10 +24,12 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 4%;
+    /* #0A0A0A - High contrast borders */
+    --input: 0 0% 4%;
     --ring: 217 91% 60%;
-    --radius: 0.5rem;
+    --radius: 0rem;
+    /* No radius */
   }
 }
 
@@ -36,10 +42,34 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  /* Brutalist Scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+    border-left: 1px solid var(--foreground);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--foreground);
+    border: 2px solid var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-stroke {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
   }
 }

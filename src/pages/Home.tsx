@@ -1,87 +1,92 @@
 import { Link } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
-import { Cpu, Zap, Database, Save } from 'lucide-react';
+import { Cpu, Zap, Database, Save, ArrowRight } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="animate-fade-in">
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-foreground leading-none tracking-tight mb-8">
-              Build Your
-              <br />
-              <span className="text-primary">Dream PC</span>
+      <section className="relative min-h-[85vh] flex flex-col justify-center px-4 sm:px-6 lg:px-12 border-b-2 border-foreground">
+        <div className="max-w-[1920px] mx-auto w-full">
+          <div className="animate-fade-in space-y-6">
+            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-bold leading-[0.85] tracking-tighter uppercase">
+              Build<br />
+              <span className="text-stroke hover:text-primary transition-colors duration-500">Your</span><br />
+              Dream PC
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-              AI-powered recommendations meet manual precision.
-              The smartest way to configure your perfect computer.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/ai-build"
-                className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary/90 transition-all duration-200 hover:scale-105 shadow-medium"
-              >
-                Start with AI
-              </Link>
-              <Link
-                to="/manual-build"
-                className="px-8 py-4 bg-secondary text-secondary-foreground rounded-full font-semibold text-lg hover:bg-secondary/80 transition-all duration-200 hover:scale-105"
-              >
-                Manual Builder
-              </Link>
+
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mt-12 gap-8">
+              <p className="text-xl md:text-2xl font-medium max-w-xl leading-relaxed border-l-4 border-primary pl-6">
+                AI-powered recommendations meet manual precision.
+                The smartest way to configure your perfect computer.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-6 w-full md:w-auto">
+                <Link
+                  to="/ai-build"
+                  className="group relative inline-flex items-center justify-center px-8 py-6 bg-foreground text-background font-bold text-xl uppercase tracking-wider hover:-translate-y-1 hover:shadow-medium transition-all duration-200 border-2 border-foreground"
+                >
+                  Start with AI
+                  <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/manual-build"
+                  className="group inline-flex items-center justify-center px-8 py-6 bg-background text-foreground font-bold text-xl uppercase tracking-wider border-2 border-foreground hover:bg-secondary hover:-translate-y-1 hover:shadow-medium transition-all duration-200"
+                >
+                  Manual Builder
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-secondary/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-16 text-foreground">
-            Everything You Need
-          </h2>
+      {/* Features Grid - Asymmetric */}
+      <section className="border-b-2 border-foreground">
+        <div className="grid grid-cols-1 md:grid-cols-12 min-h-[600px]">
+          {/* Large Feature */}
+          <div className="md:col-span-7 lg:col-span-8 p-12 border-b-2 md:border-b-0 md:border-r-2 border-foreground flex flex-col justify-between hover:bg-secondary transition-colors group">
+            <Zap className="w-24 h-24 text-primary mb-8 group-hover:scale-110 transition-transform duration-300" />
+            <div>
+              <h2 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-6">AI Architect</h2>
+              <p className="text-2xl text-foreground/80 max-w-2xl leading-relaxed">
+                Describe your needs in plain English. Our intelligence engine designs the perfect specification instantly.
+              </p>
+            </div>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <FeatureCard
-              icon={<Zap className="w-12 h-12 text-primary" />}
-              title="AI Architect"
-              description="Describe your needs, get instant build recommendations powered by advanced AI."
-            />
-            <FeatureCard
-              icon={<Cpu className="w-12 h-12 text-primary" />}
-              title="Manual Studio"
-              description="Hand-pick every component with real-time compatibility checking."
-            />
-            <FeatureCard
-              icon={<Database className="w-12 h-12 text-primary" />}
-              title="Vast Catalog"
-              description="Browse thousands of parts with detailed specs and competitive pricing."
-            />
-            <FeatureCard
-              icon={<Save className="w-12 h-12 text-primary" />}
-              title="Save & Share"
-              description="Keep your builds organized and share configurations with friends."
-            />
+          {/* Stacked Features */}
+          <div className="md:col-span-5 lg:col-span-4 flex flex-col">
+            <div className="flex-1 p-10 border-b-2 border-foreground hover:bg-primary hover:text-white transition-colors group">
+              <Cpu className="w-12 h-12 mb-4" />
+              <h3 className="text-3xl font-bold uppercase mb-2">Manual Studio</h3>
+              <p className="text-lg opacity-90">Hand-pick every component with real-time compatibility checking.</p>
+            </div>
+            <div className="flex-1 p-10 border-b-2 border-foreground hover:bg-foreground hover:text-background transition-colors group">
+              <Database className="w-12 h-12 mb-4" />
+              <h3 className="text-3xl font-bold uppercase mb-2">Vast Catalog</h3>
+              <p className="text-lg opacity-90">Browse thousands of parts with detailed specs and competitive pricing.</p>
+            </div>
+            <div className="flex-1 p-10 hover:bg-secondary transition-colors group">
+              <Save className="w-12 h-12 mb-4 text-primary" />
+              <h3 className="text-3xl font-bold uppercase mb-2">Save & Share</h3>
+              <p className="text-lg opacity-90">Keep your builds organized and share configurations with friends.</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-foreground">
+      <section className="py-32 px-4 sm:px-6 lg:px-8 bg-foreground text-background">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-6xl sm:text-8xl font-bold mb-12 uppercase tracking-tighter">
             Ready to Build?
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            Join thousands of builders creating their perfect PC
-          </p>
           <Link
             to="/ai-build"
-            className="inline-block px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary/90 transition-all duration-200 hover:scale-105 shadow-medium"
+            className="inline-block px-12 py-6 bg-primary text-white border-2 border-white font-bold text-2xl uppercase tracking-widest hover:bg-white hover:text-primary hover:scale-105 transition-all duration-300 shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]"
           >
             Get Started Now
           </Link>
@@ -89,33 +94,17 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center text-muted-foreground">
-          <p className="text-sm">
-            © 2024 TRINITY PC Part Picker. Built with precision and care.
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t-2 border-foreground">
+        <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-primary"></div>
+            <span className="font-bold uppercase tracking-widest">Trinity PC Part Picker</span>
+          </div>
+          <p className="text-sm font-medium uppercase tracking-wider opacity-60">
+            © 2024 Built with precision.
           </p>
         </div>
       </footer>
-    </div>
-  );
-}
-
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="bg-white border border-border rounded-lg p-8 hover:-translate-y-1 transition-all duration-200 hover:shadow-large group">
-      <div className="mb-4 transition-transform group-hover:scale-110 duration-200">
-        {icon}
-      </div>
-      <h3 className="text-xl font-bold mb-3 text-foreground">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed">{description}</p>
     </div>
   );
 }

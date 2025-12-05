@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ["class"],
+  darkMode: "false", // Disabled
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -19,17 +19,17 @@ export default {
     },
     extend: {
       colors: {
-        border: "#E5E5E5",
-        input: "#E5E5E5",
+        border: "#0A0A0A", // High contrast border
+        input: "#0A0A0A",
         ring: "#2563EB",
-        background: "#FAFAF9",
-        foreground: "#0A0A0A",
+        background: "#FAFAF9", // Cream
+        foreground: "#0A0A0A", // Black
         primary: {
-          DEFAULT: "#2563EB",
+          DEFAULT: "#2563EB", // Electric Blue
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#F5F5F4",
+          DEFAULT: "#F5F5F4", // Slightly darker cream
           foreground: "#0A0A0A",
         },
         destructive: {
@@ -45,23 +45,47 @@ export default {
           foreground: "#FFFFFF",
         },
         popover: {
-          DEFAULT: "#FFFFFF",
+          DEFAULT: "#FAFAF9",
           foreground: "#0A0A0A",
         },
         card: {
-          DEFAULT: "#FFFFFF",
+          DEFAULT: "#FAFAF9",
           foreground: "#0A0A0A",
         },
       },
       borderRadius: {
-        lg: "0.5rem",
-        md: "0.375rem",
-        sm: "0.25rem",
+        lg: "0px", // Brutalist - no rounded corners
+        md: "0px",
+        sm: "0px",
+        full: "9999px", // Keep full for specific pill buttons if needed, but mostly avoid
       },
       boxShadow: {
-        subtle: "0 1px 3px 0 rgba(0, 0, 0, 0.05)",
-        medium: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
-        large: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)",
+        subtle: "none",
+        medium: "4px 4px 0px 0px rgba(10, 10, 10, 1)", // Hard shadow
+        large: "8px 8px 0px 0px rgba(10, 10, 10, 1)", // Larger hard shadow
+      },
+      fontFamily: {
+        sans: [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        display: [
+          "Inter", // Ideally would use a more distinctive font, but Inter weight 800+ works for now
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
+      },
+      fontSize: {
+        "7xl": "5rem",
+        "8xl": "6rem",
+        "9xl": "8rem",
+        "10xl": "10rem",
+        "huge": "12rem",
       },
       keyframes: {
         "accordion-down": {
@@ -76,34 +100,11 @@ export default {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "slide-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out",
-        "slide-up": "slide-up 0.6s ease-out",
-      },
-      fontFamily: {
-        sans: [
-          "Inter",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "sans-serif",
-        ],
-        display: [
-          "Inter",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "sans-serif",
-        ],
       },
     },
   },

@@ -6,29 +6,31 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className="sticky top-0 z-50 bg-background border-b-2 border-foreground">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <Cpu className="w-8 h-8 text-primary transition-transform group-hover:rotate-180 duration-500" />
-            <span className="text-xl font-bold text-foreground tracking-tight">
-              TRINITY
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="bg-foreground text-background p-1">
+              <Cpu className="w-8 h-8" />
+            </div>
+            <span className="text-2xl font-bold text-foreground tracking-tighter uppercase">
+              Trinity
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-8">
             <NavLink to="/ai-build">AI Architect</NavLink>
             <NavLink to="/manual-build">Manual Studio</NavLink>
-            <NavLink to="/browse-parts">Browse Parts</NavLink>
-            <NavLink to="/saved-builds">Saved Builds</NavLink>
+            <NavLink to="/browse-parts">Catalog</NavLink>
+            <NavLink to="/saved-builds">Saved</NavLink>
           </div>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-md text-foreground hover:bg-secondary transition-colors"
+            className="md:hidden p-2 text-foreground hover:bg-foreground hover:text-background transition-colors border-2 border-transparent hover:border-foreground"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -37,8 +39,8 @@ export function Navigation() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-white">
-          <div className="px-4 pt-2 pb-4 space-y-1">
+        <div className="md:hidden border-b-2 border-foreground bg-background">
+          <div className="flex flex-col">
             <MobileNavLink to="/ai-build" onClick={() => setIsOpen(false)}>
               AI Architect
             </MobileNavLink>
@@ -46,7 +48,7 @@ export function Navigation() {
               Manual Studio
             </MobileNavLink>
             <MobileNavLink to="/browse-parts" onClick={() => setIsOpen(false)}>
-              Browse Parts
+              Catalog
             </MobileNavLink>
             <MobileNavLink to="/saved-builds" onClick={() => setIsOpen(false)}>
               Saved Builds
@@ -62,9 +64,10 @@ function NavLink({ to, children }: { to: string; children: React.ReactNode }) {
   return (
     <Link
       to={to}
-      className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-secondary rounded-md transition-all duration-200"
+      className="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors relative group"
     >
       {children}
+      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
     </Link>
   );
 }
@@ -82,7 +85,7 @@ function MobileNavLink({
     <Link
       to={to}
       onClick={onClick}
-      className="block px-4 py-3 text-base font-medium text-foreground/70 hover:text-foreground hover:bg-secondary rounded-md transition-colors"
+      className="block px-6 py-4 text-xl font-bold uppercase tracking-wider border-t border-foreground/10 hover:bg-foreground hover:text-background transition-colors"
     >
       {children}
     </Link>
