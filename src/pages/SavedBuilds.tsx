@@ -69,11 +69,11 @@ const SavedBuilds = () => {
             <p className="text-white/40 mb-12 max-w-md mx-auto text-lg">
               You haven't archived any configurations yet. Start your journey with our AI Architect.
             </p>
-            <div className="flex justify-center gap-6">
-              <Button asChild className="h-14 px-10 rounded-full bg-white text-black hover:bg-white/90 shadow-glow">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 w-full px-6 md:px-0">
+              <Button asChild className="w-full md:w-auto h-14 px-10 rounded-full bg-white text-black hover:bg-white/90 shadow-glow">
                 <Link to="/ai-build">AI Architect</Link>
               </Button>
-              <Button asChild variant="outline" className="h-14 px-10 rounded-full border-white/20 hover:bg-white/10 text-white">
+              <Button asChild variant="outline" className="w-full md:w-auto h-14 px-10 rounded-full border-white/20 hover:bg-white/10 text-white">
                 <Link to="/manual-build">Manual Studio</Link>
               </Button>
             </div>

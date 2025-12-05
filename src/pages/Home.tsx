@@ -6,11 +6,18 @@ export default function Home() {
   return (
     <div className="min-h-screen text-foreground relative selection:bg-liquid-blue/30">
       {/* Liquid Background */}
-      <div className="liquid-bg">
+      {/* Desktop Liquid Background */}
+      <div className="liquid-bg hidden md:block">
         <div className="liquid-blob bg-liquid-blue w-[500px] h-[500px] top-[-100px] left-[-100px] opacity-40 mix-blend-screen animate-blob"></div>
         <div className="liquid-blob bg-liquid-purple w-[600px] h-[600px] top-[20%] right-[-200px] opacity-30 mix-blend-screen animate-blob animation-delay-2000"></div>
         <div className="liquid-blob bg-liquid-pink w-[400px] h-[400px] bottom-[-100px] left-[20%] opacity-30 mix-blend-screen animate-blob animation-delay-4000"></div>
         <div className="liquid-blob bg-liquid-teal w-[300px] h-[300px] bottom-[10%] right-[10%] opacity-30 mix-blend-screen animate-blob animation-delay-1000"></div>
+      </div>
+
+      {/* Mobile Liquid Background (Darker, like AI Build) */}
+      <div className="fixed inset-0 pointer-events-none md:hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-liquid-blue/20 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-liquid-purple/20 rounded-full blur-[100px] animate-pulse animation-delay-2000" />
       </div>
 
       <Navigation />
