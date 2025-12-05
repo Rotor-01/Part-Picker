@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import './index.css'; // Import the main CSS file
+import './app.css'; // Import the main CSS file
 
 console.log("ACCORDION THEME ACTIVE - DEBUG CHECK");
 
