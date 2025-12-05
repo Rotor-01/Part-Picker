@@ -202,10 +202,15 @@ const AIBuild = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
+    <div className="min-h-screen flex flex-col bg-black text-foreground font-sans relative selection:bg-liquid-blue/30">
+      {/* Liquid Background */}
+      <div className="liquid-bg">
+        <div className="liquid-blob bg-liquid-blue w-[500px] h-[500px] top-[-100px] left-[-100px] opacity-20 mix-blend-screen animate-blob"></div>
+        <div className="liquid-blob bg-liquid-purple w-[600px] h-[600px] top-[20%] right-[-200px] opacity-20 mix-blend-screen animate-blob animation-delay-2000"></div>
+      </div>
       <Navigation />
 
-      <main className="container py-12 flex-grow">
+      <main className="container py-12 pt-32 flex-grow relative z-10">
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 font-display">
             AI Architect

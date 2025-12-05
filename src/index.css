@@ -4,32 +4,26 @@
 
 @layer base {
   :root {
-    --background: 30 20% 98%;
-    /* #FAFAF9 */
-    --foreground: 0 0% 4%;
-    /* #0A0A0A */
-    --card: 30 20% 98%;
-    --card-foreground: 0 0% 4%;
-    --popover: 30 20% 98%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 217 91% 60%;
-    /* #2563EB */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 30 10% 96%;
-    /* #F5F5F4 */
-    --secondary-foreground: 0 0% 4%;
-    --muted: 30 10% 96%;
-    --muted-foreground: 0 0% 32%;
-    --accent: 217 91% 60%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 100%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 100%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 4%;
-    /* #0A0A0A - High contrast borders */
-    --input: 0 0% 4%;
-    --ring: 217 91% 60%;
-    --radius: 0rem;
-    /* No radius */
+    --border: 0 0% 100%;
+    --input: 0 0% 100%;
+    --ring: 0 0% 100%;
+    --radius: 1.5rem;
   }
 }
 
@@ -39,27 +33,38 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-foreground antialiased selection:bg-white/20;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-glass;
   }
 
-  /* Brutalist Scrollbar */
-  ::-webkit-scrollbar {
-    width: 12px;
+  .glass-hover {
+    @apply hover:bg-white/10 hover:border-white/20 transition-all duration-300;
   }
 
-  ::-webkit-scrollbar-track {
-    background: var(--background);
-    border-left: 1px solid var(--foreground);
+  .liquid-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-color: #000;
+    overflow: hidden;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: var(--foreground);
-    border: 2px solid var(--background);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
+  .liquid-blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: blob 10s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
   }
 }
 
@@ -68,8 +73,7 @@
     text-wrap: balance;
   }
 
-  .text-stroke {
-    -webkit-text-stroke: 1px currentColor;
-    color: transparent;
+  .text-glow {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
   }
 }

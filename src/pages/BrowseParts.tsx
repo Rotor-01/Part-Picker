@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
-import Navigation from "@/components/Navigation";
+import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Grid, List, Plus, ShoppingCart, X } from "lucide-react";
+import { Search, Filter, Grid, List, Plus, ShoppingCart, X, Package } from "lucide-react";
 import superiorParts, { NormalizedPart } from "@/data/superiorParts";
 import { toast } from "sonner";
 
@@ -54,34 +54,43 @@ const BrowseParts = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
+    <div className="min-h-screen flex flex-col bg-black text-foreground font-sans relative selection:bg-liquid-blue/30">
+      {/* Liquid Background */}
+      <div className="liquid-bg">
+        <div className="liquid-blob bg-liquid-blue w-[400px] h-[400px] top-[20%] left-[20%] opacity-20 mix-blend-screen animate-blob"></div>
+        <div className="liquid-blob bg-liquid-purple w-[500px] h-[500px] bottom-[10%] right-[10%] opacity-20 mix-blend-screen animate-blob animation-delay-2000"></div>
+      </div>
       <Navigation />
 
-      <main className="container py-12 flex-grow">
+      <main className="container py-12 pt-32 flex-grow relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2 font-display">
-              Component Catalog
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 animate-fade-in">
+              <Package className="w-4 h-4 text-liquid-blue" />
+              <span className="text-sm font-medium text-white/80">Premium Components</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40">
+              Catalog
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Explore our curated database of premium components.
+            <p className="text-xl text-white/60">
+              Explore our curated database of next-gen hardware.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-secondary/30 p-1 rounded-lg border border-border">
+          <div className="flex items-center gap-2 glass p-1 rounded-full">
             <Button
-              variant={viewMode === "grid" ? "default" : "ghost"}
+              variant={viewMode === "grid" ? "secondary" : "ghost"}
               size="icon"
               onClick={() => setViewMode("grid")}
-              className={`h-9 w-9 rounded-md ${viewMode === "grid" ? "shadow-sm" : ""}`}
+              className={`h-10 w-10 rounded-full ${viewMode === "grid" ? "bg-white text-black" : "text-white/60"}`}
             >
               <Grid className="h-4 w-4" />
             </Button>
             <Button
-              variant={viewMode === "list" ? "default" : "ghost"}
+              variant={viewMode === "list" ? "secondary" : "ghost"}
               size="icon"
               onClick={() => setViewMode("list")}
-              className={`h-9 w-9 rounded-md ${viewMode === "list" ? "shadow-sm" : ""}`}
+              className={`h-10 w-10 rounded-full ${viewMode === "list" ? "bg-white text-black" : "text-white/60"}`}
             >
               <List className="h-4 w-4" />
             </Button>
@@ -91,36 +100,35 @@ const BrowseParts = () => {
         <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
           {/* Filters Sidebar */}
           <div className="space-y-6">
-            <div className="border border-border rounded-2xl bg-card shadow-subtle sticky top-24 overflow-hidden">
-              <div className="p-4 border-b border-border bg-secondary/30">
-                <h3 className="font-semibold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-                  <Filter className="h-4 w-4" />
-                  Filters
-                </h3>
+            <div className="glass rounded-3xl p-6 sticky top-32 animate-slide-up">
+              <div className="flex items-center gap-2 mb-6 text-white/40 uppercase tracking-widest text-xs font-bold">
+                <Filter className="h-4 w-4" />
+                Filters
               </div>
-              <div className="p-6 space-y-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Search</label>
+
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-white">Search</label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-3.5 h-4 w-4 text-white/40" />
                     <Input
                       placeholder="Search parts..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 h-10 rounded-lg"
+                      className="pl-10 h-12 bg-black/20 border-white/10"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Category</label>
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-white">Category</label>
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="h-10 rounded-lg">
+                    <SelectTrigger className="h-12 rounded-2xl bg-black/20 border-white/10 text-white">
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl shadow-medium">
+                    <SelectContent className="glass border-white/10 text-white">
                       {categories.map((cat) => (
-                        <SelectItem key={cat.value} value={cat.value} className="cursor-pointer rounded-lg my-1">
+                        <SelectItem key={cat.value} value={cat.value} className="focus:bg-white/10 cursor-pointer">
                           {cat.label}
                         </SelectItem>
                       ))}
@@ -128,23 +136,23 @@ const BrowseParts = () => {
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Price Range</label>
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-white">Price Range</label>
                   <Select value={priceRange} onValueChange={(val: any) => setPriceRange(val)}>
-                    <SelectTrigger className="h-10 rounded-lg">
+                    <SelectTrigger className="h-12 rounded-2xl bg-black/20 border-white/10 text-white">
                       <SelectValue placeholder="Select Price" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl shadow-medium">
-                      <SelectItem value="all" className="cursor-pointer rounded-lg my-1">Any Price</SelectItem>
-                      <SelectItem value="under100" className="cursor-pointer rounded-lg my-1">Under $100</SelectItem>
-                      <SelectItem value="100to300" className="cursor-pointer rounded-lg my-1">$100 - $300</SelectItem>
-                      <SelectItem value="over300" className="cursor-pointer rounded-lg my-1">Over $300</SelectItem>
+                    <SelectContent className="glass border-white/10 text-white">
+                      <SelectItem value="all" className="focus:bg-white/10 cursor-pointer">Any Price</SelectItem>
+                      <SelectItem value="under100" className="focus:bg-white/10 cursor-pointer">Under $100</SelectItem>
+                      <SelectItem value="100to300" className="focus:bg-white/10 cursor-pointer">$100 - $300</SelectItem>
+                      <SelectItem value="over300" className="focus:bg-white/10 cursor-pointer">Over $300</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                <div className="pt-4 border-t border-border">
-                  <p className="text-xs text-center text-muted-foreground">
+                <div className="pt-6 border-t border-white/10">
+                  <p className="text-xs text-center text-white/40">
                     Showing {filteredParts.length} components
                   </p>
                 </div>
@@ -155,13 +163,13 @@ const BrowseParts = () => {
           {/* Results Grid/List */}
           <div className="space-y-6">
             {filteredParts.length === 0 ? (
-              <div className="text-center py-20 border border-dashed border-border rounded-2xl bg-secondary/10">
-                <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <h3 className="text-xl font-semibold mb-2">No parts found</h3>
-                <p className="text-muted-foreground mb-6">Adjust your filters to locate components</p>
+              <div className="text-center py-20 glass rounded-3xl border-dashed border-white/20">
+                <Search className="h-12 w-12 text-white/20 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">No parts found</h3>
+                <p className="text-white/60 mb-6">Adjust your filters to locate components</p>
                 <Button
                   variant="outline"
-                  className="rounded-full px-6"
+                  className="rounded-full px-8 border-white/20 hover:bg-white/10"
                   onClick={() => {
                     setSearchTerm("");
                     setSelectedCategory("all");
@@ -179,38 +187,37 @@ const BrowseParts = () => {
                 {filteredParts.map((part, index) => (
                   <div
                     key={`${part.category}-${index}`}
-                    className={`group border border-border rounded-2xl bg-card shadow-subtle hover:shadow-medium hover:-translate-y-1 transition-all duration-300 overflow-hidden ${viewMode === "list" ? "flex flex-row items-center" : "flex flex-col"
-                      }`}
+                    className={`group glass rounded-3xl overflow-hidden hover:bg-white/10 hover:scale-[1.02] transition-all duration-500 animate-slide-up ${viewMode === "list" ? "flex flex-row items-center" : "flex flex-col"}`}
+                    style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    <div className={`relative bg-secondary/30 flex items-center justify-center p-6 ${viewMode === "list" ? "w-48 h-full shrink-0 border-r border-border" : "h-48 w-full border-b border-border"
-                      }`}>
-                      <div className="text-muted-foreground/30 group-hover:text-primary/80 transition-colors duration-300">
+                    <div className={`relative flex items-center justify-center p-8 bg-gradient-to-br from-white/5 to-transparent ${viewMode === "list" ? "w-48 h-full shrink-0 border-r border-white/5" : "h-48 w-full border-b border-white/5"}`}>
+                      <div className="text-white/20 group-hover:text-white group-hover:scale-110 transition-all duration-500">
                         <ShoppingCart className="h-12 w-12" />
                       </div>
-                      <Badge variant="secondary" className="absolute top-3 right-3 rounded-full text-[10px] font-semibold tracking-wide bg-background/80 backdrop-blur-sm shadow-sm">
+                      <Badge variant="secondary" className="absolute top-4 right-4 rounded-full text-[10px] font-bold tracking-wide bg-black/40 backdrop-blur-md border border-white/10">
                         {part.category}
                       </Badge>
                     </div>
 
-                    <div className={`flex flex-col flex-grow p-5 ${viewMode === "list" ? "flex-row items-center justify-between gap-8" : ""}`}>
-                      <div className="space-y-1.5 min-w-0">
-                        <h3 className="font-semibold text-lg leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                    <div className={`flex flex-col flex-grow p-6 ${viewMode === "list" ? "flex-row items-center justify-between gap-8" : ""}`}>
+                      <div className="space-y-2 min-w-0">
+                        <h3 className="font-bold text-lg leading-tight line-clamp-2 text-white group-hover:text-liquid-blue transition-colors">
                           {part.name}
                         </h3>
                         {part.price > 500 && (
-                          <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                          <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-liquid-purple bg-liquid-purple/10 px-2 py-0.5 rounded-full">
                             Premium
                           </span>
                         )}
                       </div>
 
-                      <div className={`flex items-center gap-4 ${viewMode === "grid" ? "mt-4 justify-between pt-4 border-t border-border/50" : "shrink-0"}`}>
-                        <span className="text-xl font-bold text-foreground">
+                      <div className={`flex items-center gap-4 ${viewMode === "grid" ? "mt-6 justify-between pt-4 border-t border-white/5" : "shrink-0"}`}>
+                        <span className="text-2xl font-bold text-white">
                           ${part.price.toFixed(2)}
                         </span>
                         <Button
                           size="sm"
-                          className="rounded-full px-5 shadow-subtle hover:shadow-md transition-all"
+                          className="rounded-full px-6 bg-white text-black hover:bg-white/90 shadow-glow"
                           onClick={() => handleAddToBuild(part.name)}
                         >
                           <Plus className="h-4 w-4 mr-1.5" /> Add

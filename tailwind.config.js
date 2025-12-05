@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: "false", // Disabled
+  darkMode: "class",
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -19,73 +19,73 @@ export default {
     },
     extend: {
       colors: {
-        border: "#0A0A0A", // High contrast border
-        input: "#0A0A0A",
-        ring: "#2563EB",
-        background: "#FAFAF9", // Cream
-        foreground: "#0A0A0A", // Black
+        border: "rgba(255, 255, 255, 0.2)",
+        input: "rgba(255, 255, 255, 0.1)",
+        ring: "rgba(255, 255, 255, 0.5)",
+        background: "#000000", // Dark base for the liquid to shine on
+        foreground: "#FFFFFF",
         primary: {
-          DEFAULT: "#2563EB", // Electric Blue
-          foreground: "#FFFFFF",
+          DEFAULT: "#FFFFFF",
+          foreground: "#000000",
         },
         secondary: {
-          DEFAULT: "#F5F5F4", // Slightly darker cream
-          foreground: "#0A0A0A",
+          DEFAULT: "rgba(255, 255, 255, 0.1)",
+          foreground: "#FFFFFF",
         },
         destructive: {
-          DEFAULT: "#DC2626",
+          DEFAULT: "#FF3B30", // iOS Red
           foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#F5F5F4",
-          foreground: "#525252",
+          DEFAULT: "rgba(255, 255, 255, 0.05)",
+          foreground: "rgba(255, 255, 255, 0.6)",
         },
         accent: {
-          DEFAULT: "#2563EB",
+          DEFAULT: "rgba(255, 255, 255, 0.2)",
           foreground: "#FFFFFF",
         },
         popover: {
-          DEFAULT: "#FAFAF9",
-          foreground: "#0A0A0A",
+          DEFAULT: "rgba(20, 20, 20, 0.8)",
+          foreground: "#FFFFFF",
         },
         card: {
-          DEFAULT: "#FAFAF9",
-          foreground: "#0A0A0A",
+          DEFAULT: "rgba(255, 255, 255, 0.05)",
+          foreground: "#FFFFFF",
         },
+        // iOS 26 Liquid Colors
+        liquid: {
+          blue: "#007AFF",
+          purple: "#AF52DE",
+          pink: "#FF2D55",
+          teal: "#5AC8FA",
+        }
       },
       borderRadius: {
-        lg: "0px", // Brutalist - no rounded corners
-        md: "0px",
-        sm: "0px",
-        full: "9999px", // Keep full for specific pill buttons if needed, but mostly avoid
+        lg: "1.5rem",
+        md: "1rem",
+        sm: "0.75rem",
+        xl: "2rem",
+        "2xl": "2.5rem",
+        "3xl": "3.5rem",
       },
       boxShadow: {
-        subtle: "none",
-        medium: "4px 4px 0px 0px rgba(10, 10, 10, 1)", // Hard shadow
-        large: "8px 8px 0px 0px rgba(10, 10, 10, 1)", // Larger hard shadow
+        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.3)",
+        glow: "0 0 20px rgba(255, 255, 255, 0.15)",
       },
       fontFamily: {
         sans: [
-          "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
+          "SF Pro Display",
+          "Inter",
           "sans-serif",
         ],
         display: [
-          "Inter", // Ideally would use a more distinctive font, but Inter weight 800+ works for now
           "-apple-system",
           "BlinkMacSystemFont",
+          "SF Pro Display",
           "sans-serif",
         ],
-      },
-      fontSize: {
-        "7xl": "5rem",
-        "8xl": "6rem",
-        "9xl": "8rem",
-        "10xl": "10rem",
-        "huge": "12rem",
       },
       keyframes: {
         "accordion-down": {
@@ -96,15 +96,22 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
+        blob: {
+          "0%": { transform: "translate(0px, 0px) scale(1)" },
+          "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+          "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+          "100%": { transform: "translate(0px, 0px) scale(1)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out",
+        blob: "blob 7s infinite",
+        float: "float 6s ease-in-out infinite",
       },
     },
   },
