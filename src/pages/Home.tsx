@@ -3,6 +3,7 @@ import { Navigation } from '@/components/Navigation';
 import { Cpu, Zap, Database, ArrowRight, Sparkles, Wrench } from 'lucide-react';
 
 export default function Home() {
+  // Force redeploy
   return (
     <div className="min-h-screen text-foreground relative selection:bg-liquid-blue/30">
       {/* Liquid Background */}
