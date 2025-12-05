@@ -4,64 +4,26 @@
 
 @layer base {
   :root {
-    /* Light Theme Only */
     --background: 30 20% 98%;
-    /* #FAFAF9 */
     --foreground: 0 0% 4%;
-    /* #0A0A0A */
-
     --card: 0 0% 100%;
     --card-foreground: 0 0% 4%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 4%;
-
-    --primary: 221 83% 53%;
-    /* #2563EB (Blue Accent) */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 30 10% 96%;
-    /* #F5F5F4 */
-    --secondary-foreground: 0 0% 9%;
-
+    --secondary-foreground: 0 0% 4%;
     --muted: 30 10% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 221 83% 53%;
+    --muted-foreground: 0 0% 32%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%;
-    /* #E5E5E5 */
     --input: 0 0% 90%;
-    --ring: 221 83% 53%;
-
+    --ring: 217 91% 60%;
     --radius: 0.5rem;
-  }
-
-  .dark {
-    /* Force Light Theme values even in dark mode to ensure consistency */
-    --background: 30 20% 98%;
-    --foreground: 0 0% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 30 10% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 30 10% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 221 83% 53%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 221 83% 53%;
   }
 }
 
@@ -71,15 +33,13 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-display tracking-tight text-foreground;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
