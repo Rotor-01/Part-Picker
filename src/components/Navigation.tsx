@@ -1,106 +1,90 @@
-import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Menu, X, Cpu } from 'lucide-react';
+import { useState } from 'react';
 
-const Navigation = () => {
-  const location = useLocation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  const isActive = (path: string) => location.pathname === path;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/ai-build", label: "AI Architect" },
-    { path: "/manual-build", label: "Manual Studio" },
-    { path: "/browse-parts", label: "Catalog" },
-    { path: "/saved-builds", label: "Saved" }
-  ];
+export function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border/50"
-          : "bg-background border-b border-transparent"
-        }`}
-    >
-      <div className="container flex h-20 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-foreground text-background flex items-center justify-center font-bold text-lg rounded-sm group-hover:bg-primary transition-colors duration-300">
-            T
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <Cpu className="w-8 h-8 text-primary transition-transform group-hover:rotate-180 duration-500" />
+            <span className="text-xl font-bold text-foreground tracking-tight">
+              TRINITY
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            <NavLink to="/ai-build">AI Architect</NavLink>
+            <NavLink to="/manual-build">Manual Studio</NavLink>
+            <NavLink to="/browse-parts">Browse Parts</NavLink>
+            <NavLink to="/saved-builds">Saved Builds</NavLink>
           </div>
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            TRINITY
-          </span>
-        </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${isActive(item.path) ? "text-foreground font-semibold" : "text-muted-foreground"
-                }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-
-          <div className="flex items-center gap-4 pl-8 border-l border-border">
-            <Button asChild size="sm" className="rounded-full px-6 font-medium">
-              <Link to="/ai-build">Start Building</Link>
-            </Button>
-          </div>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <div className="flex items-center gap-2 md:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="rounded-full"
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-md text-foreground hover:bg-secondary transition-colors"
           >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-border animate-in slide-in-from-top-5 z-40 shadow-large">
-          <nav className="container py-8 flex flex-col gap-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-lg font-medium hover:text-primary transition-colors ${isActive(item.path) ? "text-foreground" : "text-muted-foreground"
-                  }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <div className="pt-4 mt-4 border-t border-border">
-              <Button asChild className="w-full rounded-full">
-                <Link to="/ai-build" onClick={() => setIsMobileMenuOpen(false)}>Start Building</Link>
-              </Button>
-            </div>
-          </nav>
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <div className="md:hidden border-t border-border bg-white">
+          <div className="px-4 pt-2 pb-4 space-y-1">
+            <MobileNavLink to="/ai-build" onClick={() => setIsOpen(false)}>
+              AI Architect
+            </MobileNavLink>
+            <MobileNavLink to="/manual-build" onClick={() => setIsOpen(false)}>
+              Manual Studio
+            </MobileNavLink>
+            <MobileNavLink to="/browse-parts" onClick={() => setIsOpen(false)}>
+              Browse Parts
+            </MobileNavLink>
+            <MobileNavLink to="/saved-builds" onClick={() => setIsOpen(false)}>
+              Saved Builds
+            </MobileNavLink>
+          </div>
         </div>
       )}
-    </header>
+    </nav>
   );
-};
+}
 
-export default Navigation;
+function NavLink({ to, children }: { to: string; children: React.ReactNode }) {
+  return (
+    <Link
+      to={to}
+      className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-secondary rounded-md transition-all duration-200"
+    >
+      {children}
+    </Link>
+  );
+}
+
+function MobileNavLink({
+  to,
+  children,
+  onClick,
+}: {
+  to: string;
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      className="block px-4 py-3 text-base font-medium text-foreground/70 hover:text-foreground hover:bg-secondary rounded-md transition-colors"
+    >
+      {children}
+    </Link>
+  );
+}
