@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 1000, // Increase chunk size warning limit to 1000 kB (1 MB)
+    chunkSizeWarningLimit: 1500, // Increase chunk size warning limit to 1500 kB
   },
 });
 // Trigger restart
