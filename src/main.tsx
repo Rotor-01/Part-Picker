@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './app.css'; // Import the main CSS file
 
-console.log("ACCORDION THEME ACTIVE - DEBUG CHECK");
+console.log("DEBUG: App Version 2025-12-06 08:58 - Background Fix");
 
 // Ensure the root element exists before creating the app.
 const rootElement = document.getElementById('root');
