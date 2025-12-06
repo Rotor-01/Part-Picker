@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import './app.css'; // Import the main CSS file
+import './styles.css'; // Import the main CSS file
 
 console.log("DEBUG: App Version 2025-12-06 08:58 - Background Fix");
 
